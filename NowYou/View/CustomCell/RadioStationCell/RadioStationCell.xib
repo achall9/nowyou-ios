@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Gilroy-Bold.ttf">
+            <string>Gilroy-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RadioStationCell" id="E3N-Kw-XpO" customClass="RadioStationCell" customModule="NowYou" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E3N-Kw-XpO" id="tOs-2Q-TsT">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tqc-HY-5Le" customClass="NYView" customModule="NowYou">
+                        <rect key="frame" x="20" y="0.0" width="280" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vI5-8Z-Agy">
+                                <rect key="frame" x="19" y="22" width="161" height="0.0"/>
+                                <fontDescription key="fontDescription" name="Gilroy-Bold" family="Gilroy-Bold" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sTx-fb-DQy">
+                                <rect key="frame" x="200" y="0.0" width="80" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LIVE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4P-Ub-rRc">
+                                        <rect key="frame" x="0.0" y="15" width="27" height="14"/>
+                                        <fontDescription key="fontDescription" name="Gilroy-Bold" family="Gilroy-Bold" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NY_radio_live" translatesAutoresizingMaskIntoConstraints="NO" id="mYc-ub-14Z">
+                                        <rect key="frame" x="36" y="13" width="22" height="18"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="C4P-Ub-rRc" firstAttribute="centerY" secondItem="sTx-fb-DQy" secondAttribute="centerY" id="Eyb-jF-CUr"/>
+                                    <constraint firstItem="mYc-ub-14Z" firstAttribute="leading" secondItem="C4P-Ub-rRc" secondAttribute="trailing" constant="9" id="eX4-un-s3a"/>
+                                    <constraint firstAttribute="width" constant="80" id="hAX-w5-zMQ"/>
+                                    <constraint firstItem="mYc-ub-14Z" firstAttribute="centerY" secondItem="sTx-fb-DQy" secondAttribute="centerY" id="ufm-rB-hIG"/>
+                                    <constraint firstItem="C4P-Ub-rRc" firstAttribute="leading" secondItem="sTx-fb-DQy" secondAttribute="leading" id="wMQ-Er-f1B"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vI5-8Z-Agy" firstAttribute="leading" secondItem="tqc-HY-5Le" secondAttribute="leading" constant="19" id="51P-HA-mV0"/>
+                            <constraint firstItem="sTx-fb-DQy" firstAttribute="leading" secondItem="vI5-8Z-Agy" secondAttribute="trailing" constant="20" id="FTN-Ql-7eU"/>
+                            <constraint firstItem="sTx-fb-DQy" firstAttribute="height" secondItem="tqc-HY-5Le" secondAttribute="height" id="V7A-Gq-8yt"/>
+                            <constraint firstItem="vI5-8Z-Agy" firstAttribute="centerY" secondItem="tqc-HY-5Le" secondAttribute="centerY" id="any-qe-uBe"/>
+                            <constraint firstAttribute="trailing" secondItem="sTx-fb-DQy" secondAttribute="trailing" id="che-f0-YqF"/>
+                            <constraint firstItem="sTx-fb-DQy" firstAttribute="centerY" secondItem="tqc-HY-5Le" secondAttribute="centerY" id="oZu-BI-TpK"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowX">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowY">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowBlur">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spread">
+                                <real key="value" value="-12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="tqc-HY-5Le" firstAttribute="top" secondItem="tOs-2Q-TsT" secondAttribute="top" id="4pN-JU-0z8"/>
+                    <constraint firstItem="tqc-HY-5Le" firstAttribute="leading" secondItem="tOs-2Q-TsT" secondAttribute="leading" constant="20" id="Dbg-TU-1Jh"/>
+                    <constraint firstAttribute="trailing" secondItem="tqc-HY-5Le" secondAttribute="trailing" constant="20" id="TKt-MW-OMT"/>
+                    <constraint firstAttribute="bottom" secondItem="tqc-HY-5Le" secondAttribute="bottom" constant="16" id="Vik-Ak-FLM"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <viewLayoutGuide key="safeArea" id="Ugy-Nt-qVS"/>
+            <connections>
+                <outlet property="lblRadioTitle" destination="vI5-8Z-Agy" id="qS9-tc-rhT"/>
+                <outlet property="liveView" destination="sTx-fb-DQy" id="ZhW-ba-ZWg"/>
+                <outlet property="vDetails" destination="tqc-HY-5Le" id="WZk-mo-SvW"/>
+            </connections>
+            <point key="canvasLocation" x="224" y="155"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="NY_radio_live" width="22" height="18"/>
+    </resources>
+</document>
