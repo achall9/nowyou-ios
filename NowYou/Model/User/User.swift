@@ -23,6 +23,7 @@ class User: NSObject, NSCoding {
     var privateOn           : Int!
     var bio                 : String!
     
+    var total_amount        : Int = 0
     var followers_count     : Int = 0
     var followings_count    : Int = 0
     var this_week_followers : Int = 0
@@ -58,6 +59,7 @@ class User: NSObject, NSCoding {
          birthday: String,
          privateOn: Int,
          bio: String,
+         total_amount: Int,
          followers_count: Int,
          followings_count: Int,
          this_week_followers: Int,
@@ -91,6 +93,7 @@ class User: NSObject, NSCoding {
         self.birthday           = birthday
         self.privateOn          = privateOn
         self.bio                = bio
+        self.total_amount       = total_amount
         self.followers_count    = followers_count
         self.followings_count   = followings_count
         self.this_week_followers = this_week_followers
@@ -127,6 +130,8 @@ class User: NSObject, NSCoding {
         self.birthday           = json[USER.BIRTHDAY] as? String ?? ""
         self.privateOn          = json[USER.PRIVATE_ON] as? Int ?? 0
         self.bio                = json[USER.BIO]        as? String ?? ""
+        
+        self.total_amount       = json[USER.TOTAL_AMOUNT] as? Int ?? 0
         self.followers_count    = json[USER.FOLLOWERS_COUNT] as? Int ?? 0
         self.followings_count   = json[USER.FOLLOWINGS_COUNT] as? Int ?? 0
         self.this_week_followers = json[USER.THIS_WEEK_FOllOWERS] as? Int ?? 0
@@ -191,6 +196,7 @@ class User: NSObject, NSCoding {
         aCoder.encode(self.bio, forKey: USER.BIO)
         
         aCoder.encode(self.fullname, forKey: USER.FULL_NAME)
+        aCoder.encode(self.total_amount, forKey: USER.TOTAL_AMOUNT)
         aCoder.encode(self.followers_count, forKey: USER.FOLLOWERS_COUNT)
         aCoder.encode(self.followings_count, forKey: USER.FOLLOWINGS_COUNT)
         aCoder.encode(self.this_week_followers, forKey: USER.THIS_WEEK_FOllOWERS)
@@ -232,6 +238,7 @@ class User: NSObject, NSCoding {
         let privateOn      = aDecoder.decodeObject(forKey: USER.PRIVATE_ON) as? Int ?? 0
         let bio             = aDecoder.decodeObject(forKey: USER.BIO) as? String ?? ""
         
+        let total_amount = aDecoder.decodeInteger(forKey: USER.TOTAL_AMOUNT)
         let followers_count = aDecoder.decodeInteger(forKey: USER.FOLLOWERS_COUNT)
         let followings_count = aDecoder.decodeInteger(forKey: USER.FOLLOWINGS_COUNT)
         let this_week_followers = aDecoder.decodeInteger(forKey: USER.THIS_WEEK_FOllOWERS)
@@ -258,7 +265,7 @@ class User: NSObject, NSCoding {
         let daily           = aDecoder.decodeObject(forKey: USER.DAILY) as? [Double] ?? []
         let timely          = aDecoder.decodeObject(forKey: USER.TIMELY) as? [Double] ?? []
         
-        self.init(userID: userId, firstName: userFirstName, lastName: userLastName, email: userEmail, username: username, userPhoto: userAvatar, fullname: fullname, phone: phone, birthday: birthday, privateOn: privateOn, bio: bio, followers_count: followers_count, followings_count: followings_count,this_week_followers: this_week_followers, posts_count: posts_count, posts_image_count: image_count, posts_video_count: video_count, view_count_total: view_total, view_count_daily: view_daily,
+        self.init(userID: userId, firstName: userFirstName, lastName: userLastName, email: userEmail, username: username, userPhoto: userAvatar, fullname: fullname, phone: phone, birthday: birthday, privateOn: privateOn, bio: bio, total_amount: total_amount, followers_count: followers_count, followings_count: followings_count,this_week_followers: this_week_followers, posts_count: posts_count, posts_image_count: image_count, posts_video_count: video_count, view_count_total: view_total, view_count_daily: view_daily,
             view_count_weekly: view_weekly,view_count_monthly: view_monthly, view_count_yearly: view_yearly, earning_total: earning_total, earning_daily: earning_daily, earning_monthly: earning_monthly, earning_yearly: earning_yearly, withdrawns_total: withdrawn_total, color: color, gender: gender, monthly: monthly, daily: daily, timely: timely)
     }
     

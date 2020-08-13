@@ -49,6 +49,7 @@ class API {
     static let DEVICE_TOKEN             = "/profile/updateToken"
     static let GET_NOTIFICATIONS        = "/user/notifications"
     static let GET_ALL_USER             = "/user/getallusers"
+    static let FORGOT_PWD               = "/user/forgot_password"
     // feed
     static let SHARE_POST               = "/feed/share_post"
     
@@ -154,6 +155,8 @@ class USER {
     static let FULL_NAME                = "full_name"
     static let PRIVATE_ON               = "privateOn"
     static let BIO                      = "bio"
+    
+    static let TOTAL_AMOUNT             = "total_amount"
     static let FOLLOWERS_COUNT          = "followers_count"
     static let FOLLOWINGS_COUNT         = "followings_count"
     static let THIS_WEEK_FOllOWERS      = "this_week_followers"
