@@ -156,6 +156,8 @@ class USER {
     static let PRIVATE_ON               = "privateOn"
     static let BIO                      = "bio"
     
+    static let TOTAL_AMOUNT             = "total_amount"
+    
     static let FOLLOWERS_COUNT          = "followers_count"
     static let FOLLOWINGS_COUNT         = "followings_count"
     static let THIS_WEEK_FOllOWERS      = "this_week_followers"
