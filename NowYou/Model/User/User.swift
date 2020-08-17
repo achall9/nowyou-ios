@@ -127,6 +127,7 @@ class User: NSObject, NSCoding {
         self.birthday           = json[USER.BIRTHDAY] as? String ?? ""
         self.privateOn          = json[USER.PRIVATE_ON] as? Int ?? 0
         self.bio                = json[USER.BIO]        as? String ?? ""
+        
         self.followers_count    = json[USER.FOLLOWERS_COUNT] as? Int ?? 0
         self.followings_count   = json[USER.FOLLOWINGS_COUNT] as? Int ?? 0
         self.this_week_followers = json[USER.THIS_WEEK_FOllOWERS] as? Int ?? 0
@@ -144,7 +145,15 @@ class User: NSObject, NSCoding {
         
         self.withdrawns_total   = json[USER.WITHDRAWNS_TOTAL] as? Double ?? 0.0
         self.color              = json[USER.COLOR] as? String ?? "FFFFFF"
-        self.gender             = json[USER.GENDER] as? Int ?? 1
+        
+        if json[USER.GENDER] as? Int == nil {
+            let gender = json[USER.GENDER] as? String
+            self.gender = (gender as! NSString).integerValue
+        } else {
+            self.gender = json[USER.GENDER] as? Int ?? 1
+        }
+        
+               
         
         if let monthly           = json[USER.EARNING_MONTHLY] as? [String: Any] {
             self.earning_monthly = monthly["monthly"] as? Double ?? 0.0
@@ -259,7 +268,7 @@ class User: NSObject, NSCoding {
         let timely          = aDecoder.decodeObject(forKey: USER.TIMELY) as? [Double] ?? []
         
         self.init(userID: userId, firstName: userFirstName, lastName: userLastName, email: userEmail, username: username, userPhoto: userAvatar, fullname: fullname, phone: phone, birthday: birthday, privateOn: privateOn, bio: bio, followers_count: followers_count, followings_count: followings_count,this_week_followers: this_week_followers, posts_count: posts_count, posts_image_count: image_count, posts_video_count: video_count, view_count_total: view_total, view_count_daily: view_daily,
-            view_count_weekly: view_weekly,view_count_monthly: view_monthly, view_count_yearly: view_yearly, earning_total: earning_total, earning_daily: earning_daily, earning_monthly: earning_monthly, earning_yearly: earning_yearly, withdrawns_total: withdrawn_total, color: color, gender: gender, monthly: monthly, daily: daily, timely: timely)
+                  view_count_weekly: view_weekly,view_count_monthly: view_monthly, view_count_yearly: view_yearly, earning_total: earning_total, earning_daily: earning_daily, earning_monthly: earning_monthly, earning_yearly: earning_yearly, withdrawns_total: withdrawn_total, color: color, gender: gender, monthly: monthly, daily: daily, timely: timely)
     }
     
     func isLogged() -> Bool {

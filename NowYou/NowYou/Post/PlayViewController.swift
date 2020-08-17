@@ -9,10 +9,11 @@
 import UIKit
 import AVFoundation
 import AnimatedCollectionViewLayout
-import Appodeal
+//import Appodeal
 import Player
 import CRRefresh
 import SwiftyJSON
+//import GoogleMobileAds
 
 class PlayViewController: EmbeddedViewController {
 
@@ -44,11 +45,12 @@ class PlayViewController: EmbeddedViewController {
     
     var isFirstLoad: Bool = true
     var isPaged: Bool = false
+    // Facebook Ads
     
     /// The interstitial ad.
-    var interstitial: GADInterstitial!
+    //var interstitial: GADInterstitial!
     /// The reward-based video ad.
-    var rewardBasedVideo: GADRewardBasedVideoAd?
+    //var rewardBasedVideo: GADRewardBasedVideoAd?
         
     var adFiredIndex: Int = 0
     var adFiredIndex_banner: Int = 0
@@ -185,7 +187,7 @@ class PlayViewController: EmbeddedViewController {
             if self.medias.count == 0 {
                 return
             }else{
-                self.openBannerAd()
+                //self.openBannerAd()
                 let media = self.medias[0]
                 if media.type != 0 { // video
                     let path = Utils.getFullPath(path: media.path!)
@@ -247,17 +249,19 @@ class PlayViewController: EmbeddedViewController {
     }
  
     private func initValue(){
+        /*
         Appodeal.setInterstitialDelegate(self)
         Appodeal.setRewardedVideoDelegate(self)
         Appodeal.setBannerDelegate(self)
+         */
         mEndPageSelected = false
         mIndexpathRow = 0
         
         feedPageId = 0
         tagPageId = 0
         viralPageId = 0
+       
         
-    
     }
     
     private func initCollectionView(){
@@ -302,7 +306,7 @@ class PlayViewController: EmbeddedViewController {
     }
     private func initVideoPlayer(){
         
-        self.videoPlayer.playerDelegate = self
+        //self.videoPlayer.playerDelegate = self
         self.videoPlayer.playbackDelegate = self
 
         self.videoPlayer.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - 90.0)
@@ -582,6 +586,8 @@ class PlayViewController: EmbeddedViewController {
 //            print("exit")
 //        }
     }
+    
+    /*
     private func openBannerAd(){
         if Appodeal.isReadyForShow(with: .bannerBottom){
              Appodeal.hideBanner()
@@ -623,6 +629,8 @@ class PlayViewController: EmbeddedViewController {
                 }//---end if randomDiff % 2 == 0
            }//-- end  if abs(selectedIndexPath.row - 1 - adFiredIndex) > randomDiff {
     }
+ 
+     */
     
     @IBAction func onReport(_ sender: Any){
         let reportVC = ReportVC(nibName: String(describing: ReportVC.self), bundle: nil)
@@ -829,7 +837,7 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PostViewCell
             // remove image
         
-            openBannerAd()
+            //openBannerAd()
 
             cell.imageView.image = nil
             cell.btnLike.isSelected = false
@@ -1031,6 +1039,9 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
                 }
                 mIndexpathRow = indexPath.row
 //            }
+        
+        
+       
             
             return cell
 //        }
@@ -1066,8 +1077,13 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         print ("current page = \(currentPage)")
 
         if currentPage < medias.count {
-            openAd(currentPage)
-            openBannerAd()
+            if currentPage != 0 && currentPage % 3 == 0 {
+                let facebookNativeAdsVC = self.storyboard?.instantiateViewController(withIdentifier: "FacebookNativeAdsVC") as! FacebookNativeAdsVC
+                       self.navigationController?.pushViewController(facebookNativeAdsVC, animated: false)
+            }
+            
+            //openAd(currentPage)
+            //openBannerAd()
             isPaged = true
 
             NotificationCenter.default.removeObserver(self)
@@ -1206,6 +1222,7 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
 }
 
+/*
 extension PlayViewController: AppodealInterstitialDelegate {
     // Method called when precache (cheap and fast load) or usual interstitial view did load
     //
@@ -1304,7 +1321,7 @@ extension PlayViewController: AppodealBannerDelegate
     // banner did expire and could not be shown
     func bannerDidExpired() {}
 }
-
+*/
 extension PlayViewController: PlayerDelegate {
     func playerReady(_ player: Player) {
         print("\(#function) ready")
@@ -1459,7 +1476,7 @@ extension PlayViewController{
                
             if self.medias.count > 0 {
                 self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-                self.openBannerAd()
+                //self.openBannerAd()
              }else{
                  print("exit")
              }
@@ -1511,7 +1528,7 @@ extension PlayViewController{
                     self.collectionView.reloadData()
                     if self.medias.count > 0 {
                        self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-                       self.openBannerAd()
+                       //self.openBannerAd()
                     }else{
                         print("exit")
                     }
@@ -1570,7 +1587,7 @@ extension PlayViewController{
                     self.collectionView.reloadData()
                     if self.medias.count > 0 {
                        self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredVertically, animated: true)
-                       self.openBannerAd()
+                       //self.openBannerAd()
                     }else{
                         print("exit")
                     }
@@ -1603,4 +1620,5 @@ extension PlayViewController: UIViewControllerTransitioningDelegate{
        }
 
 }
+
 

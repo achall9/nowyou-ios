@@ -12,6 +12,7 @@
 #import "CSIOpusDecoder.h"
 #include "CSIDataQueue.h"
 @import Firebase;
+#import <Firebase/Firebase.h>
 
 // return max value for given values
 #define max(a, b) (((a) > (b)) ? (a) : (b))

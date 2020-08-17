@@ -8,6 +8,7 @@
 import UIKit
 class CashInfo : NSObject, NSCoding {
   
+    var total_amount        : Double = 0.0
     var total_cash          : Double = 0.0
     var total_click_count   : Int = 0
     var total_view_count    : Int = 0
@@ -28,7 +29,8 @@ class CashInfo : NSObject, NSCoding {
     var daily_history = [Double]()
     var timely_history = [Double]()
     
-    init(total_cash: Double,
+    init(total_amount: Double,
+         total_cash: Double,
          total_click_count: Int,
          total_view_count: Int,
          total_post_clicked: Int,
@@ -48,6 +50,7 @@ class CashInfo : NSObject, NSCoding {
          daily_history: [Double])
     {
         super.init()
+        self.total_amount = total_amount
         self.total_cash = total_cash
         self.total_click_count = total_click_count
         self.total_view_count = total_view_count
@@ -69,6 +72,7 @@ class CashInfo : NSObject, NSCoding {
     }
     
     init(json: [String: Any]) {
+        self.total_amount  = json["total_amount"] as? Double ?? 0.0
         self.total_cash     = json["total_cash"] as? Double ?? 0.0
         self.total_click_count = json["total_click_count"] as? Int ?? 0
         self.total_view_count = json["total_view_count"] as? Int ?? 0
@@ -111,6 +115,7 @@ class CashInfo : NSObject, NSCoding {
         }
     }
     func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.total_amount, forKey: "total_amount")
         aCoder.encode(self.total_cash, forKey: "total_cash")
         aCoder.encode(self.total_click_count, forKey: "total_click_count")
         aCoder.encode(self.total_view_count, forKey: "total_view_count")
@@ -130,6 +135,7 @@ class CashInfo : NSObject, NSCoding {
     }
     
     public convenience required init?(coder aDecoder: NSCoder) {
+        let total_amount = aDecoder.decodeDouble(forKey: "total_amount")
         let total_cash = aDecoder.decodeDouble(forKey: "total_cash")
         let total_click_count =  aDecoder.decodeInteger(forKey: "total_click_count")
         let total_view_count = aDecoder.decodeInteger(forKey: "total_view_count")
@@ -151,7 +157,8 @@ class CashInfo : NSObject, NSCoding {
         let timely_history =  aDecoder.decodeObject(forKey: "timely_history") as? [Double] ?? []
 
         
-        self.init(total_cash: total_cash,
+        self.init(total_amount: total_amount,
+            total_cash: total_cash,
             total_click_count: total_click_count,
             total_view_count: total_view_count,
             total_post_clicked: total_post_clicked,

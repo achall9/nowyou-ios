@@ -20,7 +20,7 @@ class PhoneVerifyViewController: UIViewController {
     var email: String!
     var password: String!
     var birthday: Date!
-    var gender: String!
+    var gender: Int!
     var username: String!
     var bio: String!
     var privateOn: Int!

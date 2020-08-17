@@ -9,8 +9,8 @@ import UIKit
 import Firebase
 import AVFoundation
 import IQKeyboardManagerSwift
-import GoogleMobileAds
-import Appodeal
+//import GoogleMobileAds
+//import Appodeal
 public protocol RecordedRaidoFollowDelegate: AnyObject {
     func increaseFollowing();
     func decreaseFollowing();
@@ -128,8 +128,8 @@ class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTrans
     private func initValue(){
         adTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(showAd), userInfo: nil, repeats: true)
         adTimer_banner = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(showAd_banner), userInfo: nil, repeats: true)
-        Appodeal.setInterstitialDelegate(self)
-        Appodeal.setRewardedVideoDelegate(self)
+        //Appodeal.setInterstitialDelegate(self)
+        //Appodeal.setRewardedVideoDelegate(self)
         IQKeyboardManager.shared.enable = false
         
         // log view count
@@ -221,6 +221,7 @@ class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTrans
     @objc func showAd_banner() {
         self.timeFromAdFired_banner += 1
         print("timeFromAdFired_banner = \(self.timeFromAdFired_banner), random = \(randomDuration_banner)")
+        /*
         if self.timeFromAdFired_banner > randomDuration_banner {
            if Appodeal.isReadyForShow(with: .bannerBottom){
                 Appodeal.banner()?.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.3 + 20 )
@@ -231,12 +232,14 @@ class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTrans
         } else {
             Appodeal.hideBanner()
         }
+         */
     }
     @objc func showAd() {
         self.timeFromAdFired += 1
         print("timeFromAdFired = \(self.timeFromAdFired), random = \(randomDuration)")
         if self.timeFromAdFired > randomDuration {
             // show ad
+            /*
             if Appodeal.isReadyForShow(with: .rewardedVideo){
                Appodeal.showAd(AppodealShowStyle.rewardedVideo, rootViewController: self)
                 if adTimer != nil {
@@ -255,6 +258,7 @@ class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTrans
                self.timeFromAdFired = 0
                randomDuration = Int.random(in: 3..<5)
             }
+             */
         }
     }
     
@@ -726,6 +730,7 @@ extension RecordedRadioPlayViewController: UITableViewDataSource, UITableViewDel
     }
 }
 
+/*
 extension RecordedRadioPlayViewController: AppodealInterstitialDelegate {
     // Method called when precache (cheap and fast load) or usual interstitial view did load
     //
@@ -837,6 +842,7 @@ extension RecordedRadioPlayViewController: AppodealBannerDelegate
     // banner did expire and could not be shown
     func bannerDidExpired() {}
 }
+ */
 //------Comment Thread
 extension RecordedRadioPlayViewController{
     func onShowCommentThread( _ comment: RadioComment) {

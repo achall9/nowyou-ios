@@ -11,7 +11,7 @@ import Firebase
 import AVFoundation
 import IQKeyboardManagerSwift
 import SoundWave
-import GoogleMobileAds
+//import GoogleMobileAds
 import AgoraRtcKit
 
 protocol StreamCompletionDelegate {

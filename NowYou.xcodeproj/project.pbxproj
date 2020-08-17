@@ -226,6 +226,9 @@
 		82F9055924752F9E00D5457C /* BlockedUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9055824752F9E00D5457C /* BlockedUsersViewController.swift */; };
 		D64909A124C0528E00EE9AC7 /* KVVideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */; };
 		D64909A324C0542E00EE9AC7 /* silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D64909A224C0542E00EE9AC7 /* silence.mp3 */; };
+		D673C4C524EA06F000F08335 /* FacebookNativeAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */; };
+		D6E1BA6424E5EDC4007668D0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6324E5EDC4007668D0 /* FBSDKCoreKit.framework */; };
+		D6E1BA6624E5EDD8007668D0 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6524E5EDD8007668D0 /* FBAudienceNetwork.framework */; };
 		D6FF66B924DD9A0C007769E9 /* NYImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FF66B824DD9A0C007769E9 /* NYImage.swift */; };
 		FD44509D2408C73D00ADE179 /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD44509C2408C73D00ADE179 /* DataBaseManager.swift */; };
 		FD4450AB2409741700ADE179 /* RadioUsernameSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4450AA2409741700ADE179 /* RadioUsernameSearchVC.swift */; };
@@ -522,6 +525,9 @@
 		86FC629F0870F6E91FDB9E81 /* Pods_NowYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NowYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVVideoManager.swift; sourceTree = "<group>"; };
 		D64909A224C0542E00EE9AC7 /* silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = silence.mp3; sourceTree = "<group>"; };
+		D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookNativeAdsVC.swift; sourceTree = "<group>"; };
+		D6E1BA6324E5EDC4007668D0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		D6E1BA6524E5EDD8007668D0 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		D6FF66B824DD9A0C007769E9 /* NYImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYImage.swift; sourceTree = "<group>"; };
 		F8F83CFB4C87E0F8DB2569DD /* Pods-NowYou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NowYou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NowYou/Pods-NowYou.debug.xcconfig"; sourceTree = "<group>"; };
 		FD44509C2408C73D00ADE179 /* DataBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
@@ -551,8 +557,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6E1BA6424E5EDC4007668D0 /* FBSDKCoreKit.framework in Frameworks */,
 				180098782246CC1B00F5A202 /* UserNotifications.framework in Frameworks */,
 				18131E4821FF21020095C1CA /* libopus.a in Frameworks */,
+				D6E1BA6624E5EDD8007668D0 /* FBAudienceNetwork.framework in Frameworks */,
 				18131E4721FF20FA0095C1CA /* AnimatedCollectionViewLayout.framework in Frameworks */,
 				06B7897E4FEED154F5C4DF5F /* Pods_NowYou.framework in Frameworks */,
 			);
@@ -802,6 +810,7 @@
 				181318C321FF16FC0095C1CA /* PostViewController.swift */,
 				18CC3F15228E9E4500151337 /* StoryPlayVC.swift */,
 				827F1AD1248665F80053A861 /* PostPlayVC.swift */,
+				D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -1295,6 +1304,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D6E1BA6224E5EDA8007668D0 /* FBFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D6E1BA6524E5EDD8007668D0 /* FBAudienceNetwork.framework */,
+				D6E1BA6324E5EDC4007668D0 /* FBSDKCoreKit.framework */,
+			);
+			path = FBFrameworks;
+			sourceTree = "<group>";
+		};
 		FD94F4CE23E9E86C006E06C8 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -1317,6 +1335,7 @@
 		FDACB2A223E4356A00B7A9C0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D6E1BA6224E5EDA8007668D0 /* FBFrameworks */,
 				D64909A224C0542E00EE9AC7 /* silence.mp3 */,
 				827CFAE6242E5C9000C7606A /* NYlaunch.gif */,
 				18131B9221FF17020095C1CA /* Fonts */,
@@ -1418,7 +1437,6 @@
 				782F2866D80527CBD3502916 /* [CP] Embed Pods Frameworks */,
 				18131E5221FF2CC10095C1CA /* Embed Frameworks */,
 				1800984B223EFB8E00F5A202 /* ShellScript */,
-				5BC1D45CBB37BC3B3659110F /* [CP] Copy Pods Resources */,
 				824A8018241D5D6000F8C6E6 /* ShellScript */,
 			);
 			buildRules = (
@@ -1440,7 +1458,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = Apple;
 				TargetAttributes = {
 					1813186221FF14650095C1CA = {
@@ -1607,23 +1625,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" b74a8c753cf0cab85b0c7325ca38455ab38c0f77 e30016a9f817df99d0d37be27ab0214775c8d2d3f9f5ee15976e98c6f508103a\n";
-		};
-		5BC1D45CBB37BC3B3659110F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NowYou/Pods-NowYou-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NowYou/Pods-NowYou-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NowYou/Pods-NowYou-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		782F2866D80527CBD3502916 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1808,6 +1809,7 @@
 				18131BE921FF17090095C1CA /* ColorsCollectionViewDelegate.swift in Sources */,
 				18131C0A21FF17090095C1CA /* PostViewController.swift in Sources */,
 				18131BFB21FF17090095C1CA /* WatermarkCompositionInstruction.swift in Sources */,
+				D673C4C524EA06F000F08335 /* FacebookNativeAdsVC.swift in Sources */,
 				18131BFE21FF17090095C1CA /* CameraRollViewController.swift in Sources */,
 				FDEDCD6923E27AF900850DAE /* AppManager.swift in Sources */,
 				18A950D8220222800044840C /* VideoFrameCell.swift in Sources */,
@@ -1904,6 +1906,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1965,6 +1968,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2025,10 +2029,14 @@
 				CODE_SIGN_ENTITLEMENTS = NowYou/NowYou.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = U55S7N6YRF;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NowYou/Resources/FBFrameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
@@ -2064,9 +2072,13 @@
 				CODE_SIGN_ENTITLEMENTS = NowYou/NowYou.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = U55S7N6YRF;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NowYou/Resources/FBFrameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"${PODS_ROOT}/Firebase/CoreOnly/Sources",

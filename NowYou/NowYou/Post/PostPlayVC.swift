@@ -10,7 +10,7 @@
 import UIKit
 import AVFoundation
 import AnimatedCollectionViewLayout
-import Appodeal
+//import Appodeal
 import Player
 import CRRefresh
 import SwiftyJSON
@@ -44,9 +44,9 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
     var isPaged: Bool = false
     
     /// The interstitial ad.
-    var interstitial: GADInterstitial!
+    //var interstitial: GADInterstitial!
     /// The reward-based video ad.
-    var rewardBasedVideo: GADRewardBasedVideoAd?
+    //var rewardBasedVideo: GADRewardBasedVideoAd?
         
     var adFiredIndex: Int = 0
     var adFiredIndex_banner: Int = 0
@@ -105,7 +105,7 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
         UIApplication.shared.isStatusBarHidden = true
 
         initValue()
-        openBannerAd()
+        //openBannerAd()
 
        NotificationCenter.default.addObserver(self, selector: #selector(reportedPost(notification:)),
            name: .reportedPostSuccessfully, object: nil)
@@ -164,15 +164,15 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
                 }
                 playVideoItems(currentCellIndex: currentIndex)
             }
-            openBannerAd()
+            //openBannerAd()
 
         }        
     }
 
     private func initValue(){
-        Appodeal.setInterstitialDelegate(self)
-        Appodeal.setRewardedVideoDelegate(self)
-        Appodeal.setBannerDelegate(self)
+        //Appodeal.setInterstitialDelegate(self)
+        //Appodeal.setRewardedVideoDelegate(self)
+        //Appodeal.setBannerDelegate(self)
         mEndPageSelected = false
         mIndexpathRow = 0
         
@@ -313,22 +313,10 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
     
     @objc func didSingleTapCollectionView(gesture: UITapGestureRecognizer) {
 
-//        self.photoShowTime = 0.0
-//        self.timer?.invalidate()
-//        self.timer = nil
-//        print ("scroll to index \(currentIndex)")
-//        currentIndex = mIndexpathRow
-//        currentIndex = currentIndex + 1
-//        if medias.count > 0, currentIndex < medias.count {
-//            if(gesture.state == .ended){
-//                
-//                collectionView.scrollToItem(at: IndexPath(row: currentIndex, section: 0), at: .centeredVertically, animated: true)
-//            }
-//            
-//        }else{
-//            transitionDismissal()
-//        }
+        
     }
+    
+    /*
     private func openBannerAd(){
         if Appodeal.isReadyForShow(with: .bannerBottom){
            Appodeal.hideBanner()
@@ -370,6 +358,7 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
                 }//---end if randomDiff % 2 == 0
            }//-- end  if abs(selectedIndexPath.row - 1 - adFiredIndex) > randomDiff {
     }
+    */
     
     @IBAction func onReport(_ sender: Any){
         let reportVC = ReportVC(nibName: String(describing: ReportVC.self), bundle: nil)
@@ -540,7 +529,7 @@ extension PostPlayVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PostViewCell
             let media = medias[indexPath.row]
         
-            openBannerAd()
+            //openBannerAd()
 
                  
             let selfID = UserManager.currentUser()?.userID
@@ -770,8 +759,8 @@ extension PostPlayVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
             let h = scrollView.bounds.size.height
             let currentPage = Int(ceil(y/h))
             
-            openBannerAd()
-            openAd(currentPage)
+            //openBannerAd()
+            //openAd(currentPage)
             print ("current page = \(currentPage)")
             if currentPage >= medias.count {
                 return
@@ -913,6 +902,7 @@ extension PostPlayVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
     }
 }
 
+/*
 extension PostPlayVC: AppodealInterstitialDelegate {
     // Method called when precache (cheap and fast load) or usual interstitial view did load
     //
@@ -1038,6 +1028,7 @@ extension PostPlayVC: AppodealBannerDelegate
     // banner did expire and could not be shown
     func bannerDidExpired() {}
 }
+ */
 
 extension PostPlayVC: PlayerDelegate {
     func playerReady(_ player: Player) {

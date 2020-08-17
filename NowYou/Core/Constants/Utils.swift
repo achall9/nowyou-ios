@@ -72,15 +72,19 @@ class Utils {
         return !password.isEmpty
     }
     
+    
     static func showSpinner() {
+        /*
         let activityData = ActivityData(size: CGSize(width: 30, height: 30), message: nil, messageFont: nil, messageSpacing: 0, type: .ballClipRotate, color: .green, padding: nil, displayTimeThreshold: nil, minimumDisplayTime: nil, backgroundColor: nil, textColor: nil)
         
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData, nil)
+         */
     }
 
     static func hideSpinner() {
-        NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
+        //NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
     }
+    
     
     class func getFullPath(path: String) -> String {
 //       return "http://nowyou.toplev.io\(path)"

@@ -20,7 +20,7 @@ enum RestRouter: RestAPIProtocol {
     case getAllUsers(pageNum: Int)
     // auth
     case login(email: String, password: String)
-    case register(firstName: String, lastName: String, email: String, password: String, phone: String, device_token: String, birthday: String, gender: String, username: String, privateOn: Int, bio: String)
+    case register(firstName: String, lastName: String, email: String, password: String, phone: String, device_token: String, birthday: String, gender: Int, username: String, privateOn: Int, bio: String)
     case activate(code: String)
     case resetPassword(resetCode: String, password: String, confirmPwd: String)
     

@@ -30,6 +30,9 @@ class MetricsViewController: BaseViewController {
     @IBOutlet weak var lblWeekViewcount: UILabel!
     
     @IBOutlet weak var lblEarned: UILabel!
+    @IBOutlet weak var lblTotalEarned: UILabel!
+    
+    
     @IBOutlet weak var vAmount: UIView!
     @IBOutlet weak var vFollower: UIView!
     
@@ -48,6 +51,7 @@ class MetricsViewController: BaseViewController {
             chartView.isHidden = false
             vDaily.isHidden = true
             showChart(horizontal: false)
+            lblTotalEarned.text = "+ $\(UserManager.myCashInfo()?.total_amount.truncate(places: 2) ?? 0.0) total earned"
             if metricsMode == .YEARLY {
                 lblEarned.text = "+ $\(UserManager.myCashInfo()?.yearly.truncate(places: 2) ?? 0.00) this year"
             } else if metricsMode == .MONTHLY {
@@ -215,8 +219,9 @@ class MetricsViewController: BaseViewController {
         let user = UserManager.currentUser()!
         //----
         lblViewCount.text = "\(user.view_count_total)"
-//        lblEarned.text = String(format: "+ $ %.2f today", UserManager.myCashInfo()?.daily ?? 0.00)
+        
         lblEarned.text = "+ $\(UserManager.myCashInfo()?.daily.truncate(places: 2) ?? 0.00) today"
+        lblTotalEarned.text = "+ $\(UserManager.myCashInfo()?.total_amount.truncate(places: 2) ?? 0.0) total earned"
         //----
         lblWeekViewcount.text = "+\(user.view_count_weekly) this week"
         

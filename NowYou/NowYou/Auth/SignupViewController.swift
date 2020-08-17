@@ -23,6 +23,8 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBOutlet weak var vMale: NYView!
     @IBOutlet weak var vFemale: NYView!
+    @IBOutlet weak var vOther: NYView!
+    
    
     @IBOutlet weak var vUsername: NYView!
     
@@ -50,7 +52,7 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var switchTerm: UISwitch!
     var birthday: Date?
     var phoneNumber: String!
-    var isMale: Bool = true
+    var isMale: Int = 1
     
     @IBOutlet weak var countryCodePicker: UIPickerView!
     var countryCode = "1"
@@ -203,14 +205,20 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     // MARK: - Choose Sex
     
     @IBAction func onMale(_ sender: Any) {
-        setSex(isMale: true)
-        isMale = true
+        setSex(sexType: 1)
+        isMale = 1
     }
     
     @IBAction func onFemale(_ sender: Any) {
-        setSex(isMale: false)
-        isMale = false
+        setSex(sexType: 2)
+        isMale = 2
     }
+    
+    @IBAction func onOther(_ sender: UIButton) {
+        setSex(sexType: 3)
+        isMale = 3
+    }
+    
     
     // MARK: - Private Function
     func transitionNav(to controller: UIViewController) {
@@ -253,14 +261,27 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
-    func setSex(isMale: Bool) {
-        if isMale {
+    func setSex(sexType: Int) {
+        initSexViews()
+        if sexType == 1 {
             setNYViewActive(nyView: vMale, active: true, color: NYColors.NYBlue())
             setNYViewActive(nyView: vFemale, active: false, color: UIColor.clear)
-        } else {
+            setNYViewActive(nyView: vOther, active: false, color: UIColor.clear)
+        } else if sexType == 2 {
             setNYViewActive(nyView: vMale, active: false, color: UIColor.clear)
             setNYViewActive(nyView: vFemale, active: true, color: NYColors.NYPink())
+            setNYViewActive(nyView: vOther, active: false, color: UIColor.clear)
+        } else if sexType == 3 {
+            setNYViewActive(nyView: vMale, active: false, color: UIColor.clear)
+            setNYViewActive(nyView: vFemale, active: false, color: UIColor.clear)
+            setNYViewActive(nyView: vOther, active: true, color: NYColors.NYGreen())
         }
+    }
+    
+    func initSexViews() {
+        setNYViewActive(nyView: vMale, active: false, color: UIColor.clear)
+        setNYViewActive(nyView: vFemale, active: false, color: UIColor.clear)
+        setNYViewActive(nyView: vOther, active: false, color: UIColor.clear)
     }
     
     // MARK: - TextField Event
@@ -342,7 +363,7 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         phoneVerifyVC.email = txtPhone.text!
         phoneVerifyVC.password = txtPassword.text!
         phoneVerifyVC.birthday = self.birthday!
-        phoneVerifyVC.gender = isMale ? "1" : "2"
+        phoneVerifyVC.gender = isMale
         phoneVerifyVC.username = txtUsername.text!
         phoneVerifyVC.bio = txtBio.text ?? ""
         phoneVerifyVC.privateOn = switchPrivate.isOn ? 1 : 0

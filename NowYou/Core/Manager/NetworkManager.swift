@@ -56,7 +56,7 @@ class NetworkManager: NSObject {
         call(request, completion: completion)
     }
     
-    func register(first_name: String, last_name: String, email: String, password: String, phone: String, device_token: String, birthday: String, gender: String, username: String, privateOn: Int, bio: String, completion: ((ServerResponse)->())?) {
+    func register(first_name: String, last_name: String, email: String, password: String, phone: String, device_token: String, birthday: String, gender: Int, username: String, privateOn: Int, bio: String, completion: ((ServerResponse)->())?) {
         let rest = RestRouter.register(firstName: first_name, lastName: last_name, email: email, password: password, phone: phone, device_token: device_token, birthday: birthday, gender: gender, username: username, privateOn: privateOn, bio: bio)
         
         var request = URLRequest(url: rest.url)

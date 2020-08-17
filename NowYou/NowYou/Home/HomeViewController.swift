@@ -248,6 +248,7 @@ class HomeViewController: BaseViewController {
                 return
             }
         }
+        
         switch sender.state {
         case .began:
             /* Restrict pan movement

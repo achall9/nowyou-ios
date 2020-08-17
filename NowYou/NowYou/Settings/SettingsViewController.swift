@@ -21,6 +21,8 @@ class SettingsViewController: BaseViewController {
     
     @IBOutlet weak var vMale: NYView!
     @IBOutlet weak var vFemale: NYView!
+    @IBOutlet weak var vOther: NYView!
+    
     
     @IBOutlet weak var vUsername: NYView!
     
@@ -30,6 +32,8 @@ class SettingsViewController: BaseViewController {
     
     @IBOutlet weak var lblMale: UILabel!
     @IBOutlet weak var lblFemale: UILabel!
+    @IBOutlet weak var lblOther: UILabel!
+    
     
     @IBOutlet weak var txtFirstname: UITextField!
     @IBOutlet weak var txtLastname: UITextField!
@@ -46,7 +50,7 @@ class SettingsViewController: BaseViewController {
     var imagePicker = UIImagePickerController()
     var birthday: Date?
     
-    var isMale: Bool = true
+    var isMale: Int = 1
     
     var interactor: Interactor? = nil
     let transition = CATransition()
@@ -172,7 +176,7 @@ class SettingsViewController: BaseViewController {
         DispatchQueue.main.async {
             Utils.showSpinner()
         }
-        NetworkManager.shared.updateProfile(email: txtEmail.text!, firstName: txtFirstname.text!, lastName: txtLastname.text!, phone: UserManager.currentUser()?.phone ?? "", birthDay: (birthday != nil) ? dateFormatter.string(from: birthday!): "", photo: (imgProfile.image?.pngData())!, color: appColor, username: txtUsername.text!, gender: isMale ? 1 : 2, privateOn: switchPrivate.isOn ? 1 : 0, bio: txtBio.text) { (response) in
+        NetworkManager.shared.updateProfile(email: txtEmail.text!, firstName: txtFirstname.text!, lastName: txtLastname.text!, phone: UserManager.currentUser()?.phone ?? "", birthDay: (birthday != nil) ? dateFormatter.string(from: birthday!): "", photo: (imgProfile.image?.pngData())!, color: appColor, username: txtUsername.text!, gender: isMale, privateOn: switchPrivate.isOn ? 1 : 0, bio: txtBio.text) { (response) in
             DispatchQueue.main.async {
                 Utils.hideSpinner()
                 switch response {
@@ -213,7 +217,7 @@ class SettingsViewController: BaseViewController {
         setNYViewActive(nyView: vName, active: true, color: NYColors.NYGreen())
         setNYViewActive(nyView: vLastname, active: true, color: NYColors.NYOrange())
         setNYViewActive(nyView: vPhone, active: true, color: NYColors.NYBlue())
-        setSex(isMale: true)
+        setSex(sexType: 1)
         setNYViewActive(nyView: vUsername, active: true, color: NYColors.NYPurple())
         
         setNYViewActive(nyView: vYear, active: false, color: UIColor.clear)
@@ -266,12 +270,15 @@ class SettingsViewController: BaseViewController {
             self.setNYViewActive(nyView: self.vDay, active: true, color: UIColor(hexValue: 0xF0CF3F))
         }
         
-        if gender == 1 {
-            setSex(isMale: true)
-            isMale = true
-        } else {
-            setSex(isMale: false)
-            isMale = false
+        if gender == 1 { // male
+            setSex(sexType: 1)
+            isMale = 1
+        } else if gender == 2 { // femail
+            setSex(sexType: 2)
+            isMale = 2
+        } else { // other
+            setSex(sexType: 3)
+            isMale = 3
         }
     }
     
@@ -334,14 +341,20 @@ class SettingsViewController: BaseViewController {
     // MARK: - Choose Sex
     
     @IBAction func onMale(_ sender: Any) {
-        setSex(isMale: true)
-        isMale = true
+        setSex(sexType: 1)
+        isMale = 1
     }
     
     @IBAction func onFemale(_ sender: Any) {
-        setSex(isMale: false)
-        isMale = false
+        setSex(sexType: 2)
+        isMale = 2
     }
+    
+    @IBAction func onOther(_ sender: UIButton) {
+        setSex(sexType: 3)
+        isMale = 3
+    }
+    
     
     // MARK: - Private Function
     
@@ -375,14 +388,27 @@ class SettingsViewController: BaseViewController {
         }
     }
     
-    func setSex(isMale: Bool) {
-        if isMale {
+    func setSex(sexType: Int) {
+        initSexViews()
+        if sexType == 1 {
             setNYViewActive(nyView: vMale, active: true, color: NYColors.NYBlue())
             setNYViewActive(nyView: vFemale, active: false, color: UIColor.clear)
-        } else {
+            setNYViewActive(nyView: vOther, active: false, color: UIColor.clear)
+        } else if sexType == 2 {
             setNYViewActive(nyView: vMale, active: false, color: UIColor.clear)
             setNYViewActive(nyView: vFemale, active: true, color: NYColors.NYPink())
+            setNYViewActive(nyView: vOther, active: false, color: UIColor.clear)
+        } else if sexType == 3 {
+            setNYViewActive(nyView: vMale, active: false, color: UIColor.clear)
+            setNYViewActive(nyView: vFemale, active: false, color: UIColor.clear)
+            setNYViewActive(nyView: vOther, active: true, color: NYColors.NYGreen())
         }
+    }
+    
+    func initSexViews() {
+        setNYViewActive(nyView: vMale, active: false, color: UIColor.clear)
+        setNYViewActive(nyView: vFemale, active: false, color: UIColor.clear)
+        setNYViewActive(nyView: vOther, active: false, color: UIColor.clear)
     }
     
     

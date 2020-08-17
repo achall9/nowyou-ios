@@ -49,6 +49,7 @@ class API {
     static let DEVICE_TOKEN             = "/profile/updateToken"
     static let GET_NOTIFICATIONS        = "/user/notifications"
     static let GET_ALL_USER             = "/user/getallusers"
+    static let FORGOT_PWD               = "/user/forgot_password"
     // feed
     static let SHARE_POST               = "/feed/share_post"
     
@@ -154,6 +155,7 @@ class USER {
     static let FULL_NAME                = "full_name"
     static let PRIVATE_ON               = "privateOn"
     static let BIO                      = "bio"
+    
     static let FOLLOWERS_COUNT          = "followers_count"
     static let FOLLOWINGS_COUNT         = "followings_count"
     static let THIS_WEEK_FOllOWERS      = "this_week_followers"
@@ -228,6 +230,10 @@ class NOTIFICATION {
     static let APP_COLOR_UPDATED        = "app_color_updated"
     
     static let PLAY_SCREEN_OPENED       = "play_screen_opened"
+}
+
+class FBADS {
+    static let PLACEMENT_ID = "310323296837472_310327110170424"
 }
 
 let WRONG_PHONE_NUMBER       = "Please enter valid phone number."

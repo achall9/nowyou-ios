@@ -13,11 +13,11 @@ import FirebaseMessaging
 import Fabric
 import Crashlytics
 import UserNotifications
-import GoogleMobileAds
+//import GoogleMobileAds
 import AVFoundation
 import Stripe
 
-import Appodeal
+//import Appodeal
 import StackConsentManager
 
 @UIApplicationMain
@@ -30,13 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var fcmToken:String = ""
     
     private struct AppodealConstants {
-//        static let key: String =
-//        "778c89f8cf5994c499b6e48e372c6544a185251ed394c04b"
+        
         static let key: String =
                "f3f242a36e3c06d0259f439fa771da4f61c57abb6ccab5ba"
-        static let adTypes: AppodealAdType = [.interstitial, .rewardedVideo, .banner]
-        static let logLevel: APDLogLevel = .debug
-        static let testMode: Bool = true
+//        static let adTypes: AppodealAdType = [.interstitial, .rewardedVideo, .banner]
+//        static let logLevel: APDLogLevel = .debug
+//        static let testMode: Bool = true
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -44,9 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         Fabric.with([Crashlytics.self])
 
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        //GADMobileAds.sharedInstance().start(completionHandler: nil)
         // Override point for customization after application launch.
-        initializeAppodealSDK()
+        //initializeAppodealSDK()
 
         loadFramework()
         // Remote notifications
@@ -95,6 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 //--- Appodeal : start
     // MARK: Appodeal Initialization
+    /*
     private func initializeAppodealSDK() {
 
         Appodeal.setTestingEnabled(AppodealConstants.testMode)
@@ -108,20 +108,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             hasConsent: consent
         )
     }
+    */
     
     // MARK: Consent manager
     private func synchroniseConsent() {
         STKConsentManager.shared().synchronize(withAppKey: AppodealConstants.key) { error in
             error.map { print("Error while synchronising consent manager: \($0)")}
             guard STKConsentManager.shared().shouldShowConsentDialog == .true else {
-                self.initializeAppodealSDK()
+                //self.initializeAppodealSDK()
                 return
             }
 
             STKConsentManager.shared().loadConsentDialog { [unowned self] error in
                 error.map { print("Error while loading consent dialog: \($0)") }
                 guard let controller = self.window?.rootViewController, STKConsentManager.shared().isConsentDialogReady else {
-                    self.initializeAppodealSDK()
+                    //self.initializeAppodealSDK()
                     return
                 }
                 STKConsentManager.shared().showConsentDialog(fromRootViewController: controller,delegate: self)
@@ -304,6 +305,7 @@ extension AppDelegate: NotificationDelegate{
     }
 }
 
+
 extension Notification.Name {
     static let radioIsOnBroadcastingNotification = Notification.Name("RadioIsOnBroadcastingNotification")
     static let radioIsOnBroadcastingToFeedNotification =
@@ -314,10 +316,10 @@ extension AppDelegate: STKConsentManagerDisplayDelegate {
     func consentManagerWillShowDialog(_ consentManager: STKConsentManager) {}
     
     func consentManager(_ consentManager: STKConsentManager, didFailToPresent error: Error) {
-        initializeAppodealSDK()
+        //initializeAppodealSDK()
     }
     
     func consentManagerDidDismissDialog(_ consentManager: STKConsentManager) {
-        initializeAppodealSDK()
+        //initializeAppodealSDK()
     }
 }
