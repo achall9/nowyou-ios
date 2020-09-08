@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "RestRouter.body.getter:RestRouter.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "param">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #2 in ProfileViewController.loadTaggedPosts():ProfileViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "post.taggedUserId">
+            </PersistentString>
+            <PersistentString
+               value = "UserManager.currentUser()?.userID">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ChooseAccountVC.tableView(_:didSelectRowAt:):ChooseAccountVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user.token">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FacebookAdsCell.nativeAd(_:didFailWithError:):PlayViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #2 in PlayViewController.actionSharePost(_:):PlayViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "media.id!">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ProfileViewController.viewWillAppear(_:):ProfileViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UserManager.currentUser()">
+            </PersistentString>
+            <PersistentString
+               value = "lblUsername.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in ProfileViewController.userInfoUpdated(notification:):ProfileViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UserManager.currentUser()">
+            </PersistentString>
+            <PersistentString
+               value = "self.lblUsername.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

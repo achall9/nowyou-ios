@@ -11,22 +11,24 @@ target 'NowYou' do
   pod 'ActiveLabel'
   pod 'SwiftyJSON', '~> 4.0'
   pod 'ReachabilitySwift'
-  pod 'NVActivityIndicatorView'
+  pod 'NVActivityIndicatorView','~> 4.8.0'
   pod 'DatePickerDialog'
   pod 'SDWebImage', '~> 4.0'
   pod 'CRRefresh'
   pod 'LocalizedTimeAgo', '~> 1.1.0'
   pod 'SwiftCharts', '~> 0.6.5'
-  pod 'Firebase/Core'
-  pod 'Firebase/Database'
-  pod 'Firebase/Auth'
-  pod 'Firebase'
-  pod 'Firebase/Storage'
-  pod 'Firebase/Messaging'
+  
   pod 'XLPagerTabStrip', '~> 8.1'
   pod "SoundWave"
 
-
+  
+  pod 'Firebase'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
+  pod 'Firebase/Messaging'
+  
 
   pod 'ColorSlider', '~> 4.3'
   pod 'Fabric'
@@ -48,6 +50,33 @@ target 'NowYou' do
   pod 'StackConsentManager', '~> 1.0'
   pod 'CropViewController'
   pod 'Player'
+  
+  ### paypal sdk integration
+  pod 'Braintree'
 
+  
+  # These contains UIWebView in their sdks -- Remove them.
+  #pod 'Firebase/AdMob'
+  #pod 'APDAdColonyAdapter', '2.6.2.1'
+  #pod 'APDAmazonAdsAdapter', '2.6.2.1'
+  #pod 'APDAppLovinAdapter', '2.6.2.1'
+  #pod 'APDAppodealAdExchangeAdapter', '2.6.2.1'
+  #pod 'APDChartboostAdapter', '2.6.2.1'
+  #pod 'APDFacebookAudienceAdapter', '2.6.2.1'
+  #pod 'APDGoogleAdMobAdapter', '2.6.2.1'
+  #pod 'APDInMobiAdapter', '2.6.2.1'
+  #pod 'APDInnerActiveAdapter', '2.6.2.1'
+  #pod 'APDIronSourceAdapter', '2.6.2.1'
+  #pod 'APDMintegralAdapter', '2.6.2.1'
+  #pod 'APDMyTargetAdapter', '2.6.2.1'
+  #pod 'APDOguryAdapter', '2.6.2.1'
+  #pod 'APDOpenXAdapter', '2.6.2.1'
+  #pod 'APDPubnativeAdapter', '2.6.2.1'
+  #pod 'APDSmaatoAdapter', '2.6.2.1'
+  #pod 'APDStartAppAdapter', '2.6.2.1'
+  #pod 'APDTapjoyAdapter', '2.6.2.1'
+  #pod 'APDUnityAdapter', '2.6.2.1'
+  #pod 'APDVungleAdapter', '2.6.2.1'
+  #pod 'APDYandexAdapter', '2.6.2.1'
   
 end

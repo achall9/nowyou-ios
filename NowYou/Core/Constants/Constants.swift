@@ -27,9 +27,11 @@ class API {
     // auth
     static let REGISTER                 = "/auth/register"
     static let LOGIN                    = "/auth/login"
+    static let PASSWORD_RESET           = "/auth/requestPasswordReset"
     static let ACTIVATE                 = "/auth/activate"
     static let RESET_PWD                = "/auth/resetPassword"
-    
+    static let GET_ADDITIONAL_ACCOUNTS  = "/get_additional_accounts"
+   static let CREATE_ADDITIONAL_ACCOUNT = "/create_additional_account"
     // profile
     static let CHANGE_PWD               = "/profile/changePassword"
     static let USER_DETAILS             = "/profile/userDetails"
@@ -145,6 +147,7 @@ class API {
 
 class USER {
     static let ID                       = "id"
+    static let MAIN_USER_ID             = "main_user_id"
     static let FIRST_NAME               = "first_name"
     static let LAST_NAME                = "last_name"
     static let EMAIL                    = "email"
@@ -155,6 +158,7 @@ class USER {
     static let FULL_NAME                = "full_name"
     static let PRIVATE_ON               = "privateOn"
     static let BIO                      = "bio"
+    static let TOKEN                    = "token"
     
     static let TOTAL_AMOUNT             = "total_amount"
     
@@ -186,6 +190,8 @@ class USER {
 
 class MEDIA {
     static let ID                       = "id"
+    static let SHARED_PARENT_ID         = "shared_parent_id"
+    static let ORIGINAL_USER_ID         = "original_user_id"
     static let USER_ID                  = "user_id"
     static let TYPE                     = "type"
     static let PATH                     = "path"
@@ -235,7 +241,8 @@ class NOTIFICATION {
 }
 
 class FBADS {
-    static let PLACEMENT_ID = "310323296837472_310327110170424"
+    static let NATIVE_PLACEMENT_ID = "310323296837472_310327110170424"
+    static let BANNER_PLACEMENT_ID = "310323296837472_322663118936823"
 }
 
 let WRONG_PHONE_NUMBER       = "Please enter valid phone number."

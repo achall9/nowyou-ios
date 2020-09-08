@@ -20,10 +20,13 @@ enum RestRouter: RestAPIProtocol {
     case getAllUsers(pageNum: Int)
     // auth
     case login(email: String, password: String)
+    case passwordReset(email: String)
+    
     case register(firstName: String, lastName: String, email: String, password: String, phone: String, device_token: String, birthday: String, gender: Int, username: String, privateOn: Int, bio: String)
     case activate(code: String)
     case resetPassword(resetCode: String, password: String, confirmPwd: String)
-    
+    case getAdditionalAccounts(main_user_id: String)
+    case createAdditionalAccount(main_user_id: String, first_name: String, last_name: String, user_name: String, password: String, bio: String, photo: Data)
     // profile
     case changePassword(password: String, confirmPassword: String)
     case userDetails(userId: Int)
@@ -86,12 +89,18 @@ enum RestRouter: RestAPIProtocol {
         switch self {
         case .login:
             return URL(string: API.SERVER + API.LOGIN)!
+        case .passwordReset:
+            return URL(string: API.SERVER + API.PASSWORD_RESET)!
         case .register:
             return URL(string: API.SERVER + API.REGISTER)!
         case .activate(let code):
             return URL(string: API.SERVER + API.ACTIVATE + "?/code=\(code)")!
         case .resetPassword:
             return URL(string: API.SERVER + API.RESET_PWD)!
+        case .getAdditionalAccounts:
+            return URL(string: API.SERVER + API.GET_ADDITIONAL_ACCOUNTS)!
+        case .createAdditionalAccount:
+            return URL(string: API.SERVER + API.CREATE_ADDITIONAL_ACCOUNT)!
         case .changePassword:
             return URL(string: API.SERVER + API.CHANGE_PWD)!
         case .userDetails:
@@ -201,11 +210,18 @@ enum RestRouter: RestAPIProtocol {
         switch self {
         case .login:
             return "POST"
+        case .passwordReset:
+            return "POST"
+            
         case .register:
             return "POST"
         case .activate:
             return "GET"
         case .resetPassword:
+            return "POST"
+        case .getAdditionalAccounts:
+            return "POST"
+        case .createAdditionalAccount:
             return "POST"
         case .changePassword:
             return "POST"
@@ -322,12 +338,24 @@ enum RestRouter: RestAPIProtocol {
         switch self {
         case .login:
             return [:]
+        case .passwordReset:
+            return [:]
         case .register(let firstName, let lastName, let email, let password, let phone, let token, let birthday, let gender, let username, let privateOn, let bio):
             return ["first_name": firstName, "last_name": lastName, "email": email, "password": password, "c_password": password, "phone": phone, "device_token": token, "birthday": birthday, "gender": gender, "user_name": username, "privateOn": privateOn, "bio": bio]
         case .activate:
             return [:]
         case .resetPassword:
             return [:]
+        case .getAdditionalAccounts:
+            return [:]
+        case .createAdditionalAccount(let main_user_id, let first_name, let last_name, let user_name, let password, let bio, _):
+            return ["main_user_id": main_user_id,
+                    "first_name"  : first_name,
+                    "last_name"   : last_name,
+                    "user_name"   : user_name,
+                    "password"    : password,
+                    "bio"         : bio
+            ]
         case .changePassword:
             return [:]
         case .userDetails:
@@ -469,11 +497,24 @@ enum RestRouter: RestAPIProtocol {
             
             return nil
             
+        case .passwordReset(let email):
+            var data = Data()
+            
+            
+            let param = ["email": email]
+            do {
+                data = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
+                return data
+            } catch let error {
+            }
+            
+            return nil
+            
         case .register(let firstName, let lastName, let email, let password, let phone, let deviceToken, let birthday, let gender, let username, let privateOn, let bio):
             var data = Data()
             
             var token: String = ""
-            if let deviceToken = UserDefaults.standard.value(forKey: USER.DEVICE_TOKEN) as? String{
+            if let deviceToken = UserDefaults.standard.value(forKey: USER.DEVICE_TOKEN) as? String {
                 token = deviceToken
             }
             
@@ -499,7 +540,46 @@ enum RestRouter: RestAPIProtocol {
 
                 return nil
             }
-
+            
+            
+        case .getAdditionalAccounts(let main_user_id):
+            var data = Data()
+            let param = ["main_user_id": main_user_id]
+            /*
+            do {
+                data = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted)
+                return data
+            } catch let error {
+                return nil
+            }
+             */
+            for (key, value) in param {
+                data.append("--\(self.boundary)\r\n".data(using: .utf8)!)
+                data.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+                data.append("\(value)\r\n".data(using: .utf8)!)
+            }
+            return data
+        
+        case .createAdditionalAccount(_, _, _, _, _, _, let photo):
+            var data = Data()
+            for (key, value) in param {
+                data.append("--\(self.boundary)\r\n".data(using: .utf8)!)
+                data.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+                data.append("\(value)\r\n".data(using: .utf8)!)
+            }
+            
+            data.append("\r\n--\(self.boundary)\r\n".data(using: .utf8)!)
+            
+            // using as image name timestamp in UNIX format
+            let tempFileName = Int(Date().timeIntervalSince1970).description + ".png"
+            data.append("Content-Disposition: form-data; name=\"photo\"; filename=\"\(tempFileName)\"\r\n".data(using: .utf8)!)
+            
+            data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
+            data.append(photo)
+            data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+             
+            return data
+            
         case .changePassword(let password, let confirmPwd):
             var data = Data()
             let param = ["password": password,

@@ -10,11 +10,11 @@ import UIKit
 import NVActivityIndicatorView
 import Reachability
 
-class Utils {
+class Utils: NSObject {
     
 //    private let reachability = Reachability(hostname: "https://www.google.com")
     static let shared = Utils()
-//
+
 //    var isReachableNetwork: Bool {
 //        return reachability?.connection != .none
 //    }
@@ -74,16 +74,16 @@ class Utils {
     
     
     static func showSpinner() {
-        /*
-        let activityData = ActivityData(size: CGSize(width: 30, height: 30), message: nil, messageFont: nil, messageSpacing: 0, type: .ballClipRotate, color: .green, padding: nil, displayTimeThreshold: nil, minimumDisplayTime: nil, backgroundColor: nil, textColor: nil)
+        let activityData = ActivityData(size: CGSize(width: 30, height: 30), message: nil, messageFont: nil, messageSpacing: 0, type: .ballClipRotateMultiple, color: .white, padding: nil, displayTimeThreshold: nil, minimumDisplayTime: nil, backgroundColor: nil, textColor: nil)
         
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData, nil)
-         */
     }
 
     static func hideSpinner() {
-        //NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
+        NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
     }
+    
+    
     
     
     class func getFullPath(path: String) -> String {

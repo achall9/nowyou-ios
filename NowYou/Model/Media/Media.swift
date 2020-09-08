@@ -10,6 +10,8 @@ import UIKit
 
 class Media: NSObject {
     var id: Int?
+    var shared_parent_id: Int?
+    var original_user_id: Int?
     var userId: Int?
     var type: Int?
     var path: String?
@@ -46,15 +48,17 @@ class Media: NSObject {
         hash_tag    = json["hash_tag"] as? [String]
        taggedUserId = json["taggedUserId"] as? String
         
-        id          = json[MEDIA.ID] as? Int
-        userId      = json[MEDIA.USER_ID] as? Int
-        type        = json[MEDIA.TYPE] as? Int
-        path        = json[MEDIA.PATH] as? String
-        descStr     = json[MEDIA.DESCRIPTION] as? String
-        forever     = json[MEDIA.FOREVER] as? Bool ?? false
-        viewsCount  = json[MEDIA.VIEWS] as? Int
+        id                  = json[MEDIA.ID] as? Int
+        shared_parent_id    = json[MEDIA.SHARED_PARENT_ID] as? Int
+        original_user_id    = json[MEDIA.ORIGINAL_USER_ID] as? Int
+        userId              = json[MEDIA.USER_ID] as? Int
+        type                = json[MEDIA.TYPE] as? Int
+        path                = json[MEDIA.PATH] as? String
+        descStr             = json[MEDIA.DESCRIPTION] as? String
+        forever             = json[MEDIA.FOREVER] as? Bool ?? false
+        viewsCount          = json[MEDIA.VIEWS] as? Int
     
-        thumbnail   = json[MEDIA.THUMBNAIL] as? String
+        thumbnail           = json[MEDIA.THUMBNAIL] as? String
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

@@ -87,6 +87,7 @@ public final class PhotoEditorViewController: UIViewController {
     var imageRotated: Bool = false
     var imageViewToPan: UIImageView?
     var hashtag: String?
+    var taggedUserId: String = "0"
     var linkTextField: UITextField?
     var drawingIndex = [Int]()
     var attachedLinks = [String]()
@@ -96,6 +97,16 @@ public final class PhotoEditorViewController: UIViewController {
     var colorSlider: ColorSlider!
     var exportSession:AVAssetExportSession!
     var isPen: Bool = true
+    
+    
+    
+    var users = [User]()
+    var pageNum: Int = 1
+    var selected_user: User!
+    
+    
+    
+    
     //Register Custom font before we load XIB
     public override func loadView() {
         registerFont()
@@ -187,11 +198,18 @@ public final class PhotoEditorViewController: UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(taggedUserNotification(notification:)),
+                                               name: .taggedUserNotification, object: nil)
             
         configureCollectionView()
         bottomSheetVC = BottomSheetViewController(nibName: "BottomSheetViewController", bundle: Bundle(for: BottomSheetViewController.self))
-        
+        getAllUsers()
     }
+    
+    
+    
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
          NotificationCenter.default.post(name: .photoEditViewEnable, object: self)
@@ -396,7 +414,6 @@ public final class PhotoEditorViewController: UIViewController {
                 }
             }
         }
-        
     }
     
     
@@ -407,12 +424,89 @@ public final class PhotoEditorViewController: UIViewController {
     }
     
     
-    @IBAction func tagTapped(_ sender: UIButton) {
-        if self.btnTag.titleColor(for: .normal) == .red {
-            self.btnTag.setTitleColor(.white, for: .normal)
-        } else {
+    @objc func taggedUserNotification( notification: Notification){
+        let userInfo = notification.userInfo
+        let selected_user = userInfo!["selected_user"] as? User
+        self.taggedUserId = "\(selected_user?.userID ?? 0)"
+        
+        if self.btnTag.titleColor(for: .normal) == .white {
             self.btnTag.setTitleColor(.red, for: .normal)
         }
+        
+    }
+    
+    @IBAction func tagTapped(_ sender: UIButton) {
+        
+        let  dropDown = DropDown(frame: CGRect(x: 20, y: 50, width: UIScreen.main.bounds.width - 40, height: 200)) // set frame
+        dropDown.textColor = textColor
+        dropDown.arrowColor = .clear
+        
+        
+        // The list of array to display. Can be changed dynamically
+        dropDown.optionArray = self.users.map { "@" + $0.username }
+        
+        dropDown.textAlignment = .center
+        dropDown.font = UIFont(name: "Courier", size: 20)
+        dropDown.text = "Type/Select the name"
+        dropDown.becomeFirstResponder()
+        
+        // The the Closure returns Selected Index and String
+        dropDown.didSelect{(selectedText , index ,id) in
+            //self.valueLabel.text = "Selected String: \(selectedText) \n index: \(index)"
+            dropDown.text = selectedText
+            self.selected_user = self.users.filter{ "@" + $0.username == selectedText }.first
+            print("selected_user")
+        }
+        addGestures(view: dropDown)
+        addPanGuesture(view: dropDown)
+        
+        if frames.count > 1 {
+            let imgView = tempImageViews[selectedFrame]
+            imgView.addSubview(dropDown)
+        } else {
+            self.tempImageView.addSubview(dropDown)
+        }
+        framesView.isHidden = true
+    }
+    
+    
+    func getAllUsers() {
+        users.removeAll()
+        DispatchQueue.main.async {
+            Utils.showSpinner()
+        }
+        
+        NetworkManager.shared.getAllUsers(pageNum: pageNum) { (response) in
+                
+            DispatchQueue.main.async {
+                Utils.hideSpinner()
+                switch response {
+                case .error(let error):
+                    print (error.localizedDescription)
+                case .success(let data):
+                    do {
+                        let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+
+                        print (jsonRes)
+                        if let json = jsonRes as? [[String: Any]]/*, let usersData = json["data"] as? [[String: Any]]*/ {
+                            for user in json {
+                                if let userData = user["user"] as? [String: Any] {
+                                    let userObj = User(json: userData)
+                                    
+                                    self.users.append(userObj)
+                                }
+                            }
+                        }
+                    } catch {
+                        
+                    }
+                }// End switch response
+                DispatchQueue.main.async {
+                    Utils.hideSpinner()
+                }
+            }// End DispatchQueue.main.async {
+        }
+        
     }
     
     
@@ -477,7 +571,20 @@ public final class PhotoEditorViewController: UIViewController {
        } else {
            // Fallback on earlier versions
        }
+        
+        if selected_user != nil {
+            
+            self.taggedUserId = "\(selected_user?.userID ?? 0)"
+            
+            if self.btnTag.titleColor(for: .normal) == .white {
+                self.btnTag.setTitleColor(.red, for: .normal)
+            }
+            
+            clearButtonTapped(UIButton())
+        }
+        
     }
+    
     @IBAction func cancelButtonTapped(_ sender: Any) {
         photoEditorDelegate?.editorCanceled()
         player?.pause()
@@ -533,7 +640,7 @@ public final class PhotoEditorViewController: UIViewController {
         textView.layer.shadowOpacity = 0.2
         textView.layer.shadowRadius = 1.0
         textView.layer.backgroundColor = UIColor.clear.cgColor
-//        textView.translatesAutoresizingMaskIntoConstraints = true
+        //textView.translatesAutoresizingMaskIntoConstraints = true
         textView.autocorrectionType = .no
         textView.isScrollEnabled = false
         textView.delegate = self
@@ -1004,12 +1111,8 @@ public final class PhotoEditorViewController: UIViewController {
   
         print ("continue")
         player?.pause()
-        var taggedUserId = ""
-        if self.btnTag.titleColor(for: .normal) == .red {
-            taggedUserId = "@"
-        }
         
-        photoEditorDelegate?.imageEdited(image: canvasView!.asImage(), hashtag: self.hashtag, link: attachedLinks[0], linkRect: attachedLinkPos[0], angle: attachedLinkPosAngle[0], taggedUserId: [taggedUserId], sender: self)
+        photoEditorDelegate?.imageEdited(image: canvasView!.asImage(), hashtag: self.hashtag, link: attachedLinks[0], linkRect: attachedLinkPos[0], angle: attachedLinkPosAngle[0], taggedUserId: [self.taggedUserId], sender: self)
     }
     
     func saveVideo(videoURLs: [URL]) {
@@ -1180,13 +1283,9 @@ public final class PhotoEditorViewController: UIViewController {
             }
         })
         
-        var taggedUserId = ""
-        if self.btnTag.titleColor(for: .normal) == .red {
-            taggedUserId = "@"
-        }
-
+        
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(self.frames.count * 20)){
-            self.photoEditorDelegate?.videoEdited(videoUrls: self.finalFrames, hashtag: self.hashtag , link: self.attachedLinks, linkRect: self.attachedLinkPos, angle: self.attachedLinkPosAngle, taggedUserId: [taggedUserId], sender: self)
+            self.photoEditorDelegate?.videoEdited(videoUrls: self.finalFrames, hashtag: self.hashtag , link: self.attachedLinks, linkRect: self.attachedLinkPos, angle: self.attachedLinkPosAngle, taggedUserId: [self.taggedUserId], sender: self)
             
             Utils.hideSpinner()
 //            photoEditorDelegate?.imageEdited(image: canvasView!.asImage(), hashtag: self.hashtag, link: attachedLinks[0], linkRect: attachedLinkPos[0], angle: attachedLinkPosAngle[0], sender: self)

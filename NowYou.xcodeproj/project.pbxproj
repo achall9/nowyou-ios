@@ -224,6 +224,11 @@
 		82F4E89724874FD900C4CAC5 /* CommentFirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F4E89624874FD800C4CAC5 /* CommentFirebaseManager.swift */; };
 		82F628D423F6C1E600964445 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F628D323F6C1E600964445 /* Utilities.swift */; };
 		82F9055924752F9E00D5457C /* BlockedUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F9055824752F9E00D5457C /* BlockedUsersViewController.swift */; };
+		D621F17B2501514800BA81DE /* UserListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621F17A2501514800BA81DE /* UserListVC.swift */; };
+		D621F181250298DB00BA81DE /* ChooseAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621F180250298DB00BA81DE /* ChooseAccountVC.swift */; };
+		D621F1842502CA7400BA81DE /* iOSDropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621F1832502CA7400BA81DE /* iOSDropDown.swift */; };
+		D621F18925034D8E00BA81DE /* NY_GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621F18825034D8E00BA81DE /* NY_GradientView.swift */; };
+		D621F18B25054B2500BA81DE /* AddAdditionalAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621F18A25054B2500BA81DE /* AddAdditionalAccountVC.swift */; };
 		D64909A124C0528E00EE9AC7 /* KVVideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */; };
 		D64909A324C0542E00EE9AC7 /* silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D64909A224C0542E00EE9AC7 /* silence.mp3 */; };
 		D673C4C524EA06F000F08335 /* FacebookNativeAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */; };
@@ -523,6 +528,11 @@
 		82F628D323F6C1E600964445 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		82F9055824752F9E00D5457C /* BlockedUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedUsersViewController.swift; sourceTree = "<group>"; };
 		86FC629F0870F6E91FDB9E81 /* Pods_NowYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NowYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D621F17A2501514800BA81DE /* UserListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListVC.swift; sourceTree = "<group>"; };
+		D621F180250298DB00BA81DE /* ChooseAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseAccountVC.swift; sourceTree = "<group>"; };
+		D621F1832502CA7400BA81DE /* iOSDropDown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSDropDown.swift; sourceTree = "<group>"; };
+		D621F18825034D8E00BA81DE /* NY_GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NY_GradientView.swift; sourceTree = "<group>"; };
+		D621F18A25054B2500BA81DE /* AddAdditionalAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdditionalAccountVC.swift; sourceTree = "<group>"; };
 		D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVVideoManager.swift; sourceTree = "<group>"; };
 		D64909A224C0542E00EE9AC7 /* silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = silence.mp3; sourceTree = "<group>"; };
 		D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookNativeAdsVC.swift; sourceTree = "<group>"; };
@@ -640,6 +650,8 @@
 		1813188621FF16F30095C1CA /* UIExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				D621F18525034D5200BA81DE /* GradientView */,
+				D621F1822502CA6800BA81DE /* DropDown */,
 				18131BB621FF17080095C1CA /* ImageExtension */,
 				1813188721FF16F30095C1CA /* UIColor+Extension.swift */,
 				1813188821FF16F30095C1CA /* UILabel+Extension.swift */,
@@ -708,6 +720,8 @@
 				18ADBF5422608E200099F6EC /* ContactViewController.swift */,
 				183662E9226C6DC300189E0C /* ColorPickerViewController.swift */,
 				82F9055824752F9E00D5457C /* BlockedUsersViewController.swift */,
+				D621F180250298DB00BA81DE /* ChooseAccountVC.swift */,
+				D621F18A25054B2500BA81DE /* AddAdditionalAccountVC.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -777,6 +791,7 @@
 				18B364C422017AB000484D1D /* LinkAttachViewController.swift */,
 				18481C1F221BDADE0061D2AB /* EmojiCollectionHeaderView.swift */,
 				18481C20221BDADE0061D2AB /* EmojiCollectionHeaderView.xib */,
+				D621F17A2501514800BA81DE /* UserListVC.swift */,
 			);
 			path = "Photo Video Edit";
 			sourceTree = "<group>";
@@ -1304,6 +1319,22 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D621F1822502CA6800BA81DE /* DropDown */ = {
+			isa = PBXGroup;
+			children = (
+				D621F1832502CA7400BA81DE /* iOSDropDown.swift */,
+			);
+			path = DropDown;
+			sourceTree = "<group>";
+		};
+		D621F18525034D5200BA81DE /* GradientView */ = {
+			isa = PBXGroup;
+			children = (
+				D621F18825034D8E00BA81DE /* NY_GradientView.swift */,
+			);
+			path = GradientView;
+			sourceTree = "<group>";
+		};
 		D6E1BA6224E5EDA8007668D0 /* FBFrameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1685,6 +1716,7 @@
 				82B193F524852F7C00A218D9 /* Search.swift in Sources */,
 				8204D284240A9EAD00266EED /* StripeBank.swift in Sources */,
 				18131BE321FF17090095C1CA /* NYView.swift in Sources */,
+				D621F18B25054B2500BA81DE /* AddAdditionalAccountVC.swift in Sources */,
 				824FFCC823D9E7DA0032A3AE /* FollowViewController.swift in Sources */,
 				82011C9023EB952900EC0BFB /* AllRaioStationViewController.swift in Sources */,
 				82F9055924752F9E00D5457C /* BlockedUsersViewController.swift in Sources */,
@@ -1710,6 +1742,7 @@
 				18131E2B21FF170E0095C1CA /* CrossFadeAttributesAnimator.swift in Sources */,
 				18131E3121FF170E0095C1CA /* PageAttributesAnimator.swift in Sources */,
 				18131E2721FF170E0095C1CA /* UIImage+FixOrientation.swift in Sources */,
+				D621F1842502CA7400BA81DE /* iOSDropDown.swift in Sources */,
 				18131BE221FF17090095C1CA /* NYFonts.swift in Sources */,
 				18131C0921FF17090095C1CA /* PlayViewController.swift in Sources */,
 				827C76182494106F00A52EBE /* StringExtension.swift in Sources */,
@@ -1789,6 +1822,7 @@
 				828A778B2408E6B500E401F4 /* StripeManager.swift in Sources */,
 				18CC506222132F6300C84EA3 /* SoundWave+Helpers.swift in Sources */,
 				18131BDF21FF17090095C1CA /* PHAsset+Extension.swift in Sources */,
+				D621F17B2501514800BA81DE /* UserListVC.swift in Sources */,
 				8204D27C2409429F00266EED /* StripeCard.swift in Sources */,
 				829B8FC1240B039500F0FE99 /* StripeBaseViewController.swift in Sources */,
 				18131BEC21FF17090095C1CA /* BottomSheetViewController.swift in Sources */,
@@ -1838,6 +1872,7 @@
 				18B364C522017AB000484D1D /* LinkAttachViewController.swift in Sources */,
 				82011C9223EB953E00EC0BFB /* AllCategoryViewController.swift in Sources */,
 				82377C9323CFB9B9008F41EF /* Audios.swift in Sources */,
+				D621F18925034D8E00BA81DE /* NY_GradientView.swift in Sources */,
 				18131E2121FF170E0095C1CA /* User.swift in Sources */,
 				18131E0721FF170E0095C1CA /* SubRadioViewController.swift in Sources */,
 				18131E2E21FF170E0095C1CA /* UIView+Anchor.swift in Sources */,
@@ -1851,6 +1886,7 @@
 				18131D0D21FF170B0095C1CA /* AudioPlay.m in Sources */,
 				1813186721FF14650095C1CA /* AppDelegate.swift in Sources */,
 				1890CAA8220634C6008ED8A1 /* ExtraMedia.swift in Sources */,
+				D621F181250298DB00BA81DE /* ChooseAccountVC.swift in Sources */,
 				18131E1B21FF170E0095C1CA /* RestApiProtocol.swift in Sources */,
 				18131E1C21FF170E0095C1CA /* RestRouter.swift in Sources */,
 				829B8FB4240AEC5D00F0FE99 /* AddBankViewController.swift in Sources */,
@@ -2029,7 +2065,7 @@
 				CODE_SIGN_ENTITLEMENTS = NowYou/NowYou.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 14;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = U55S7N6YRF;
 				ENABLE_BITCODE = NO;
@@ -2072,7 +2108,7 @@
 				CODE_SIGN_ENTITLEMENTS = NowYou/NowYou.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = U55S7N6YRF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

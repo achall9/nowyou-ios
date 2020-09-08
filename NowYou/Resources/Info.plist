@@ -26,6 +26,16 @@
 				<string>com.googleusercontent.apps.781097836951-ogdqoe0vqdmif2hosdi016ao6pgui2bg</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.eduard.NowYou.toplev</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.eduard.NowYou.toplev.payments</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>

@@ -133,15 +133,18 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
+    
     func initUI() {
-        
         self.switchTerm.setOn(false, animated: true)
         self.switchPrivate.setOn(false, animated: true)
         
         setNYViewActive(nyView: vName, active: false, color: UIColor.clear)
         setNYViewActive(nyView: vLastname, active: false, color: UIColor.clear)
         setNYViewActive(nyView: vPhone, active: false, color: UIColor.clear)
+        
         setNYViewActive(nyView: vFemale, active: false, color: UIColor.clear)
+        setNYViewActive(nyView: vOther, active: false, color: UIColor.clear)
+        
         setNYViewActive(nyView: vUsername, active: false, color: UIColor.clear)
         
         setNYViewActive(nyView: vYear, active: false, color: UIColor.clear)

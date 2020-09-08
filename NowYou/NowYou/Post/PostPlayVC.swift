@@ -14,6 +14,7 @@ import AnimatedCollectionViewLayout
 import Player
 import CRRefresh
 import SwiftyJSON
+
 class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -69,6 +70,8 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
     
     var longPress = false
     
+    var original_user_id : Int? = 0
+    var sharer_id : Int? = 0
    
     // MARK: object lifecycle
     deinit {
@@ -360,6 +363,52 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
     }
     */
     
+    @IBAction func actionSharePost(_ sender: UIButton) {
+        let refreshAlert = UIAlertController(title: "Share", message: "Do you want to continue?", preferredStyle: UIAlertController.Style.alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+              print("Handle Cancel Logic here")
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+            
+            print("clicked share button")
+            let media = self.medias[self.currentIndex]
+            
+             
+             DispatchQueue.main.async {
+                 Utils.showSpinner()
+             }
+             NetworkManager.shared.sharePost(postId: media.id!) { (response) in
+                 DispatchQueue.main.async {
+                     Utils.hideSpinner()
+                     
+                     switch response {
+                         case .error(let error):
+                             self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                         case .success(let data):
+                             do {
+                                 let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                 if jsonRes as? Int == 1 {
+                                     self.present(Alert.alertWithTextInfo(errorText: "Shared the post!"), animated: true, completion: nil)
+                                     //self.getAllViralData()
+                                 } else {
+                                     self.present(Alert.alertWithTextInfo(errorText: "Please try again!"), animated: true, completion: nil)
+                                     return
+                                 }
+                                 
+                             } catch {}
+                     }
+                     
+                 }
+             }
+            
+        }))
+
+        present(refreshAlert, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func onReport(_ sender: Any){
         let reportVC = ReportVC(nibName: String(describing: ReportVC.self), bundle: nil)
         reportVC.postId = medias[mIndexpathRow].id
@@ -387,9 +436,77 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
         performSegue(withIdentifier: "toComments1", sender: nil)
     }
     
+    
+    @IBAction func gotoSharerProfile(_ sender: UIButton) {
+        
+        print("other profile")
+        //guard let userID = medias[mIndexpathRow].userId else { return }
+        guard let userID = self.sharer_id else { return }
+        timer?.invalidate()
+        if self.videoPlayer.playbackState == .playing {
+            self.videoPlayer.pause()
+        }
+        DispatchQueue.main.async {
+            Utils.showSpinner()
+        }
+        NetworkManager.shared.getUserDetails(userId: userID) { (response) in
+            DispatchQueue.main.async {
+                Utils.hideSpinner()
+                switch response {
+                case .error(let error):
+                    self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                case .success(let data):
+                    do {
+                        let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                        if let json = jsonRes as? [String: Any] {
+                            let isFollowing = json["is_following"] as? Bool ?? false
+                            if let userJson = json["user"] as? [String: Any] {
+                               let user = User(json: userJson)
+                                
+                                var postsSeenIds = [Int]()
+                                if let postsSeen = userJson["posts_seen"] as? [[String: Any]] {
+                                    for post in postsSeen {
+                                        let post = Media(json: post)
+                                        postsSeenIds.append(post.id!)
+                                    }
+                                }
+                                var posts = [Media]()
+                                if let postsJson = userJson["posts"] as? [[String: Any]] {
+                                    for post in postsJson {
+                                        let p = Media(json: post)
+                                        if postsSeenIds.contains(p.id!) {
+                                            p.isSeen = true
+                                        }
+                                        posts.append(p)
+                                    }
+                                }
+                                let searchUser = SearchUser(searchUser: user, following: isFollowing, posts: posts)
+                                
+                               let profile = UIViewController.viewControllerWith("OtherProfileViewController") as! OtherProfileViewController
+                               profile.blockerTap = false
+                               profile.user = searchUser
+                               profile.transitioningDelegate = self
+                               profile.interactor = self.interactor!
+                               if searchUser.user?.userID == UserManager.currentUser()?.userID {
+                                    profile.isSelf = true
+                               } else {
+                                    profile.isSelf = false
+                               }
+                               self.transition(to: profile)
+                            }
+                        }
+                    } catch {
+                    }
+                }//--end  switch response
+            }//--end  DispatchQueue.main.async
+        }//--end
+        
+    }
+    
     @IBAction func gotoProfile(_ sender: Any) {
         print("other profile")
-        guard let userID = medias[currentIndex].userId else{return}
+        //guard let userID = medias[currentIndex].userId else{return}
+        guard let userID = self.original_user_id else{return}
         timer?.invalidate()
         DispatchQueue.main.async {
             Utils.showSpinner()
@@ -547,16 +664,67 @@ extension PostPlayVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
                 cell.btnLike.isSelected = false
             }
             cell.lblViewsCount.text = "\(media.views)" + " Views"
+        
+        
+        
+        self.original_user_id = media.original_user_id  ?? 0
+        self.sharer_id        = media.userId            ?? 0
+        
+        
+        
+        // Original poster
+            if let original_user_id = media.original_user_id, original_user_id != media.userId {
+                // load user info
+                NetworkManager.shared.getUserDetails(userId: original_user_id) { (response) in
+                    switch response {
+                    case .error(let error):
+                        DispatchQueue.main.async {
+                            self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                        }
+                    case .success(let data):
+                        do {
+                            let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                            if let json = jsonRes as? [String: Any] {
+                                if let userJson = json["user"] as? [String: Any] {
+                                    let user = User(json: userJson)
+                                    // set the user name
+                                    DispatchQueue.main.async {
+                                        
+                                        let formatter = DateFormatter()
+                                        formatter.timeZone = TimeZone.current
+                                        formatter.dateFormat = "MMM dd, hh:mm a"
+                                        cell.lblTimestamp.text = user.username!// + ", " + formatter.string(from: media.created)
+                                        print(formatter.timeZone ?? "")
+                                        cell.imgProfile.sd_setImage(with: URL(string: Utils.getFullPath(path: user.userPhoto ?? "")), placeholderImage: PLACEHOLDER_IMG, options: .lowPriority, completed: nil)
+                                        cell.imgProfile.setCircular()
+                                        
+                                        let media_username = media.username ?? ""
+                                        cell.lblSharer.text = "Shared by: " + media_username
+                                        cell.imgSharer.sd_setImage(with: URL(string: Utils.getFullPath(path: media.userPhoto ?? "")), placeholderImage: PLACEHOLDER_IMG, options: .lowPriority, completed: nil)
+                                        cell.imgSharer.setCircular()
+                                    }
+                                    
+                                }
+                            }
+                        } catch {
+                            
+                        }
+                    }
+                }
+                
+            } else {
+                // TimeStamp
+                        let formatter = DateFormatter()
+                        formatter.timeZone = TimeZone.current
+                        formatter.dateFormat = "MMM dd, hh:mm a"
+                        cell.lblTimestamp.text = media.username! + ", " + formatter.string(from: media.created)
+                        print(formatter.timeZone ?? "")
+                        cell.imgProfile.sd_setImage(with: URL(string: Utils.getFullPath(path: media.userPhoto ?? "")), placeholderImage: PLACEHOLDER_IMG, options: .lowPriority, completed: nil)
+                        cell.imgProfile.setCircular()
+                //--End TimeStamp
+            }
             
-            // TimeStamp
-            let formatter = DateFormatter()
-            formatter.timeZone = TimeZone.current
-            formatter.dateFormat = "MMM dd, hh:mm a"
-            cell.lblTimestamp.text = media.username! + ", " + formatter.string(from: media.created)
-            print(formatter.timeZone ?? "")
-            cell.imgProfile.sd_setImage(with: URL(string: Utils.getFullPath(path: media.userPhoto ?? "")), placeholderImage: PLACEHOLDER_IMG, options: .lowPriority, completed: nil)
-            cell.imgProfile.setCircular()
-    //--End TimeStamp
+        
 
             print ("current cell index = \(indexPath.row)")
             print(media)

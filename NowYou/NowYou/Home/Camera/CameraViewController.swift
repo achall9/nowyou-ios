@@ -687,7 +687,7 @@ extension CameraViewController: PhotoEditorDelegate {
         DispatchQueue.main.async {
             Utils.showSpinner()
         }
-        NetworkManager.shared.postMedia(hash_tag: ["128"], description: "test", forever: true, isVideo: true, thumbnail: thumbnail,  media: data!, link: link[0], user_id: (UserManager.currentUser()?.userID)!, screen_w: Int(screenWidth), screen_h: Int(screenHeight), x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height, angle: angle[0], scale: 0, taggedUserId: ["128"]) { (response) in
+        NetworkManager.shared.postMedia(hash_tag: tags, description: description, forever: true, isVideo: true, thumbnail: thumbnail,  media: data!, link: link[0], user_id: (UserManager.currentUser()?.userID)!, screen_w: Int(screenWidth), screen_h: Int(screenHeight), x: rect.origin.x, y: rect.origin.y, width: rect.size.width, height: rect.size.height, angle: angle[0], scale: 0, taggedUserId: ["128"]) { (response) in
             
             DispatchQueue.main.async{
                 Utils.hideSpinner()
