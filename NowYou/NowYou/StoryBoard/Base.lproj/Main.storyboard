@@ -9870,11 +9870,7 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q00-33-e6s">
-<<<<<<< HEAD
                                                             <rect key="frame" x="365.5" y="278" width="37.5" height="17"/>
-=======
-                                                            <rect key="frame" x="365.5" y="292" width="37.5" height="17"/>
->>>>>>> e732668ddf4394b392665dfa42debc03059b1526
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
