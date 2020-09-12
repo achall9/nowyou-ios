@@ -36,8 +36,13 @@ class PopularRadioStationViewController: BaseTableViewController, IndicatorInfoP
     }
 //    NotificationCenter.default.addObserver(self, selector: #selector(getRadioStationIdOnBroadCasting(notification:)), name: .radioIsOnBroadcastingNotification, object: nil)
     @objc func getRadioStationIdOnBroadCasting( notification: Notification){
-        let userInfo = notification.userInfo
-        radioStationIdOnBroadCasting = userInfo!["radioStationId"] as! Int
+        guard let userInfo = notification.userInfo else{
+            return
+        }
+        
+        if let id =  Int(userInfo["radioStationId"] as! String) {
+            radioStationIdOnBroadCasting = id
+        }
     }
     func showOnBoarding(){
         

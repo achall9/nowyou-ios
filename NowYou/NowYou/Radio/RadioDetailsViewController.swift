@@ -14,6 +14,7 @@ import AgoraRtcKit
 
 class RadioDetailsViewController: BaseViewController, UIViewControllerTransitioningDelegate {
 
+    @IBOutlet weak var viewVideoContainer: UIView!
     @IBOutlet weak var btnBack: NSLayoutConstraint!
     @IBOutlet weak var vLogo: UIView!
     @IBOutlet weak var btnProfile: UIButton!
@@ -39,7 +40,7 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
     var comments = [RadioComment]()
     //----comment
     var tempComments = [RadioComment]()
-    var radioRef: DatabaseReference!
+    var radioRef: DatabaseReference?
 
     var radio : RadioStation!
     var isPlaying: Bool = true
@@ -82,6 +83,15 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
         joinRadioStation()
 
     }
+    func setupVideo() {
+            
+            agoraKit.enableVideo()
+            let configuration = AgoraVideoEncoderConfiguration(size: AgoraVideoDimension640x360, frameRate: .fps15, bitrate: AgoraVideoBitrateStandard, orientationMode: .adaptative)
+    //        agoraKit.setVideoEncoderConfiguration(AgoraVideoEncoderConfiguration(size: AgoraVideoDimension640x360, frameRate: .fps15, bitrate: AgoraVideoBitrateStandard, orientationMode: .adaptative))
+            agoraKit.setVideoEncoderConfiguration(configuration)
+     
+            
+        }
     func addRigthSwipe(){
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
         rightSwipe.direction = .right
@@ -213,8 +223,8 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
           let param: NSDictionary = [
                      "userID":currentUser.userID ?? -1
                  ]
-          radioRef.child("\(currentUser.userID ?? -1)").setValue(param)
-          radioRef.observe(.childAdded, with: { (snapshot) in
+          radioRef?.child("\(currentUser.userID ?? -1)").setValue(param)
+          radioRef?.observe(.childAdded, with: { (snapshot) in
               self.getViewers()
           })
       }
@@ -441,7 +451,11 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
     @IBAction func onBack(_ sender: Any) {
         
         leaveChannel()
-        navigationController?.popViewController(animated: true)
+        if let nav = self.navigationController{
+            nav.popViewController(animated: true)
+        }else{
+            self.dismiss(animated: true)
+        }
     }
     
     @objc func playerDidFinishPlaying(sender: Notification) {
@@ -482,7 +496,7 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
     private func loadComments(){
         // load comments
         comments.removeAll()
-        radioRef.observe(.childAdded, with: { (snapshot) in
+        radioRef?.observe(.childAdded, with: { (snapshot) in
             if snapshot.exists() {
                 if let value = snapshot.value as? [String: Any]{
                     let key = snapshot.key
@@ -512,7 +526,7 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
     
     private func updateComment(){
         // load comments
-        self.radioRef.observe(.childChanged, with: { (snapshot) in
+        self.radioRef?.observe(.childChanged, with: { (snapshot) in
             if snapshot.exists() {
                 if let value = snapshot.value as? [String: Any]{
                     let key = snapshot.key
@@ -539,7 +553,7 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
     private func updateDeletedComment(){
             // load comments
         self.comments.removeAll()
-        radioRef.observe(.childRemoved, with: { (snapshot) in
+        radioRef?.observe(.childRemoved, with: { (snapshot) in
             if snapshot.exists() {
                 if let value = snapshot.value as? [String: Any]{
                     let key = snapshot.key
@@ -663,6 +677,7 @@ private extension RadioDetailsViewController {
             agoraKit.muteLocalAudioStream(false)
             agoraKit.setEnableSpeakerphone(false)
         }
+        setupVideo()
     }
     
     func leaveChannel() {
@@ -695,6 +710,7 @@ extension RadioDetailsViewController: AgoraRtcEngineDelegate {
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOfflineOfUid uid: UInt, reason: AgoraUserOfflineReason) {
         append(log: "Did offline of uid: \(uid), reason: \(reason.rawValue)")
+        viewVideoContainer.isHidden = true
     }
     
     func rtcEngine(_ engine: AgoraRtcEngineKit, audioQualityOfUid uid: UInt, quality: AgoraNetworkQuality, delay: UInt, lost: UInt) {
@@ -708,6 +724,20 @@ extension RadioDetailsViewController: AgoraRtcEngineDelegate {
     // warning code
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurWarning warningCode: AgoraWarningCode) {
         print("warning code: \(warningCode.description)")
+    }
+    func rtcEngine(_ engine: AgoraRtcEngineKit, firstRemoteVideoDecodedOfUid uid: UInt, size: CGSize, elapsed: Int) {
+           
+           viewVideoContainer.tag = Int(uid)
+           viewVideoContainer.backgroundColor = UIColor.purple
+    
+           let videoCanvas = AgoraRtcVideoCanvas()
+           videoCanvas.uid = uid
+           videoCanvas.view = viewVideoContainer
+           videoCanvas.renderMode = .hidden
+           agoraKit.setupRemoteVideo(videoCanvas)
+       }
+     func rtcEngine(_ engine: AgoraRtcEngineKit, didVideoEnabled enabled: Bool, byUid uid: UInt) {
+        viewVideoContainer.isHidden = !enabled
     }
     
 }
@@ -760,24 +790,24 @@ extension RadioDetailsViewController{
     }
     
     func sendLikeComment(_ cell: MessageTableViewCell, _ comment : RadioComment){
-        radioRef.child("\(comment.commentId)").updateChildValues(["like":1])
+        radioRef?.child("\(comment.commentId)").updateChildValues(["like":1])
     }
     func sendUnlikeComment(_ cell: MessageTableViewCell, _ comment : RadioComment){
-        radioRef.child("\(comment.commentId)").updateChildValues(["like":0])
+        radioRef?.child("\(comment.commentId)").updateChildValues(["like":0])
     }
     func sendCommentInComment(_ cell: MessageTableViewCell, _ comment : RadioComment){
         let user = UserManager.currentUser()!
         let data : [String: Any] = ["comment": textView.text ?? "", "username": user.username ?? "", "photo": user.userPhoto!, "timestamp": Date().timeIntervalSince1970, "userId": user.userID ?? "", "parentId": "\(comment.commentId)", "like": 0,"quotedeComment" : "\(comment.comment)"]
-        radioRef.childByAutoId().setValue(data)
+        radioRef?.childByAutoId().setValue(data)
         textView.text = ""
     }
     func sendDeleteComment(_ cell: MessageTableViewCell, _ comment : RadioComment){
-        radioRef.child("\(comment.commentId)").removeValue()
+        radioRef?.child("\(comment.commentId)").removeValue()
     }
     func sendComment(){
         let user = UserManager.currentUser()!
         let data : [String: Any] = ["comment": textView.text ?? "", "username": user.username ?? "", "photo": user.userPhoto!, "timestamp": Date().timeIntervalSince1970, "userId": user.userID ?? "", "parentId": "", "like": 0,"quotedeComment" : ""]
-        radioRef.childByAutoId().setValue(data)
+        radioRef?.childByAutoId().setValue(data)
         textView.text = ""
     }
 }

@@ -13,6 +13,7 @@ import AnimatedCollectionViewLayout
 import Player
 import CRRefresh
 import SwiftyJSON
+import FBAudienceNetwork
 //import GoogleMobileAds
 
 class PlayViewController: EmbeddedViewController {
@@ -23,6 +24,10 @@ class PlayViewController: EmbeddedViewController {
     @IBOutlet weak var feedIntroIV: UIImageView!
     @IBOutlet weak var btnCloseTutor: UIButton!
 
+    @IBOutlet weak var stackViewForButtons: UIStackView!
+    
+    
+    
     var videoPlayer:Player = Player()
     var playerUrls = [URL]()
     
@@ -102,6 +107,11 @@ class PlayViewController: EmbeddedViewController {
     var tutorboardShown: Bool = false
     let pageLimit = 10
     var longPress = false
+    
+    var bannerAd: FBAdView!
+    
+    var original_user_id : Int? = 0
+    var sharer_id : Int? = 0
     //-------------------
     // MARK: object lifecycle
     deinit {
@@ -127,6 +137,7 @@ class PlayViewController: EmbeddedViewController {
         listenVolumeButton()
         initVideoPlayer()
         initTabs()
+        initBannerAds()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -168,6 +179,22 @@ class PlayViewController: EmbeddedViewController {
         }
         
        }
+    
+    func initBannerAds() {
+        /*
+        self.adView = [[FBAdView alloc] initWithPlacementID:@"YOUR_PLACEMENT_ID"
+                                                     adSize:kFBAdSizeHeight250Rectangle
+                                         rootViewController:self];
+        self.adView.frame = CGRectMake(0, 0, 320, 250);
+        self.adView.delegate = self;
+        [self.adView loadAd];
+         */
+        self.bannerAd = FBAdView.init(placementID: FBADS.BANNER_PLACEMENT_ID, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        self.bannerAd.frame = CGRect.init(x: 0, y: self.view.bounds.height - 80, width: self.view.bounds.width, height: 50)
+        self.bannerAd.delegate = self
+        self.bannerAd.loadAd()
+    }
+    
        @objc func openTutor(notification: Notification){
            feedIntroIV.alpha = 1.0
            btnCloseTutor.alpha = 1.0
@@ -551,15 +578,52 @@ class PlayViewController: EmbeddedViewController {
     }
 
     @objc func longTapGesture(gesture: UITapGestureRecognizer) {
+        
         if gesture.state == .began {
             
+            // Hide loading bar and all buttons
+            self.stackViewForButtons.isHidden = true
+            let pointInCollectionView: CGPoint = gesture.location(in: self.collectionView)
+            let selectedIndexPath: IndexPath = collectionView.indexPathForItem(at: pointInCollectionView)!
+            
+            let indexPath = IndexPath(row: selectedIndexPath.row, section: 0)
+            let cell = collectionView.cellForItem(at: indexPath) as! PostViewCell
+            
+            cell.progressContainer.isHidden = true
+            cell.btnShare.isHidden = true
+            cell.btnMute.isHidden = true
+            cell.lblViewsCount.isHidden = true
+            cell.btnComment.isHidden = true
+            cell.btnLike.isHidden = true
+            cell.btnReport.isHidden = true
+            cell.imgEye.isHidden = true
+            
+            
+            // If video is playing, stop
             if self.videoPlayer.playbackState == .playing {
                 longPress = true
                 self.videoPlayer.pause()
-                
             }
         }
         else if gesture.state == .ended {
+            // Show loading bar and all buttons
+            self.stackViewForButtons.isHidden = false
+            let pointInCollectionView: CGPoint = gesture.location(in: self.collectionView)
+            let selectedIndexPath: IndexPath = collectionView.indexPathForItem(at: pointInCollectionView)!
+            
+            let indexPath = IndexPath(row: selectedIndexPath.row, section: 0)
+            let cell = collectionView.cellForItem(at: indexPath) as! PostViewCell
+            
+            cell.progressContainer.isHidden = false
+            cell.btnShare.isHidden = false
+            cell.btnMute.isHidden = false
+            cell.lblViewsCount.isHidden = false
+            cell.btnComment.isHidden = false
+            cell.btnLike.isHidden = false
+            cell.btnReport.isHidden = false
+            cell.imgEye.isHidden = false
+            
+            // If video is paused, play again
             if self.videoPlayer.playbackState == .paused {
                 longPress = false
                 self.videoPlayer.playFromCurrentTime()
@@ -639,36 +703,48 @@ class PlayViewController: EmbeddedViewController {
     }
     
     @IBAction func actionSharePost(_ sender: UIButton) {
-        print("clicked share button")
-        let media = self.medias[currentIndex]
-       
+        let refreshAlert = UIAlertController(title: "Share", message: "Do you want to continue?", preferredStyle: UIAlertController.Style.alert)
         
-        DispatchQueue.main.async {
-            Utils.showSpinner()
-        }
-        NetworkManager.shared.sharePost(postId: media.id!) { (response) in
-            DispatchQueue.main.async {
-                Utils.hideSpinner()
-                
-                switch response {
-                    case .error(let error):
-                        self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
-                    case .success(let data):
-                        do {
-                            let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                            if jsonRes as? Int == 1 {
-                                self.present(Alert.alertWithTextInfo(errorText: "Shared the post!"), animated: true, completion: nil)
-                                self.getAllViralData()
-                            } else {
-                                self.present(Alert.alertWithTextInfo(errorText: "Please try again!"), animated: true, completion: nil)
-                                return
-                            }
-                            
-                        } catch {}
-                }
-                
-            }
-        }
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+              print("Handle Cancel Logic here")
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+            
+            print("clicked share button")
+            let media = self.medias[self.currentIndex]
+            
+             
+             DispatchQueue.main.async {
+                 Utils.showSpinner()
+             }
+             NetworkManager.shared.sharePost(postId: media.id!) { (response) in
+                 DispatchQueue.main.async {
+                     Utils.hideSpinner()
+                     
+                     switch response {
+                         case .error(let error):
+                             self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                         case .success(let data):
+                             do {
+                                 let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                 if jsonRes as? Int == 1 {
+                                     self.present(Alert.alertWithTextInfo(errorText: "Shared the post!"), animated: true, completion: nil)
+                                     self.getAllViralData()
+                                 } else {
+                                     self.present(Alert.alertWithTextInfo(errorText: "Please try again!"), animated: true, completion: nil)
+                                     return
+                                 }
+                                 
+                             } catch {}
+                     }
+                     
+                 }
+             }
+            
+        }))
+
+        present(refreshAlert, animated: true, completion: nil)
     }
     
     
@@ -689,9 +765,11 @@ class PlayViewController: EmbeddedViewController {
         performSegue(withIdentifier: "toComments", sender: nil)
     }
     
-    @IBAction func gotoProfile(_ sender: Any) {
+    @IBAction func gotoSharerProfile(_ sender: UIButton) {
+        
         print("other profile")
-        guard let userID = medias[mIndexpathRow].userId else{return}
+        //guard let userID = medias[mIndexpathRow].userId else { return }
+        guard let userID = self.sharer_id else { return }
         timer?.invalidate()
         if self.videoPlayer.playbackState == .playing {
             self.videoPlayer.pause()
@@ -737,7 +815,73 @@ class PlayViewController: EmbeddedViewController {
                                profile.user = searchUser
                                profile.transitioningDelegate = self
                                profile.interactor = self.interactor
-                               if searchUser.user?.userID == UserManager.currentUser()?.userID{
+                               if searchUser.user?.userID == UserManager.currentUser()?.userID {
+                                    profile.isSelf = true
+                               }else{
+                                    profile.isSelf = false
+                               }
+                               self.transition(to: profile)
+                            }
+                        }
+                    } catch {
+                    }
+                }//--end  switch response
+            }//--end  DispatchQueue.main.async
+        }//--end
+        
+        
+    }
+    
+    @IBAction func gotoProfile(_ sender: Any) {
+        print("other profile")
+        //guard let userID = medias[mIndexpathRow].userId else{return}
+        guard let userID = self.original_user_id else{return}
+        timer?.invalidate()
+        if self.videoPlayer.playbackState == .playing {
+            self.videoPlayer.pause()
+        }
+        DispatchQueue.main.async {
+            Utils.showSpinner()
+        }
+        NetworkManager.shared.getUserDetails(userId: userID) { (response) in
+            DispatchQueue.main.async {
+                Utils.hideSpinner()
+                switch response {
+                case .error(let error):
+                    self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                case .success(let data):
+                    do {
+                        let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                        if let json = jsonRes as? [String: Any] {
+                            let isFollowing = json["is_following"] as? Bool ?? false
+                            if let userJson = json["user"] as? [String: Any] {
+                               let user = User(json: userJson)
+                                
+                                var postsSeenIds = [Int]()
+                                if let postsSeen = userJson["posts_seen"] as? [[String: Any]] {
+                                    for post in postsSeen {
+                                        let post = Media(json: post)
+                                        postsSeenIds.append(post.id!)
+                                    }
+                                }
+                                var posts = [Media]()
+                                if let postsJson = userJson["posts"] as? [[String: Any]] {
+                                    for post in postsJson {
+                                        let p = Media(json: post)
+                                        if postsSeenIds.contains(p.id!) {
+                                            p.isSeen = true
+                                        }
+                                        posts.append(p)
+                                    }
+                                }
+                                let searchUser = SearchUser(searchUser: user, following: isFollowing, posts: posts)
+                                
+                               let profile = UIViewController.viewControllerWith("OtherProfileViewController") as! OtherProfileViewController
+                               profile.blockerTap = false
+                               profile.user = searchUser
+                               profile.transitioningDelegate = self
+                               profile.interactor = self.interactor
+                               if searchUser.user?.userID == UserManager.currentUser()?.userID {
                                     profile.isSelf = true
                                }else{
                                     profile.isSelf = false
@@ -833,219 +977,278 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
            
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PostViewCell
-            // remove image
-        
-            //openBannerAd()
-
-            cell.imageView.image = nil
-            cell.btnLike.isSelected = false
-//            if medias.count > 0 {
-                let media = self.medias[indexPath.row]
-               
-                if media.liked {
-                    cell.btnLike.isSelected = true
-                } else {
-                    cell.btnLike.isSelected = false
-                }
-                cell.lblViewsCount.text = "\(media.views)" + " Views"
-        // TimeStamp
-                let formatter = DateFormatter()
-                formatter.timeZone = TimeZone.current
-                formatter.dateFormat = "MMM dd, hh:mm a"
-                cell.lblTimestamp.text = media.username! + ", " + formatter.string(from: media.created)
-                print(formatter.timeZone ?? "")
-                cell.imgProfile.sd_setImage(with: URL(string: Utils.getFullPath(path: media.userPhoto ?? "")), placeholderImage: PLACEHOLDER_IMG, options: .lowPriority, completed: nil)
-                cell.imgProfile.setCircular()
-        //--End TimeStamp
-                print ("current cell index = \(indexPath.row)")
-                print(media)
-                if media.type == 0 {
-                    cell.imageView.sd_setImage(with: URL(string: Utils.getFullPath(path: media.path!)), completed: nil)
-        //--show time bar
-                    for subview in cell.progressContainer.arrangedSubviews {
-                        subview.removeFromSuperview()
-                    }
-                    cell.progressContainer.isHidden = false
-                    
-                    let defaultProgressView = UIProgressView(progressViewStyle: .default)
-                    defaultProgressView.progress = 0.0
-                    defaultProgressView.tintColor = UIColor.white
-                    
-                    cell.progressContainer.addArrangedSubview(defaultProgressView)
-                    
-                    //-- Show time bar
-                        self.timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { (_) in
-                            print("image")
-                            if let subProgressView = cell.progressContainer.arrangedSubviews[0] as? UIProgressView {
-                                if self.photoShowTime >= 1.0 {
-                                    self.timer?.invalidate()
-                                    self.timer = nil
-                                }else{
-                                    self.photoShowTime += 0.005
-                                    subProgressView.progress = self.photoShowTime
-                                }
-                            }
-                        })
-                    //--End time bar
-                    cell.btnMute.alpha = 0.0
-                    cell.btnMute.isEnabled = false
-                } else {
-                    // add progress bar
-                    cell.btnMute.alpha = 1.0
-                    cell.btnMute.isEnabled = true
-                    cell.progressContainer.isHidden = false
-                    cell.imageView.sd_setImage(with: URL(string: Utils.getFullPath(path: media.thumbnail ?? "")), completed: nil)
-                    
-                    for subview in cell.progressContainer.arrangedSubviews {
-                        subview.removeFromSuperview()
-                    }
-                    
-                    let defaultProgressView = UIProgressView(progressViewStyle: .default)
-                    defaultProgressView.progress = 0.0
-                    defaultProgressView.tintColor = UIColor.white
-                    
-                    cell.progressContainer.addArrangedSubview(defaultProgressView)
-                    
-                    if media.extras.count > 0 {
-                        for extraIndex in 0...media.extras.count - 1 {
-                            let extraMedia = media.extras[extraIndex]
-                            
-                            let progressView = UIProgressView(progressViewStyle: .default)
-                            progressView.progress = 0.0
-                            progressView.tintColor = UIColor.white
-                            progressView.tag = extraMedia.id
-                            cell.progressContainer.addArrangedSubview(progressView)
-                            // addd link button for each extra media
-                        }
-                    }
-                    
-                    cell.containerView.layoutIfNeeded()
-                    
-    //                if indexPath.row == currentIndex {
-                        totalLengthOfPlayItems = 0.0
-                        playerUrls.removeAll()
-                        let media = self.medias[indexPath.row]
-                        
-                        let path = Utils.getFullPath(path: media.path!)
-                        playerUrls.append(URL(string: path)!)
-                        totalLengthOfPlayItems += CMTimeGetSeconds(AVPlayerItem(url: URL(string: path)!).duration) / 60.0
-                        
-                        if media.extras.count > 0 {
-                            for extraIndex in 0...media.extras.count - 1 {
-                                let extraMedia = media.extras[extraIndex]
-                                
-                                let extraMediaPath = Utils.getFullPath(path: extraMedia.path!)
-                                let extraItem = URL(string: extraMediaPath)!
-                                playerUrls.append(extraItem)
-                                
-                                totalLengthOfPlayItems += CMTimeGetSeconds(AVPlayerItem(url: extraItem).duration) / 60.0
-                            }
-                        }
-                        
-                        self.videoPlayer.view.frame = cell.imageView.frame
-                        self.videoPlayer.url = playerUrls.first
-                        if self.videoPlayer.view.superview != nil {
-                            self.videoPlayer.view.removeFromSuperview()
-                        }
-                        if indexPath.row == 0 && prevButton == 100 {
-                           
-                        } else if self.firstPlay {
-                            
-                             self.videoPlayer.playFromBeginning()
-                        } else {
-                            
-                    }
-                        cell.containerView.insertSubview(self.videoPlayer.view, at: 0)
-    //                }
-                }
-                
-                if let link = media.link {
-                    
-                    cell.lblLink.isHidden = true
-                    
-                    cell.lblLink.customize { (label) in
-                        label.text = link
-                        label.textColor = UIColor.white
-                        label.URLColor = UIColor.white
-                        label.URLSelectedColor = UIColor.white
-                        
-                        label.enabledTypes = [.url]
-                        
-                        label.handleURLTap({ (url) in
-                            Utils.openURL(url.absoluteString)
-                        })
-                        
-                        label.configureLinkAttribute = { (type, attributes, isSelected) in
-                            
-                            var atts = attributes
-                            
-                            switch type {
-                            case .url:
-                                atts[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
-                                break
-                            default:
-                                break
-                            }
-                            return atts
-                        }
-                    }
-                } else {
-                    cell.lblLink.isHidden = true
-                }
-                if media.userId != UserManager.currentUser()?.userID{
-                    NetworkManager.shared.logViewFeed(media_id: media.id!) { (_) in
-                               
-                    }
-                }
-               
-                cell.btnComment.tag = indexPath.row + 100
-                cell.btnComment.addTarget(self, action: #selector(onComments(sender:)), for: .touchUpInside)
-                
-                cell.btnLike.tag = indexPath.row + 101
-                cell.btnLike.addTarget(self, action: #selector(onLikes(sender:)), for: .touchUpInside)
-                
-                cell.btnMute.tag = 104
-                cell.btnMute.addTarget(self, action: #selector(onMute(sender:)), for: .touchUpInside)
-                // add button for link view area
-                
-                for subview in cell.contentView.subviews {
-                    if subview is UIButton {
-                        subview.removeFromSuperview()
-                    }
-                }
-                
-                let linkButton = UIButton(frame: CGRect(x: media.x, y: media.y, width: media.width, height: media.height))
-                cell.contentView.addSubview(linkButton)
-                
-                linkButton.addTarget(self, action: #selector(openLink(sender:)), for: .touchUpInside)
-                linkButton.tag = indexPath.row + 102
-                
-                let rotation = linkButton.transform.rotated(by: CGFloat(media.angle))
-                linkButton.transform = rotation
-
-                for extraMediaIdx in 0..<media.extras.count {
-                    let extraMedia = media.extras[extraMediaIdx]
-                    guard let _ = extraMedia.link else {continue}
-                    
-                    let extraLinkButton = UIButton(frame: CGRect(x: extraMedia.x, y: extraMedia.y, width: extraMedia.width, height: extraMedia.height))
-                    cell.contentView.addSubview(extraLinkButton)
-                    extraLinkButton.addTarget(self, action: #selector(openExtraMediaLink(sender:)), for: .touchUpInside)
-                    extraLinkButton.tag = indexPath.row + 103
-                    
-                    let exrotation = extraLinkButton.transform.rotated(by: CGFloat(extraMedia.angle))
-                    extraLinkButton.transform = exrotation
-                }
-                mIndexpathRow = indexPath.row
-//            }
-        
-        
-       
+        if indexPath.row % 3 == 0 && indexPath.row != 0 {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FacebookAdsCell", for: indexPath) as! FacebookAdsCell
             
             return cell
-//        }
-        //------------------
+            
+        } else {
+
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PostViewCell
+                 // remove image
+             
+                 //openBannerAd()
+
+                 cell.imageView.image = nil
+                 cell.btnLike.isSelected = false
+             
+             
+                     let media = self.medias[indexPath.row]
+                    
+                     if media.liked {
+                         cell.btnLike.isSelected = true
+                     } else {
+                         cell.btnLike.isSelected = false
+                     }
+                     cell.lblViewsCount.text = "\(media.views)" + " Views"
+            
+            self.original_user_id = media.original_user_id  ?? 0
+            self.sharer_id        = media.userId            ?? 0
+            
+            
+            
+            // Original poster
+                if let original_user_id = media.original_user_id, original_user_id != media.userId {
+                    // load user info
+                    NetworkManager.shared.getUserDetails(userId: original_user_id) { (response) in
+                        switch response {
+                        case .error(let error):
+                            DispatchQueue.main.async {
+                                self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                            }
+                        case .success(let data):
+                            do {
+                                let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                if let json = jsonRes as? [String: Any] {
+                                    if let userJson = json["user"] as? [String: Any] {
+                                        let user = User(json: userJson)
+                                        // set the user name
+                                        DispatchQueue.main.async {
+                                            
+                                            let formatter = DateFormatter()
+                                            formatter.timeZone = TimeZone.current
+                                            formatter.dateFormat = "MMM dd, hh:mm a"
+                                            cell.lblTimestamp.text = user.username!// + ", " + formatter.string(from: media.created)
+                                            print(formatter.timeZone ?? "")
+                                            cell.imgProfile.sd_setImage(with: URL(string: Utils.getFullPath(path: user.userPhoto ?? "")), placeholderImage: PLACEHOLDER_IMG, options: .lowPriority, completed: nil)
+                                            cell.imgProfile.setCircular()
+                                            
+                                            let media_username = media.username ?? ""
+                                            cell.lblSharer.text = "Shared by: " + media_username
+                                            cell.imgSharer.sd_setImage(with: URL(string: Utils.getFullPath(path: media.userPhoto ?? "")), placeholderImage: PLACEHOLDER_IMG, options: .lowPriority, completed: nil)
+                                            cell.imgSharer.setCircular()
+                                        }
+                                        
+                                    }
+                                }
+                            } catch {
+                                
+                            }
+                        }
+                    }
+                    
+                } else {
+                    // TimeStamp
+                            let formatter = DateFormatter()
+                            formatter.timeZone = TimeZone.current
+                            formatter.dateFormat = "MMM dd, hh:mm a"
+                            cell.lblTimestamp.text = media.username! + ", " + formatter.string(from: media.created)
+                            print(formatter.timeZone ?? "")
+                            cell.imgProfile.sd_setImage(with: URL(string: Utils.getFullPath(path: media.userPhoto ?? "")), placeholderImage: PLACEHOLDER_IMG, options: .lowPriority, completed: nil)
+                            cell.imgProfile.setCircular()
+                    //--End TimeStamp
+                }
+                
+            
+            //-- End original poster
+                     print ("current cell index = \(indexPath.row)")
+                     print(media)
+                     if media.type == 0 {
+                         cell.imageView.sd_setImage(with: URL(string: Utils.getFullPath(path: media.path!)), completed: nil)
+             //--show time bar
+                         for subview in cell.progressContainer.arrangedSubviews {
+                             subview.removeFromSuperview()
+                         }
+                         cell.progressContainer.isHidden = false
+                         
+                         let defaultProgressView = UIProgressView(progressViewStyle: .default)
+                         defaultProgressView.progress = 0.0
+                         defaultProgressView.tintColor = UIColor.white
+                         
+                         cell.progressContainer.addArrangedSubview(defaultProgressView)
+                         
+                         //-- Show time bar
+                             self.timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { (_) in
+                                 print("image")
+                                 if let subProgressView = cell.progressContainer.arrangedSubviews[0] as? UIProgressView {
+                                     if self.photoShowTime >= 1.0 {
+                                         self.timer?.invalidate()
+                                         self.timer = nil
+                                     }else{
+                                         self.photoShowTime += 0.005
+                                         subProgressView.progress = self.photoShowTime
+                                     }
+                                 }
+                             })
+                         //--End time bar
+                         cell.btnMute.alpha = 0.0
+                         cell.btnMute.isEnabled = false
+                     } else {
+                         // add progress bar
+                         cell.btnMute.alpha = 1.0
+                         cell.btnMute.isEnabled = true
+                         cell.progressContainer.isHidden = false
+                         cell.imageView.sd_setImage(with: URL(string: Utils.getFullPath(path: media.thumbnail ?? "")), completed: nil)
+                         
+                         for subview in cell.progressContainer.arrangedSubviews {
+                             subview.removeFromSuperview()
+                         }
+                         
+                         let defaultProgressView = UIProgressView(progressViewStyle: .default)
+                         defaultProgressView.progress = 0.0
+                         defaultProgressView.tintColor = UIColor.white
+                         
+                         cell.progressContainer.addArrangedSubview(defaultProgressView)
+                         
+                         if media.extras.count > 0 {
+                             for extraIndex in 0...media.extras.count - 1 {
+                                 let extraMedia = media.extras[extraIndex]
+                                 
+                                 let progressView = UIProgressView(progressViewStyle: .default)
+                                 progressView.progress = 0.0
+                                 progressView.tintColor = UIColor.white
+                                 progressView.tag = extraMedia.id
+                                 cell.progressContainer.addArrangedSubview(progressView)
+                                 // addd link button for each extra media
+                             }
+                         }
+                         
+                         cell.containerView.layoutIfNeeded()
+                         
+                             totalLengthOfPlayItems = 0.0
+                             playerUrls.removeAll()
+                             let media = self.medias[indexPath.row]
+                             
+                             let path = Utils.getFullPath(path: media.path!)
+                             playerUrls.append(URL(string: path)!)
+                             totalLengthOfPlayItems += CMTimeGetSeconds(AVPlayerItem(url: URL(string: path)!).duration) / 60.0
+                             
+                             if media.extras.count > 0 {
+                                 for extraIndex in 0...media.extras.count - 1 {
+                                     let extraMedia = media.extras[extraIndex]
+                                     
+                                     let extraMediaPath = Utils.getFullPath(path: extraMedia.path!)
+                                     let extraItem = URL(string: extraMediaPath)!
+                                     playerUrls.append(extraItem)
+                                     
+                                     totalLengthOfPlayItems += CMTimeGetSeconds(AVPlayerItem(url: extraItem).duration) / 60.0
+                                 }
+                             }
+                             
+                             self.videoPlayer.view.frame = cell.imageView.frame
+                             self.videoPlayer.url = playerUrls.first
+                             if self.videoPlayer.view.superview != nil {
+                                 self.videoPlayer.view.removeFromSuperview()
+                             }
+                             if indexPath.row == 0 && prevButton == 100 {
+                                
+                             } else if self.firstPlay {
+                                 
+                                  self.videoPlayer.playFromBeginning()
+                             } else {
+                                 
+                         }
+                             cell.containerView.insertSubview(self.videoPlayer.view, at: 0)
+                     }
+                     
+                     if let link = media.link {
+                         
+                         cell.lblLink.isHidden = true
+                         
+                         cell.lblLink.customize { (label) in
+                             label.text = link
+                             label.textColor = UIColor.white
+                             label.URLColor = UIColor.white
+                             label.URLSelectedColor = UIColor.white
+                             
+                             label.enabledTypes = [.url]
+                             
+                             label.handleURLTap({ (url) in
+                                 Utils.openURL(url.absoluteString)
+                             })
+                             
+                             label.configureLinkAttribute = { (type, attributes, isSelected) in
+                                 
+                                 var atts = attributes
+                                 
+                                 switch type {
+                                 case .url:
+                                     atts[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
+                                     break
+                                 default:
+                                     break
+                                 }
+                                 return atts
+                             }
+                         }
+                     } else {
+                         cell.lblLink.isHidden = true
+                     }
+                     if media.userId != UserManager.currentUser()?.userID{
+                         NetworkManager.shared.logViewFeed(media_id: media.id!) { (_) in
+                                    
+                         }
+                     }
+            
+                    
+                     cell.btnComment.tag = indexPath.row + 100
+                     cell.btnComment.addTarget(self, action: #selector(onComments(sender:)), for: .touchUpInside)
+                     
+                     cell.btnLike.tag = indexPath.row + 101
+                     cell.btnLike.addTarget(self, action: #selector(onLikes(sender:)), for: .touchUpInside)
+                     
+                     cell.btnMute.tag = 104
+                     cell.btnMute.addTarget(self, action: #selector(onMute(sender:)), for: .touchUpInside)
+                     // add button for link view area
+                     
+                     for subview in cell.contentView.subviews {
+                         if subview is UIButton {
+                             subview.removeFromSuperview()
+                         }
+                     }
+                     
+                     let linkButton = UIButton(frame: CGRect(x: media.x, y: media.y, width: media.width, height: media.height))
+                     cell.contentView.addSubview(linkButton)
+                     
+                     linkButton.addTarget(self, action: #selector(openLink(sender:)), for: .touchUpInside)
+                     linkButton.tag = indexPath.row + 102
+                     
+                     let rotation = linkButton.transform.rotated(by: CGFloat(media.angle))
+                     linkButton.transform = rotation
+
+                     for extraMediaIdx in 0..<media.extras.count {
+                         let extraMedia = media.extras[extraMediaIdx]
+                         guard let _ = extraMedia.link else {continue}
+                         
+                         let extraLinkButton = UIButton(frame: CGRect(x: extraMedia.x, y: extraMedia.y, width: extraMedia.width, height: extraMedia.height))
+                         cell.contentView.addSubview(extraLinkButton)
+                         extraLinkButton.addTarget(self, action: #selector(openExtraMediaLink(sender:)), for: .touchUpInside)
+                         extraLinkButton.tag = indexPath.row + 103
+                         
+                         let exrotation = extraLinkButton.transform.rotated(by: CGFloat(extraMedia.angle))
+                         extraLinkButton.transform = exrotation
+                     }
+                     mIndexpathRow = indexPath.row
+            
+                 
+                 return cell
+             //------------------
+        }
+        
+        
+        
+        
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
@@ -1077,10 +1280,10 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         print ("current page = \(currentPage)")
 
         if currentPage < medias.count {
-            if currentPage != 0 && currentPage % 3 == 0 {
-                let facebookNativeAdsVC = self.storyboard?.instantiateViewController(withIdentifier: "FacebookNativeAdsVC") as! FacebookNativeAdsVC
-                       self.navigationController?.pushViewController(facebookNativeAdsVC, animated: false)
-            }
+//            if currentPage != 0 && currentPage % 3 == 0 {
+//                let facebookNativeAdsVC = self.storyboard?.instantiateViewController(withIdentifier: "FacebookNativeAdsVC") as! FacebookNativeAdsVC
+//                       self.navigationController?.pushViewController(facebookNativeAdsVC, animated: false)
+//            }
             
             //openAd(currentPage)
             //openBannerAd()
@@ -1449,9 +1652,9 @@ extension PlayViewController{
     }
     @objc func getViralData(_ page: Int){
         
-        Utils.showSpinner()
+        //Utils.showSpinner()
         DataBaseManager.shared.getViralFeed(pageId: self.viralPageId) { (result, error) in
-           Utils.hideSpinner()
+           //Utils.hideSpinner()
            if error != "" {
                self.medias.removeAll()
                self.collectionView.reloadData()
@@ -1622,3 +1825,129 @@ extension PlayViewController: UIViewControllerTransitioningDelegate{
 }
 
 
+class FacebookAdsCell: UICollectionViewCell {
+    
+    @IBOutlet weak var adUIView: UIView!
+    @IBOutlet weak var adIconImageView: UIImageView!
+    @IBOutlet weak var adTitleLabel: UILabel!
+    @IBOutlet weak var adCoverMediaView: FBMediaView!
+    @IBOutlet weak var adCallToActionButton: UIButton!
+    @IBOutlet weak var sponsoredLabel: UILabel!
+    
+    @IBOutlet weak var adView: UIView!
+    
+    
+    var nativeAd: FBNativeAd!
+        
+    
+    override var bounds: CGRect {
+        didSet {
+            self.layoutIfNeeded()
+        }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        initAds()
+        
+        backgroundColor = .black
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+    }
+    
+    
+    func initAds() {
+        self.nativeAd = FBNativeAd.init(placementID: FBADS.NATIVE_PLACEMENT_ID)
+        
+        self.nativeAd.delegate = self
+       
+        self.nativeAd.loadAd()
+    }
+    
+    
+}
+
+
+// MARK: FB Interstitial SDK Extension
+extension FacebookAdsCell: FBNativeAdDelegate, FBMediaViewDelegate {
+    func nativeAdDidLoad(_ nativeAd: FBNativeAd) {
+        //self.adCoverMediaView.delegate = self
+        
+        //nativeAd.downloadMedia()
+        self.nativeAd = nativeAd
+        
+        self.showNativeAd()
+    }
+    
+    func showNativeAd() {
+        if self.nativeAd.isAdValid {
+            /*
+            self.nativeAd.unregisterView()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "playvc") as! PlayViewController
+            self.nativeAd.registerView(forInteraction: self.adUIView, mediaView: self.adCoverMediaView, iconImageView: self.adIconImageView, viewController: vc)
+            // Render Native ads onto UIView
+            self.adTitleLabel.text = self.nativeAd.advertiserName
+            self.sponsoredLabel.text = self.nativeAd.sponsoredTranslation
+            self.adCallToActionButton.setTitle(self.nativeAd.callToAction, for: .normal)
+             */
+            
+            let adView: FBNativeAdView! = FBNativeAdView.init(nativeAd: self.nativeAd, with: .genericHeight300)
+            self.adView.addSubview(adView)
+            adView.frame = self.adView.frame
+        }
+    }
+    
+    
+    func nativeAdDidClick(_ nativeAd: FBNativeAd) {
+        print("Native ad was clicked.")
+    }
+    
+    func nativeAdDidFinishHandlingClick(_ nativeAd: FBNativeAd) {
+        print("Native ad did finish click handling")
+    }
+    
+    func nativeAdWillLogImpression(_ nativeAd: FBNativeAd) {
+        print("Native ad impression is being captured")
+    }
+    
+    
+    func nativeAd(_ nativeAd: FBNativeAd, didFailWithError error: Error) {
+        print(error.localizedDescription)
+        print("Native ad failed to load with error")
+    }
+    
+    
+        
+}
+
+extension PlayViewController: FBAdViewDelegate {
+    
+    func adViewDidClick(_ adView: FBAdView) {
+        print("banner ads click")
+    }
+    
+    func adViewDidFinishHandlingClick(_ adView: FBAdView) {
+        print("adViewDidFinishHandlingClick")
+    }
+    
+    func adViewWillLogImpression(_ adView: FBAdView) {
+        print("adViewWillLogImpression")
+    }
+    
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        print("banner ads loading failed")
+    }
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        self.showBanner()
+    }
+    
+    func showBanner() {
+        self.view.addSubview(self.bannerAd)
+    }
+    
+}

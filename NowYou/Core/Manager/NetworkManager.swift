@@ -56,6 +56,20 @@ class NetworkManager: NSObject {
         call(request, completion: completion)
     }
     
+    func passwordReset(email: String, completion: ((ServerResponse)->())?) {
+        let rest = RestRouter.passwordReset(email: email)
+        
+        var request = URLRequest(url: rest.url)
+        
+        request.httpMethod = rest.method
+        request.httpBody = rest.body
+        
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        call(request, completion: completion)
+    }
+    
     func register(first_name: String, last_name: String, email: String, password: String, phone: String, device_token: String, birthday: String, gender: Int, username: String, privateOn: Int, bio: String, completion: ((ServerResponse)->())?) {
         let rest = RestRouter.register(firstName: first_name, lastName: last_name, email: email, password: password, phone: phone, device_token: device_token, birthday: birthday, gender: gender, username: username, privateOn: privateOn, bio: bio)
         
@@ -91,6 +105,39 @@ class NetworkManager: NSObject {
         
         call(request, completion: completion)
     }
+    
+    
+    func getAdditionalAccounts(main_user_id: String, completion: ((ServerResponse)->())?) {
+        let rest = RestRouter.getAdditionalAccounts(main_user_id: main_user_id)
+        
+        var request = URLRequest(url: rest.url)
+        
+        request.httpMethod = rest.method
+        request.httpBody = rest.body
+        request.addValue("Bearer \(TokenManager.getToken()!)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("multipart/form-data; boundary=\(rest.boundary)", forHTTPHeaderField: "Content-Type")
+        
+        call(request, completion: completion)
+    }
+    
+    
+    func createAdditionalAccount(main_user_id: String, first_name: String, last_name: String, user_name: String, password: String, bio: String, photo: Data, completion: ((ServerResponse)->())?) {
+        
+        let rest = RestRouter.createAdditionalAccount(main_user_id: main_user_id, first_name: first_name, last_name: last_name, user_name: user_name, password: password, bio: bio, photo: photo)
+        
+        var request = URLRequest(url: rest.url)
+
+        request.httpMethod = rest.method
+        request.httpBody = rest.body
+        
+        request.addValue("Bearer \(TokenManager.getToken()!)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("multipart/form-data; boundary=\(rest.boundary)", forHTTPHeaderField: "Content-Type")
+        
+        call(request, completion: completion)
+    }
+    
     
     func changePassword(password: String, confirm_pwd: String, completion: ((ServerResponse)->())?) {
         let rest = RestRouter.changePassword(password: password, confirmPassword: confirm_pwd)

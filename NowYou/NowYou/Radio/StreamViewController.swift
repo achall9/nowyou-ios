@@ -37,6 +37,7 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
         }
     }
 
+    @IBOutlet weak var segmentVideo: UISegmentedControl!
     private let viewModel = ViewModel()
 
     private var currentState: AudioRecodingState = .ready {
@@ -49,6 +50,7 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
 
     private var chronometer: Chronometer?
 
+    @IBOutlet weak var viewVideoContainer: UIView!
     @IBOutlet weak var imgLogo: UIImageView!
     @IBOutlet weak var logoBorderView: UIView!
     @IBOutlet weak var tblComment: UITableView!
@@ -82,7 +84,7 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
         }
     }
     
-    fileprivate var agoraKit: AgoraRtcEngineKit!
+    fileprivate var agoraKit: AgoraRtcEngineKit?
     fileprivate var logs = [String]()
     
     
@@ -118,8 +120,32 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
             self.audioVisualizationView.add(meteringLevel: meteringLevel)
         }
         
-        self.loadAgoraKit()
         addRigthSwipe()
+    }
+    func setupVideo() {
+        let configuration = AgoraVideoEncoderConfiguration(size: AgoraVideoDimension640x360, frameRate: .fps15, bitrate: AgoraVideoBitrateStandard, orientationMode: .adaptative)
+        //        agoraKit.setVideoEncoderConfiguration(AgoraVideoEncoderConfiguration(size: AgoraVideoDimension640x360, frameRate: .fps15, bitrate: AgoraVideoBitrateStandard, orientationMode: .adaptative))
+        agoraKit?.setVideoEncoderConfiguration(configuration)
+        DispatchQueue.main.async {
+            self.setupLocalVideo(uid: 1)
+        }
+        
+        
+    }
+    func setupLocalVideo(uid: UInt) {
+        
+        print(uid)
+        
+        viewVideoContainer.tag = Int(uid)
+        viewVideoContainer.backgroundColor = UIColor.clear
+        
+        let videoCanvas = AgoraRtcVideoCanvas()
+        videoCanvas.uid = uid
+        videoCanvas.view = viewVideoContainer
+        videoCanvas.renderMode = .hidden
+        agoraKit?.setupLocalVideo(videoCanvas)
+        
+        
     }
     func addRigthSwipe(){
           let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(_:)))
@@ -200,6 +226,8 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
             self.audioProcessor = nil
             btnPlay.isSelected = false
             self.chronometer?.pause()
+            agoraKit?.pauseAllEffects()
+            agoraKit?.disableVideo()
             do {
                 try self.viewModel.pauseRecording()
             } catch {
@@ -211,6 +239,13 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
             btnPlay.isSelected = true
             self.chronometer?.start()
             self.viewModel.resumeRecording()
+            loadAgoraKit()
+            setupVideo()
+            if(segmentVideo.selectedSegmentIndex == 1){
+                agoraKit?.enableVideo()
+            }else{
+                agoraKit?.disableVideo()
+            }
         }
         muteAudio()
     }
@@ -266,6 +301,13 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
         }
     }
 
+    @IBAction func videoSegmentChanged(_ sender: Any) {
+        if (segmentVideo.selectedSegmentIndex == 0){
+            agoraKit?.disableVideo()
+        }else{
+            agoraKit?.enableVideo()
+        }
+    }
     @objc func applicationResignActive(notification: NSNotification) {
         // Application did become inactive
         //        onPause(btnPlay)
@@ -433,15 +475,15 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
     }
     
     private func setClientRole(){
-        agoraKit.setClientRole(.broadcaster)
+        agoraKit?.setClientRole(.broadcaster)
     }
     private func speakerPressed(){
         speakerEnabled = !speakerEnabled
-        agoraKit.setEnableSpeakerphone(speakerEnabled)
+        agoraKit?.setEnableSpeakerphone(speakerEnabled)
     }
     private func muteAudio(){
         audioMuted = !audioMuted
-        agoraKit.muteLocalAudioStream(audioMuted)
+        agoraKit?.muteLocalAudioStream(audioMuted)
     }
     
     private func getViewers(){
@@ -501,19 +543,19 @@ private extension StreamViewController {
     }
     func loadAgoraKit() {
         agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: KeyCenter.AppId, delegate: self)
-        agoraKit.setChannelProfile(.liveBroadcasting)
-        agoraKit.setClientRole(.broadcaster)
+        agoraKit?.setChannelProfile(.liveBroadcasting)
+        agoraKit?.setClientRole(.broadcaster)
         
         
         guard let userID = UserManager.currentUser()?.userID else {return}
-        agoraKit.joinChannel(byToken: nil, channelId: "\(radio.id)", info: nil, uid: UInt(userID), joinSuccess: nil)
+        agoraKit?.joinChannel(byToken: nil, channelId: "\(radio.id)", info: nil, uid: UInt(userID), joinSuccess: nil)
         
-        agoraKit.muteLocalAudioStream(false)
-        agoraKit.setEnableSpeakerphone(false)
+        agoraKit?.muteLocalAudioStream(false)
+        agoraKit?.setEnableSpeakerphone(false)
     }
     
     func leaveChannel() {
-        agoraKit.leaveChannel(nil)
+        agoraKit?.leaveChannel(nil)
     }
 }
 

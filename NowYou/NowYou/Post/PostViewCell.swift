@@ -21,6 +21,11 @@ class PostViewCell: UICollectionViewCell {
     @IBOutlet weak var imgBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var btnMute: UIButton!
+    @IBOutlet weak var btnShare: UIButton!
+    @IBOutlet weak var btnReport: UIButton!
+    @IBOutlet weak var imgEye: UIImageView!
+    
+    
     
     @IBOutlet weak var lblViewsCount: UILabel!
     @IBOutlet weak var linkLblTopConstraint: NSLayoutConstraint!
@@ -31,6 +36,11 @@ class PostViewCell: UICollectionViewCell {
     @IBOutlet weak var imgProfile: UIImageView!
     @IBOutlet weak var lblTimestamp: UILabel!
     @IBOutlet weak var btnBack: UIButton!
+    
+    @IBOutlet weak var imgSharer: UIImageView!
+    @IBOutlet weak var lblSharer: UILabel!
+    
+    
     override var bounds: CGRect {
         didSet {
             self.layoutIfNeeded()
@@ -40,7 +50,7 @@ class PostViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = .black
-//        imageView.contentMode = .scaleToFill
+        //imageView.contentMode = .scaleToFill
     }
     
     override func prepareForReuse() {

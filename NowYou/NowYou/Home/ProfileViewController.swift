@@ -60,27 +60,23 @@ class ProfileViewController: EmbeddedViewController, UIViewControllerTransitioni
         clvTags?.register(TagHeader.self, forSupplementaryViewOfKind:
             UICollectionView.elementKindSectionHeader, withReuseIdentifier: "tagHeaderId")
         clvTags.semanticContentAttribute = UISemanticContentAttribute.forceLeftToRight
+       
         
-        clvPost.cr.addHeadRefresh(animator: NormalHeaderAnimator()) {
-            if self.selectedIndex == 0 {
-                self.loadPosts()
-            } else {
-                self.loadTaggedPosts()
-            }
-            
-        }
         clvTags.cr.addHeadRefresh(animator: NormalHeaderAnimator()) {
             self.getFollowingTags()
         }
-
+        
+        if self.selectedIndex == 0 {
+            self.loadPosts()
+        } else {
+            self.loadTaggedPosts()
+        }
+        
     }
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        getFollowingTags()
-        loadPosts()
+        super.viewDidLoad()        
         
         NotificationCenter.default.addObserver(self, selector: #selector(newMediaPosted(notification:)),
                                                name: NSNotification.Name(rawValue: NOTIFICATION.NEW_MEDIA_POSTED), object: nil)
@@ -262,7 +258,8 @@ class ProfileViewController: EmbeddedViewController, UIViewControllerTransitioni
                             let post = Media(json: feed)
                             
                             if let _ = post.path {
-                                if post.taggedUserId?.contains("@") ?? false {
+                                
+                                if post.taggedUserId == "\(UserManager.currentUser()?.userID ?? 0)" {
                                     self.posts.append(post)
                                 }
                             }
@@ -637,7 +634,6 @@ extension ProfileViewController: CropViewControllerDelegate {
                                 let user = User(json: userJSON)
                                 UserManager.updateUser(user: user)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: NOTIFICATION.USER_PHOTO_UPDATED), object: nil, userInfo: nil)
-
                             }
                         }
                         break

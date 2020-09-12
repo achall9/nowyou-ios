@@ -2,6 +2,28 @@ PODS:
   - ActiveLabel (1.1.0)
   - AgoraRtcEngine_iOS (3.1.0)
   - Alamofire (4.9.1)
+  - Braintree (4.35.0):
+    - Braintree/Card (= 4.35.0)
+    - Braintree/Core (= 4.35.0)
+    - Braintree/PayPal (= 4.35.0)
+    - Braintree/UI (= 4.35.0)
+  - Braintree/Card (4.35.0):
+    - Braintree/Core
+  - Braintree/Core (4.35.0)
+  - Braintree/PayPal (4.35.0):
+    - Braintree/Core
+    - Braintree/PayPalOneTouch
+  - Braintree/PayPalDataCollector (4.35.0):
+    - Braintree/Core
+    - Braintree/PayPalUtils
+  - Braintree/PayPalOneTouch (4.35.0):
+    - Braintree/Core
+    - Braintree/PayPalDataCollector
+    - Braintree/PayPalUtils
+  - Braintree/PayPalUtils (4.35.0)
+  - Braintree/UI (4.35.0):
+    - Braintree/Card
+    - Braintree/Core
   - ColorSlider (4.4)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
@@ -761,9 +783,9 @@ PODS:
     - nanopb/encode (= 1.30905.0)
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
-  - NVActivityIndicatorView (5.0.1):
-    - NVActivityIndicatorView/Base (= 5.0.1)
-  - NVActivityIndicatorView/Base (5.0.1)
+  - NVActivityIndicatorView (4.8.0):
+    - NVActivityIndicatorView/Presenter (= 4.8.0)
+  - NVActivityIndicatorView/Presenter (4.8.0)
   - ObjectMapper (4.2.0)
   - Player (0.13.2)
   - PromisesObjC (1.2.10)
@@ -786,6 +808,7 @@ DEPENDENCIES:
   - ActiveLabel
   - AgoraRtcEngine_iOS
   - Alamofire (~> 4.5)
+  - Braintree
   - ColorSlider (~> 4.3)
   - Crashlytics
   - CropViewController
@@ -805,7 +828,7 @@ DEPENDENCIES:
   - LocalizedTimeAgo (~> 1.1.0)
   - MaterialComponents
   - McPicker (~> 2.0.0)
-  - NVActivityIndicatorView
+  - NVActivityIndicatorView (~> 4.8.0)
   - ObjectMapper
   - Player
   - ReachabilitySwift
@@ -825,6 +848,7 @@ SPEC REPOS:
     - ActiveLabel
     - AgoraRtcEngine_iOS
     - Alamofire
+    - Braintree
     - ColorSlider
     - Crashlytics
     - CropViewController
@@ -878,6 +902,7 @@ SPEC CHECKSUMS:
   ActiveLabel: 5e3f4de79a1952d4604b845a0610d4776e4b82b3
   AgoraRtcEngine_iOS: 59db1384cef2791af5bcaa8784191a30569bf9e6
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Braintree: 7ff6755ba50506e403dc03779ae68c5ccf6b9808
   ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CropViewController: 980df34ffc499db89755b2f307f20eca00cd40c6
@@ -910,7 +935,7 @@ SPEC CHECKSUMS:
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
-  NVActivityIndicatorView: 738e843cb8924e9e4fc3e559d0728031624bf860
+  NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   Player: 7a2bcad3631034fa47d4b6fdedf7c4075fc236fe
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
@@ -927,6 +952,6 @@ SPEC CHECKSUMS:
   WSTagsField: a4e91b7d866e8c9755332ebcf8123f42f2abd4a0
   XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: 370843a4ea6da5fcc997dbb77b60a9afd0531cce
+PODFILE CHECKSUM: 7dca77ce4d5681f31d448e6ee3fdbd35aa5d7d7c
 
 COCOAPODS: 1.9.3

@@ -10,6 +10,7 @@ import UIKit
 
 class User: NSObject, NSCoding {
     var userID              : Int!
+    var main_user_id        : Int!
     var firstName           : String!
     var lastName            : String!
     var email               : String!
@@ -33,7 +34,7 @@ class User: NSObject, NSCoding {
     var view_count_total    : Int = 0
     var view_count_daily    : Int = 0
     var view_count_monthly  : Int = 0
-    var view_count_weekly  : Int = 0
+    var view_count_weekly   : Int = 0
     var view_count_yearly   : Int = 0
     var earning_total       : Double = 0.0
     var earning_daily       : Double = 0.0
@@ -44,11 +45,15 @@ class User: NSObject, NSCoding {
     var color               : String = "FFFFFF"
     var gender              : Int = 1
     
+    var token               : String!
+    
+    
     var monthly_history = [Double]()
     var daily_history = [Double]()
     var timely_history = [Double]()
     
     init(userID: Int,
+         main_user_id: Int,
          firstName: String,
          lastName: String,
          email: String,
@@ -78,11 +83,13 @@ class User: NSObject, NSCoding {
          withdrawns_total: Double,
          color: String,
          gender: Int,
+         token: String,
          monthly: [Double],
          daily:[Double],
          timely: [Double]) {
         
         self.userID             = userID
+        self.main_user_id       = main_user_id
         self.firstName          = firstName
         self.lastName           = lastName
         self.email              = email
@@ -112,6 +119,7 @@ class User: NSObject, NSCoding {
         self.withdrawns_total   = withdrawns_total
         self.color              = color
         self.gender             = gender
+        self.token              = token
         self.monthly_history    = monthly
         self.daily_history      = daily
         self.timely_history     = timely
@@ -120,6 +128,7 @@ class User: NSObject, NSCoding {
     
     init(json: [String: Any]) {
         self.userID             = json[USER.ID] as? Int ?? 0
+        self.main_user_id       = json[USER.MAIN_USER_ID] as? Int ?? 0
         self.firstName          = json[USER.FIRST_NAME] as? String ?? ""
         self.lastName           = json[USER.LAST_NAME] as? String ?? ""
         self.email              = json[USER.EMAIL] as? String ?? ""
@@ -130,7 +139,7 @@ class User: NSObject, NSCoding {
         self.birthday           = json[USER.BIRTHDAY] as? String ?? ""
         self.privateOn          = json[USER.PRIVATE_ON] as? Int ?? 0
         self.bio                = json[USER.BIO]        as? String ?? ""
-        
+        self.token              = json[USER.TOKEN]      as? String ?? ""
 
         self.total_amount       = json[USER.TOTAL_AMOUNT] as? Int ?? 0
         
@@ -193,6 +202,7 @@ class User: NSObject, NSCoding {
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(self.userID, forKey: USER.ID)
+        aCoder.encode(self.main_user_id, forKey: USER.MAIN_USER_ID)
         aCoder.encode(self.firstName, forKey: USER.FIRST_NAME)
         aCoder.encode(self.lastName, forKey: USER.LAST_NAME)
         aCoder.encode(self.email, forKey: USER.EMAIL)
@@ -226,6 +236,7 @@ class User: NSObject, NSCoding {
         aCoder.encode(self.withdrawns_total, forKey: USER.WITHDRAWNS_TOTAL)
         aCoder.encode(self.color, forKey: USER.COLOR)
         aCoder.encode(self.gender, forKey: USER.GENDER)
+        aCoder.encode(self.token, forKey: USER.TOKEN)
         
         aCoder.encode(self.monthly_history, forKey: USER.MONTHLY)
         aCoder.encode(self.daily_history, forKey: USER.DAILY)
@@ -235,6 +246,7 @@ class User: NSObject, NSCoding {
     public convenience required init?(coder aDecoder: NSCoder) {
         
         let userId          = aDecoder.decodeObject(forKey: USER.ID) as! Int
+        let main_user_id          = aDecoder.decodeObject(forKey: USER.MAIN_USER_ID) as! Int
         let userAvatar      = aDecoder.decodeObject(forKey: USER.PHOTO) as? String ?? ""
         let userFirstName   = aDecoder.decodeObject(forKey: USER.FIRST_NAME) as? String ?? ""
         let userLastName    = aDecoder.decodeObject(forKey: USER.LAST_NAME) as? String ?? ""
@@ -270,6 +282,7 @@ class User: NSObject, NSCoding {
         
         let color           = aDecoder.decodeObject(forKey: USER.COLOR) as? String ?? "FFFFFF"
         let gender          = aDecoder.decodeInteger(forKey: USER.GENDER)
+        let token           = aDecoder.decodeObject(forKey: USER.TOKEN) as? String ?? ""
         
         let monthly         = aDecoder.decodeObject(forKey: USER.MONTHLY) as? [Double] ?? []
         let daily           = aDecoder.decodeObject(forKey: USER.DAILY) as? [Double] ?? []
@@ -277,9 +290,7 @@ class User: NSObject, NSCoding {
         
 
 
-        self.init(userID: userId, firstName: userFirstName, lastName: userLastName, email: userEmail, username: username, userPhoto: userAvatar, fullname: fullname, phone: phone, birthday: birthday, privateOn: privateOn, bio: bio, followers_count: followers_count, followings_count: followings_count,this_week_followers: this_week_followers, posts_count: posts_count, posts_image_count: image_count, posts_video_count: video_count, view_count_total: view_total, view_count_daily: view_daily,
-                  view_count_weekly: view_weekly,view_count_monthly: view_monthly, view_count_yearly: view_yearly, earning_total: earning_total, earning_daily: earning_daily, earning_monthly: earning_monthly, earning_yearly: earning_yearly, withdrawns_total: withdrawn_total, color: color, gender: gender, monthly: monthly, daily: daily, timely: timely)
-
+        self.init(userID: userId, main_user_id: main_user_id,firstName: userFirstName, lastName: userLastName, email: userEmail, username: username, userPhoto: userAvatar, fullname: fullname, phone: phone, birthday: birthday, privateOn: privateOn, bio: bio, total_amount: total_amount, followers_count: followers_count, followings_count: followings_count,this_week_followers: this_week_followers, posts_count: posts_count, posts_image_count: image_count, posts_video_count: video_count, view_count_total: view_total, view_count_daily: view_daily,         view_count_weekly: view_weekly,view_count_monthly: view_monthly, view_count_yearly: view_yearly, earning_total: earning_total, earning_daily: earning_daily, earning_monthly: earning_monthly, earning_yearly: earning_yearly, withdrawns_total: withdrawn_total, color: color, gender: gender, token: token, monthly: monthly, daily: daily, timely: timely)
     }
     
     func isLogged() -> Bool {

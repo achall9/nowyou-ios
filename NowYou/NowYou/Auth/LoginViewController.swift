@@ -118,6 +118,7 @@ class LoginViewController: UIViewController {
                                 let app = UIApplication.shared.delegate as! AppDelegate
                                 app.window?.rootViewController = UIViewController.viewControllerWith("homeVC")
                             }
+                            
                         } else {
                             self.present(Alert.alertWithText(errorText: "Invalid Credentials."), animated: true, completion: nil)
                         }
@@ -130,5 +131,69 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func actionForgotPwd(_ sender: UIButton) {
+        print("forgot password")
+        
+        let alertController = UIAlertController(title: "Forgot Password", message: "", preferredStyle: UIAlertController.Style.alert)
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Enter your email address"
+        }
+        
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: {
+        (action : UIAlertAction!) -> Void in })
+        
+        
+        let saveAction = UIAlertAction(title: "Reset", style: UIAlertAction.Style.default, handler: { alert -> Void in
+            let tfEmail = alertController.textFields![0] as UITextField
+            let email = tfEmail.text ?? ""
+            
+            if email == "" {
+                self.present(Alert.alertWithText(errorText: "Please input the email address you remember"), animated: true, completion: nil)
+                return
+            }
+            
+            
+            NetworkManager.shared.passwordReset(email: email) { (response) in
+                
+                DispatchQueue.main.async {
+                    switch response {
+                    case .error( _):
+                            self.present(Alert.alertWithText(errorText: "Password Reset is not recognized"), animated: true, completion: nil)
+                            self.txtEmail.text = ""
+                            break
+                        case .success(let data):
+                            do {
+                                let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                
+                                if let jsonObject = jsonRes as? [String: AnyObject] {
+                                    
+                                    if let success = jsonObject["success"] as? String {
+                                        self.present(Alert.alertWithTextInfo(errorText: success), animated: true, completion: nil)
+                                    } else if let failure = jsonObject["failure"] as? String {
+                                        self.present(Alert.alertWithText(errorText: failure), animated: true, completion: nil)
+                                    }
+                                }
+                            } catch {
+                                
+                            }
+                            break
+                    }
+                }
+            }
+            
+        })
+        
+       
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+        
+        
+    }
+    
     
 }

@@ -33,6 +33,7 @@ class Alert: NSObject {
         return alertController
     }
     
+    
     class func alertWithTextInfo(errorText: String?,
                                  title: String                        = "",
                                  cancelTitle: String                  = "OK",

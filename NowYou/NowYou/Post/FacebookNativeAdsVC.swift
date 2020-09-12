@@ -33,8 +33,7 @@ class FacebookNativeAdsVC: UIViewController {
         // While you are using this temporary code you will only get test ads and if you release
         // your code like this to the App Store your users will not receive ads (you will get a no fill error).
         
-        
-        self.nativeAd = FBNativeAd.init(placementID: FBADS.PLACEMENT_ID)
+        self.nativeAd = FBNativeAd.init(placementID: FBADS.NATIVE_PLACEMENT_ID)
         self.nativeAd.delegate = self
         self.nativeAd.loadAd()
     }
@@ -53,7 +52,6 @@ extension FacebookNativeAdsVC: FBNativeAdDelegate, FBMediaViewDelegate {
         self.adCoverMediaView.delegate = self
         nativeAd.downloadMedia()
         self.nativeAd = nativeAd
-        
         self.showNativeAd()
     }
     

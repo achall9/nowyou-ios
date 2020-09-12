@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftCharts
+import Braintree
 
 enum MetricsMode {
     case DAILY
@@ -42,6 +43,9 @@ class MetricsViewController: BaseViewController {
     
     @IBOutlet weak var btnCloseTutor: UIButton!
     fileprivate var chart: Chart?
+    
+    
+    var braintreeClient: BTAPIClient!
     
     let sideSelectorHeight: CGFloat = 50
     
@@ -145,7 +149,7 @@ class MetricsViewController: BaseViewController {
         segView.selectedIndex = 0
         
         loadUserInfo()
-
+        initBrainTree()
         loadCashInfo()
         
         segView.layer.borderColor = UIColor(hexValue: 0x979797).withAlphaComponent(0.2).cgColor
@@ -169,6 +173,10 @@ class MetricsViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(openTutor(notification:)), name: .openTutorboardNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(closeTutor(notification:)), name: .closeTutorboardNotification, object: nil)
+    }
+    
+    func initBrainTree() {
+        self.braintreeClient = BTAPIClient(authorization: "sandbox_csqhfs5n_j75yqq5gt9vtp55x")
     }
     
     @objc func openTutor(notification: Notification){
@@ -517,10 +525,65 @@ class MetricsViewController: BaseViewController {
     }
     
     @IBAction func onCashout(_ sender: Any) {
-        let stripeCustomeAccountId = UserDefaults.standard.object(forKey:"StripeCustomAccountId") as? String
-        if stripeCustomeAccountId == "Connect Error"{
-            return
+        
+        let alert = UIAlertController(title: "Cash Out", message: "Please Select an Option", preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "PayPal", style: .default , handler:{ (UIAlertAction)in
+            self.paypalWidthdraw()
+        }))
+
+        alert.addAction(UIAlertAction(title: "Stripe", style: .default , handler:{ (UIAlertAction)in
+            self.stripeWidthdraw()
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel , handler:{ (UIAlertAction)in
+            self.dismiss(animated: true, completion: nil)
+        }))
+
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+    }
+    
+    func paypalWidthdraw() {
+        let paypalDriver = BTPayPalDriver(apiClient: self.braintreeClient)
+        paypalDriver.viewControllerPresentingDelegate = self
+        paypalDriver.appSwitchDelegate = self
+        
+        
+        // Specify the transaction amount here. "2.32" is used in this example.
+        let request = BTPayPalRequest(amount: "2.32")
+        request.currencyCode = "USD" // Optional; see BTPayPalRequest.h for more options
+
+        paypalDriver.requestOneTimePayment(request) { (tokenizedPayPalAccount, error) in
+            if let tokenizedPayPalAccount = tokenizedPayPalAccount {
+                print("Got a nonce: \(tokenizedPayPalAccount.nonce)")
+
+                // Access additional information
+                let email = tokenizedPayPalAccount.email
+                let firstName = tokenizedPayPalAccount.firstName
+                let lastName = tokenizedPayPalAccount.lastName
+                let phone = tokenizedPayPalAccount.phone
+
+                // See BTPostalAddress.h for details
+                let billingAddress = tokenizedPayPalAccount.billingAddress
+                let shippingAddress = tokenizedPayPalAccount.shippingAddress
+            } else if let error = error {
+                // Handle error here...
+            } else {
+                // Buyer canceled payment approval
+            }
         }
+    }
+    
+    
+    
+    
+    func stripeWidthdraw() {
+        let stripeCustomeAccountId = UserDefaults.standard.object(forKey:"StripeCustomAccountId") as? String
+//        if stripeCustomeAccountId == "Connect Error"{
+//            return
+//        }
         
         let storyboard = UIStoryboard(name: "withdraw", bundle: nil)
         if stripeCustomeAccountId == ""{
@@ -533,6 +596,45 @@ class MetricsViewController: BaseViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
+}
+
+
+extension MetricsViewController: BTViewControllerPresentingDelegate, BTAppSwitchDelegate {
+    func paymentDriver(_ driver: Any, requestsPresentationOf viewController: UIViewController) {
+        present(viewController, animated: true, completion: nil)
+    }
+    
+    func paymentDriver(_ driver: Any, requestsDismissalOf viewController: UIViewController) {
+        viewController.dismiss(animated: true, completion: nil)
+    }
+    
+    func appSwitcherWillPerformAppSwitch(_ appSwitcher: Any) {
+        showLoadingUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(hideLoadingUI), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    func appSwitcher(_ appSwitcher: Any, didPerformSwitchTo target: BTAppSwitchTarget) {
+        
+    }
+    
+    func appSwitcherWillProcessPaymentInfo(_ appSwitcher: Any) {
+        hideLoadingUI()
+    }
+    
+    
+    func showLoadingUI() {
+        // show the loading bar
+        
+    }
+    
+    @objc
+    func hideLoadingUI() {
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        // hide the loading bar
+        
+    }
+    
+    
 }
 
 extension Double
@@ -551,3 +653,4 @@ extension Double
     }
     
 }
+

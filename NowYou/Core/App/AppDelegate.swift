@@ -20,6 +20,10 @@ import Stripe
 //import Appodeal
 import StackConsentManager
 
+import Braintree
+
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -44,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
 
         //GADMobileAds.sharedInstance().start(completionHandler: nil)
-        // Override point for customization after application launch.
+        //Override point for customization after application launch.
         //initializeAppodealSDK()
 
         loadFramework()
@@ -53,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationManager.shared.initRun()
         NotificationManager.shared.notificationDelegate = self
         IQKeyboardManager.shared.enable = true
-        
+        BTAppSwitch.setReturnURLScheme("com.eduard.NowYou.toplev.payments")
         //Allow audio to play from other apps
         if AVAudioSession.sharedInstance().isOtherAudioPlaying {
         _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient, options: AVAudioSession.CategoryOptions.mixWithOthers)
@@ -75,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //play sound in recorded videos
-//        try! AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+        //try! AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
         IQKeyboardManager.shared.disabledToolbarClasses.insert(PhotoEditorViewController.self, at: 0)
         IQKeyboardManager.shared.disabledToolbarClasses.insert(CommentViewController.self, at: 1)
         IQKeyboardManager.shared.disabledToolbarClasses.insert(RadioDetailsViewController.self, at: 2)
@@ -92,6 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        synchroniseConsent()
         return true
     }
+    
 //--- Appodeal : start
     // MARK: Appodeal Initialization
     /*
@@ -136,6 +141,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         
         return true
+    }
+    
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if url.scheme?.localizedCaseInsensitiveCompare("com.eduard.NowYou.toplev.payments") == .orderedSame {
+            return BTAppSwitch.handleOpen(url, options: options)
+        }
+        return false
     }
 
     // Respond to Universal Links
@@ -310,6 +323,7 @@ extension Notification.Name {
     static let radioIsOnBroadcastingNotification = Notification.Name("RadioIsOnBroadcastingNotification")
     static let radioIsOnBroadcastingToFeedNotification =
         Notification.Name("RadioIsOnBroadcastingToFeedNotification")
+    static let taggedUserNotification = Notification.Name("TaggedUserNotification")
 }
 
 extension AppDelegate: STKConsentManagerDisplayDelegate {

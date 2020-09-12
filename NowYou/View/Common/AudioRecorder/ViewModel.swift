@@ -57,7 +57,9 @@ final class ViewModel {
     }
 
     func stopRecording() throws {
-        try AudioRecorderManager.shared.stopRecording()
+        if(AudioRecorderManager.shared.isRunning){
+            try AudioRecorderManager.shared.stopRecording()
+        }
     }
 
     func resetRecording() throws {

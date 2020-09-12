@@ -60,9 +60,6 @@ class SettingsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        initUI()
-        loadUserInfo()
         
         btnColor.layer.shadowColor = UIColor.black.cgColor
         btnColor.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
@@ -84,6 +81,10 @@ class SettingsViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        
+        // Do any additional setup after loading the view.
+        initUI()
+        loadUserInfo()
         if let color = UserManager.currentUser()?.color {
             btnColor.backgroundColor = UIColor(hexString: color)
         } else {
@@ -469,6 +470,12 @@ class SettingsViewController: BaseViewController {
         self.present(colorVC, animated: true, completion: nil)
     }
     
+    @IBAction func onChooseAccount(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChooseAccountVC") as! ChooseAccountVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
     @IBAction func onChangePhoto(_ sender: Any) {
         // show picker
         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
@@ -559,10 +566,9 @@ class SettingsViewController: BaseViewController {
             }
         }
     }
-    
-    
 
 }
+
 
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -574,8 +580,8 @@ extension SettingsViewController: UITextFieldDelegate {
     }
 }
 
+
 extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
 //--- Crop image
     func presentCropViewController(_ profileImg : UIImage) {
         let image: UIImage = profileImg
@@ -584,16 +590,22 @@ extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationC
         self.present(cropViewController, animated: true, completion: nil)
     }
 //--- End Crop image
+    
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
      
         picker.dismiss(animated: false, completion: nil)
         
+        
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.imgProfile.image = pickedImage.fixedOrientation()?.resized(toWidth: 300)
         }
+        
         presentCropViewController(self.imgProfile.image!)
         photoUpdated = true
     }
+    
+    
 }
 
 //--- Crop image
