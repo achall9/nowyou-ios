@@ -42,6 +42,20 @@ class NetworkManager: NSObject {
 //        reachability?.stopNotifier()
     }
     
+    func is_email_phone_duplicate(email: String, phone: String, completion: ((ServerResponse)->())?) {
+        let rest = RestRouter.is_email_phone_duplicate(email: email, phone: phone)
+        
+        var request = URLRequest(url: rest.url)
+        
+        request.httpMethod = rest.method
+        request.httpBody = rest.body
+        
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        call(request, completion: completion)
+    }
+    
     func login(email: String, password: String, completion: ((ServerResponse)->())?) {
         let rest = RestRouter.login(email: email, password: password)
         

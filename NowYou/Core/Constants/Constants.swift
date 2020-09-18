@@ -23,7 +23,8 @@ class API {
 //    static let SERVER                   = "http://foodspecials.us/api"
 
     static let SERVER_ADDR              = "http://192.168.1.194/bucketapp.com/"
-    
+    // know if email/phone is duplicate or not
+    static let IS_EMAIL_PHONE_DUPLICATE = "/is_email_phone_duplicate"
     // auth
     static let REGISTER                 = "/auth/register"
     static let LOGIN                    = "/auth/login"

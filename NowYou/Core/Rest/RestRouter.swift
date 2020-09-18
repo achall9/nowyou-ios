@@ -18,6 +18,8 @@ enum RestRouter: RestAPIProtocol {
     case getNotifications
     // get all users
     case getAllUsers(pageNum: Int)
+    // know if email/phone is duplicate or not
+    case is_email_phone_duplicate(email: String, phone: String)
     // auth
     case login(email: String, password: String)
     case passwordReset(email: String)
@@ -87,6 +89,8 @@ enum RestRouter: RestAPIProtocol {
 
     var url: URL {
         switch self {
+        case .is_email_phone_duplicate:
+            return URL(string: API.SERVER + API.IS_EMAIL_PHONE_DUPLICATE)!
         case .login:
             return URL(string: API.SERVER + API.LOGIN)!
         case .passwordReset:
@@ -208,6 +212,9 @@ enum RestRouter: RestAPIProtocol {
     
     var method: String {
         switch self {
+        case .is_email_phone_duplicate:
+            return "POST"
+            
         case .login:
             return "POST"
         case .passwordReset:
@@ -336,6 +343,8 @@ enum RestRouter: RestAPIProtocol {
     
     var param: Parameters {
         switch self {
+        case .is_email_phone_duplicate:
+            return [:]
         case .login:
             return [:]
         case .passwordReset:
@@ -481,6 +490,21 @@ enum RestRouter: RestAPIProtocol {
     
     var body: Data? {
         switch self {
+        case .is_email_phone_duplicate(let email, let phone):
+            
+            var data = Data()
+            
+            
+            let param = ["email": email, "phone": phone]
+            do {
+                data = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
+                return data
+            } catch let error {
+            }
+            
+            return nil
+            
+            
         case .login(let email, let password):
             var data = Data()
             

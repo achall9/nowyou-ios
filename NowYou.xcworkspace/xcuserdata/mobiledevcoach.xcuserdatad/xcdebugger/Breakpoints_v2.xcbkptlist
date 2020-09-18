@@ -46,8 +46,8 @@
             filePath = "NowYou/Core/Manager/NetworkManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "createAdditionalAccount(main_user_id:first_name:last_name:user_name:password:bio:photo:completion:)"
             landmarkType = "7">
          </BreakpointContent>
