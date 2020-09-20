@@ -108,9 +108,11 @@ class LoginViewController: UIViewController {
                                 
                                 let accounts = jsonObject["accounts"] as? [[String: Any]]
                                 
+                                self.users.removeAll()
+                                self.saveUserType()
                                 if accounts?.count == 1 {
                                     self.doLogin()
-                                } else {
+                                } else if accounts!.count > 1 {
                                     for account in accounts! {
                                         let user = User(json: account)
                                         self.users.append(user)
@@ -120,6 +122,8 @@ class LoginViewController: UIViewController {
                                     vc.users = self.users
                                     self.navigationController?.pushViewController(vc, animated: true)
                                     
+                                } else {
+                                    self.present(Alert.alertWithText(errorText: "Invalid username or password."), animated: true, completion: nil)
                                 }
                                 
                                 
@@ -163,6 +167,7 @@ class LoginViewController: UIViewController {
                                     let encodedUser = NSKeyedArchiver.archivedData(withRootObject: user)
                                     UserDefaults.standard.set(encodedUser, forKey: USER_INFO)
                                     
+                                    
                                     NotificationManager.shared.storeToken()
                                     DispatchQueue.main.async {
                                         let app = UIApplication.shared.delegate as! AppDelegate
@@ -179,6 +184,14 @@ class LoginViewController: UIViewController {
                     break
                 }
             }
+        }
+    }
+    
+    func saveUserType() {
+        if txtEmail.text!.contains("@") {
+            UserManager.saveUserType(userLoggedinType: "email")
+        } else {
+            UserManager.saveUserType(userLoggedinType: "phone_username")
         }
     }
     

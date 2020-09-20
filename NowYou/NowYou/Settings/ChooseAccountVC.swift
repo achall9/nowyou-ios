@@ -36,16 +36,66 @@ class ChooseAccountVC: UIViewController {
             Utils.showSpinner()
         }
         
-        var main_user_id = UserManager.currentUser()?.userID
-        if UserManager.currentUser()?.main_user_id != nil &&
-            UserManager.currentUser()?.main_user_id != 0 {
-            main_user_id = UserManager.currentUser()?.main_user_id
+        var email = ""
+        var phone = ""
+        
+        if UserManager.getUserType() == "phone_username" {
+            email = UserManager.currentUser()!.phone!
+            phone = UserManager.currentUser()!.phone!
+        } else {
+            email = UserManager.currentUser()!.email!
+            phone = UserManager.currentUser()!.email!
         }
         
-        let main_userId = "\(main_user_id ?? 0)"
         
+        NetworkManager.shared.is_email_phone_duplicate(email: email, phone: phone) { (response) in
+            DispatchQueue.main.async {
+                Utils.hideSpinner()
+            
+                switch response {
+                    case .error(let error):
+                        self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                        break
+                    case .success(let data):
+                        do {
+                            let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                            
+                            if let jsonObject = jsonRes as? [String: Any] {
+                                
+                                let accounts = jsonObject["accounts"] as? [[String: Any]]
+                                
+                                self.users.removeAll()
+                                
+                                for account in accounts! {
+                                    let user = User(json: account)
+                                    self.users.append(user)
+                                }
+                                
+                                self.tableView.reloadData()
+                                
+                                
+                            } else {
+                               self.present(Alert.alertWithText(errorText: "Invalid Credentials."), animated: true, completion: nil)
+                           }
+                        } catch {
+                            
+                        }
+                    break
+                }
+            }
+        }
+            
+       /*
+       var main_user_id = UserManager.currentUser()?.userID
+       if UserManager.currentUser()?.main_user_id != nil &&
+           UserManager.currentUser()?.main_user_id != 0 {
+           main_user_id = UserManager.currentUser()?.main_user_id
+       }
+       let main_userId = "\(main_user_id ?? 0)"
+       */
+            
+        /*
         NetworkManager.shared.getAdditionalAccounts(main_user_id: main_userId) { (response) in
-                
             DispatchQueue.main.async {
                 switch response {
                     case .error(let error):
@@ -85,7 +135,8 @@ class ChooseAccountVC: UIViewController {
                     self.tableView.reloadData()
                 }
             }  // End DispatchQueue.main.async {
-        }
+        } // End NetworkManager
+        */
         
     }
     
