@@ -102,7 +102,7 @@
 		18131E2021FF170E0095C1CA /* Radio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18131BAD21FF17060095C1CA /* Radio.swift */; };
 		18131E2121FF170E0095C1CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18131BAF21FF17060095C1CA /* User.swift */; };
 		18131E2221FF170E0095C1CA /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18131BB121FF17060095C1CA /* Media.swift */; };
-		18131E2321FF170E0095C1CA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18131BB321FF17080095C1CA /* Constants.swift */; };
+		18131E2321FF170E0095C1CA /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18131BB321FF17080095C1CA /* APIConstants.swift */; };
 		18131E2421FF170E0095C1CA /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18131BB421FF17080095C1CA /* GridLayout.swift */; };
 		18131E2521FF170E0095C1CA /* GradientView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18131BB521FF17080095C1CA /* GradientView1.swift */; };
 		18131E2621FF170E0095C1CA /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18131BB721FF17080095C1CA /* UIImage+Resize.swift */; };
@@ -182,6 +182,7 @@
 		8239DBF523D0CCF700C13E7B /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DBF423D0CCF700C13E7B /* NotificationManager.swift */; };
 		823BC1A6248A9439002AC75C /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823BC1A5248A9439002AC75C /* UIFont+Extension.swift */; };
 		82481FDB23DA88F2006F4F0E /* LogoAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82481FDA23DA88F2006F4F0E /* LogoAnimationView.swift */; };
+		8249BAEA251943AB006BB275 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8249BAE9251943AB006BB275 /* Constant.swift */; };
 		824FFCC823D9E7DA0032A3AE /* FollowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FFCC723D9E7DA0032A3AE /* FollowViewController.swift */; };
 		824FFCCA23D9EB990032A3AE /* FollowContatinerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824FFCC923D9EB990032A3AE /* FollowContatinerViewController.swift */; };
 		824FFCD223D9F3350032A3AE /* RadioCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 824FFCD023D9F3350032A3AE /* RadioCategoryCell.xib */; };
@@ -406,7 +407,7 @@
 		18131BAD21FF17060095C1CA /* Radio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Radio.swift; sourceTree = "<group>"; };
 		18131BAF21FF17060095C1CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		18131BB121FF17060095C1CA /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
-		18131BB321FF17080095C1CA /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		18131BB321FF17080095C1CA /* APIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		18131BB421FF17080095C1CA /* GridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		18131BB521FF17080095C1CA /* GradientView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView1.swift; sourceTree = "<group>"; };
 		18131BB721FF17080095C1CA /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
@@ -488,6 +489,7 @@
 		8239DBF423D0CCF700C13E7B /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		823BC1A5248A9439002AC75C /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		82481FDA23DA88F2006F4F0E /* LogoAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoAnimationView.swift; sourceTree = "<group>"; };
+		8249BAE9251943AB006BB275 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		824FFCC723D9E7DA0032A3AE /* FollowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowViewController.swift; sourceTree = "<group>"; };
 		824FFCC923D9EB990032A3AE /* FollowContatinerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowContatinerViewController.swift; sourceTree = "<group>"; };
 		824FFCD023D9F3350032A3AE /* RadioCategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RadioCategoryCell.xib; sourceTree = "<group>"; };
@@ -1457,8 +1459,9 @@
 		FDACB2AC23E439EA00B7A9C0 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				18131BB321FF17080095C1CA /* Constants.swift */,
+				18131BB321FF17080095C1CA /* APIConstants.swift */,
 				18131BD021FF17080095C1CA /* Utils.swift */,
+				8249BAE9251943AB006BB275 /* Constant.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1710,6 +1713,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				183662EA226C6DC300189E0C /* ColorPickerViewController.swift in Sources */,
+				8249BAEA251943AB006BB275 /* Constant.swift in Sources */,
 				18131E3221FF170E0095C1CA /* SnapInAttributesAnimator.swift in Sources */,
 				8254CDC923DA16BF00F7167F /* FollowingsTableViewController.swift in Sources */,
 				18481C28221BF20B0061D2AB /* TagSearchCell.swift in Sources */,
@@ -1870,7 +1874,7 @@
 				18131C0221FF17090095C1CA /* ProfileHeaderView.swift in Sources */,
 				18131BE621FF17090095C1CA /* Interactor.swift in Sources */,
 				18481C21221BDADE0061D2AB /* EmojiCollectionHeaderView.swift in Sources */,
-				18131E2321FF170E0095C1CA /* Constants.swift in Sources */,
+				18131E2321FF170E0095C1CA /* APIConstants.swift in Sources */,
 				18131C0321FF17090095C1CA /* ProfilePostCell.swift in Sources */,
 				82050E0E2410A65700873357 /* temp.swift in Sources */,
 				FD94F4EC23E9EA21006E06C8 /* Settings.swift in Sources */,
