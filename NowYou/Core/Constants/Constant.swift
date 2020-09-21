@@ -50,11 +50,12 @@ struct Constant {
                 }
             }
             static var token: String {
-                    return "\(baseAuth)/token"
+                return "\(baseAuth)/token"
             }
             static var payout: String{
                 return "\(base)/payouts"
             }
             
         }
+    }
 }
