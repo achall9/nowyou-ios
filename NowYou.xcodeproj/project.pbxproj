@@ -232,7 +232,6 @@
 		D6487DE52514EE480090F1BE /* LoginMultipleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6487DE42514EE480090F1BE /* LoginMultipleViewController.swift */; };
 		D64909A124C0528E00EE9AC7 /* KVVideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */; };
 		D64909A324C0542E00EE9AC7 /* silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D64909A224C0542E00EE9AC7 /* silence.mp3 */; };
-		D673C4C524EA06F000F08335 /* FacebookNativeAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */; };
 		D6E1BA6424E5EDC4007668D0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6324E5EDC4007668D0 /* FBSDKCoreKit.framework */; };
 		D6E1BA6624E5EDD8007668D0 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6524E5EDD8007668D0 /* FBAudienceNetwork.framework */; };
 		D6FF66B924DD9A0C007769E9 /* NYImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FF66B824DD9A0C007769E9 /* NYImage.swift */; };
@@ -537,7 +536,6 @@
 		D6487DE42514EE480090F1BE /* LoginMultipleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginMultipleViewController.swift; sourceTree = "<group>"; };
 		D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVVideoManager.swift; sourceTree = "<group>"; };
 		D64909A224C0542E00EE9AC7 /* silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = silence.mp3; sourceTree = "<group>"; };
-		D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookNativeAdsVC.swift; sourceTree = "<group>"; };
 		D6E1BA6324E5EDC4007668D0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		D6E1BA6524E5EDD8007668D0 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		D6FF66B824DD9A0C007769E9 /* NYImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYImage.swift; sourceTree = "<group>"; };
@@ -827,7 +825,6 @@
 				181318C321FF16FC0095C1CA /* PostViewController.swift */,
 				18CC3F15228E9E4500151337 /* StoryPlayVC.swift */,
 				827F1AD1248665F80053A861 /* PostPlayVC.swift */,
-				D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -1847,7 +1844,6 @@
 				18131BE921FF17090095C1CA /* ColorsCollectionViewDelegate.swift in Sources */,
 				18131C0A21FF17090095C1CA /* PostViewController.swift in Sources */,
 				18131BFB21FF17090095C1CA /* WatermarkCompositionInstruction.swift in Sources */,
-				D673C4C524EA06F000F08335 /* FacebookNativeAdsVC.swift in Sources */,
 				18131BFE21FF17090095C1CA /* CameraRollViewController.swift in Sources */,
 				FDEDCD6923E27AF900850DAE /* AppManager.swift in Sources */,
 				18A950D8220222800044840C /* VideoFrameCell.swift in Sources */,

@@ -246,6 +246,7 @@ class FBADS {
     static let BANNER_PLACEMENT_ID = "310323296837472_322663118936823"
 }
 
+
 let WRONG_PHONE_NUMBER       = "Please enter valid phone number."
 let WRONG_BIRTH              = "Please choose your birthday."
 let WRONG_EMAIL              = "Please provide a valid email."
