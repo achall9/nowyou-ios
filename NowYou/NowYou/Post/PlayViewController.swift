@@ -109,6 +109,8 @@ class PlayViewController: EmbeddedViewController {
     var longPress = false
     
     var bannerAd: FBAdView!
+    var lblBannerReview: UILabel!
+    var failedOfBanner: Bool = false
     
     var original_user_id : Int? = 0
     var sharer_id : Int? = 0
@@ -193,6 +195,11 @@ class PlayViewController: EmbeddedViewController {
         self.bannerAd.frame = CGRect.init(x: 0, y: self.view.bounds.height - 80, width: self.view.bounds.width, height: 50)
         self.bannerAd.delegate = self
         self.bannerAd.loadAd()
+        
+        self.lblBannerReview = UILabel.init(frame: CGRect.init(x: 0, y: self.view.bounds.height - 80, width: self.view.bounds.width, height: 50))
+        self.lblBannerReview.text = "Reviewing ads by Facebook team"
+        self.lblBannerReview.textAlignment = .center
+        self.lblBannerReview.backgroundColor = .white
     }
     
        @objc func openTutor(notification: Notification){
@@ -978,13 +985,15 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
            
         if indexPath.row % 3 == 0 && indexPath.row != 0 {
-            
+            self.lblBannerReview.isHidden = true
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FacebookAdsCell", for: indexPath) as! FacebookAdsCell
-            
             return cell
             
         } else {
-
+            if failedOfBanner {
+                self.lblBannerReview.isHidden = false
+            }
+             
              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PostViewCell
                  // remove image
              
@@ -1280,10 +1289,7 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         print ("current page = \(currentPage)")
 
         if currentPage < medias.count {
-//            if currentPage != 0 && currentPage % 3 == 0 {
-//                let facebookNativeAdsVC = self.storyboard?.instantiateViewController(withIdentifier: "FacebookNativeAdsVC") as! FacebookNativeAdsVC
-//                       self.navigationController?.pushViewController(facebookNativeAdsVC, animated: false)
-//            }
+            
             
             //openAd(currentPage)
             //openBannerAd()
@@ -1835,6 +1841,7 @@ class FacebookAdsCell: UICollectionViewCell {
     @IBOutlet weak var sponsoredLabel: UILabel!
     
     @IBOutlet weak var adView: UIView!
+    @IBOutlet weak var lblReview: UILabel!
     
     
     var nativeAd: FBNativeAd!
@@ -1860,10 +1867,9 @@ class FacebookAdsCell: UICollectionViewCell {
     
     
     func initAds() {
-        self.nativeAd = FBNativeAd.init(placementID: FBADS.NATIVE_PLACEMENT_ID)
         
+        self.nativeAd = FBNativeAd.init(placementID: FBADS.NATIVE_PLACEMENT_ID)
         self.nativeAd.delegate = self
-       
         self.nativeAd.loadAd()
     }
     
@@ -1875,7 +1881,7 @@ class FacebookAdsCell: UICollectionViewCell {
 extension FacebookAdsCell: FBNativeAdDelegate, FBMediaViewDelegate {
     func nativeAdDidLoad(_ nativeAd: FBNativeAd) {
         //self.adCoverMediaView.delegate = self
-        
+        self.lblReview.isHidden = true
         //nativeAd.downloadMedia()
         self.nativeAd = nativeAd
         
@@ -1893,14 +1899,13 @@ extension FacebookAdsCell: FBNativeAdDelegate, FBMediaViewDelegate {
             self.adTitleLabel.text = self.nativeAd.advertiserName
             self.sponsoredLabel.text = self.nativeAd.sponsoredTranslation
             self.adCallToActionButton.setTitle(self.nativeAd.callToAction, for: .normal)
-             */
+            */
             
             let adView: FBNativeAdView! = FBNativeAdView.init(nativeAd: self.nativeAd, with: .genericHeight300)
             self.adView.addSubview(adView)
             adView.frame = self.adView.frame
         }
     }
-    
     
     func nativeAdDidClick(_ nativeAd: FBNativeAd) {
         print("Native ad was clicked.")
@@ -1914,9 +1919,9 @@ extension FacebookAdsCell: FBNativeAdDelegate, FBMediaViewDelegate {
         print("Native ad impression is being captured")
     }
     
-    
     func nativeAd(_ nativeAd: FBNativeAd, didFailWithError error: Error) {
         print(error.localizedDescription)
+        self.lblReview.isHidden = false
         print("Native ad failed to load with error")
     }
     
@@ -1939,10 +1944,14 @@ extension PlayViewController: FBAdViewDelegate {
     }
     
     func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        self.view.addSubview(self.lblBannerReview)
+        self.lblBannerReview.isHidden = false
+        self.failedOfBanner = true
         print("banner ads loading failed")
     }
     
     func adViewDidLoad(_ adView: FBAdView) {
+        self.lblBannerReview.isHidden = true
         self.showBanner()
     }
     

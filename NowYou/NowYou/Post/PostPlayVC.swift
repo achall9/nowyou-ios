@@ -15,6 +15,11 @@ import Player
 import CRRefresh
 import SwiftyJSON
 
+
+import FBAudienceNetwork
+
+
+
 class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -73,6 +78,10 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
     var original_user_id : Int? = 0
     var sharer_id : Int? = 0
    
+    var bannerAd: FBAdView!
+    var lblBannerReview: UILabel!
+    
+    
     // MARK: object lifecycle
     deinit {
         self.videoPlayer.willMove(toParent: nil)
@@ -95,6 +104,7 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
         setupGesture()
         listenVolumeButton()
         initVideoPlayer()
+        initBannerAds()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -124,6 +134,26 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
         try? audioSession.setActive(true)
         
         UIApplication.shared.isStatusBarHidden = false
+    }
+    
+    func initBannerAds() {
+        /*
+        self.adView = [[FBAdView alloc] initWithPlacementID:@"YOUR_PLACEMENT_ID"
+                                                     adSize:kFBAdSizeHeight250Rectangle
+                                         rootViewController:self];
+        self.adView.frame = CGRectMake(0, 0, 320, 250);
+        self.adView.delegate = self;
+        [self.adView loadAd];
+         */
+        self.bannerAd = FBAdView.init(placementID: FBADS.BANNER_PLACEMENT_ID, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        self.bannerAd.frame = CGRect.init(x: 0, y: self.view.bounds.height - 80, width: self.view.bounds.width, height: 50)
+        self.bannerAd.delegate = self
+        self.bannerAd.loadAd()
+        
+        self.lblBannerReview = UILabel.init(frame: CGRect.init(x: 0, y: self.view.bounds.height - 80, width: self.view.bounds.width, height: 50))
+        self.lblBannerReview.text = "Reviewing ads by Facebook team"
+        self.lblBannerReview.textAlignment = .center
+        self.lblBannerReview.backgroundColor = .white
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -315,7 +345,6 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
     }
     
     @objc func didSingleTapCollectionView(gesture: UITapGestureRecognizer) {
-
         
     }
     
@@ -641,7 +670,12 @@ extension PostPlayVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+        if indexPath.row % 3 == 0 && indexPath.row != 0 {
+            self.lblBannerReview.isHidden = true
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FacebookAdsCell", for: indexPath) as! FacebookAdsCell
+            return cell
+            
+        } else {
             //------------------
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PostViewCell
             let media = medias[indexPath.row]
@@ -667,8 +701,8 @@ extension PostPlayVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
         
         
         
-        self.original_user_id = media.original_user_id  ?? 0
-        self.sharer_id        = media.userId            ?? 0
+            self.original_user_id = media.original_user_id  ?? 0
+            self.sharer_id        = media.userId            ?? 0
         
         
         
@@ -900,7 +934,9 @@ extension PostPlayVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
             }
             mIndexpathRow = indexPath.row
             return cell
+        }
         //------------------
+        
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
@@ -1308,4 +1344,38 @@ extension PostPlayVC: PlayerPlaybackDelegate {
     func playerPlaybackDidLoop(_ player: Player) {
         
     }
+}
+
+
+
+
+extension PostPlayVC: FBAdViewDelegate {
+    
+    func adViewDidClick(_ adView: FBAdView) {
+        print("banner ads click")
+    }
+    
+    func adViewDidFinishHandlingClick(_ adView: FBAdView) {
+        print("adViewDidFinishHandlingClick")
+    }
+    
+    func adViewWillLogImpression(_ adView: FBAdView) {
+        print("adViewWillLogImpression")
+    }
+    
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        self.view.addSubview(self.lblBannerReview)
+        self.lblBannerReview.isHidden = false
+        print("banner ads loading failed")
+    }
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        self.lblBannerReview.isHidden = true
+        self.showBanner()
+    }
+    
+    func showBanner() {
+        self.view.addSubview(self.bannerAd)
+    }
+    
 }

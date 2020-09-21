@@ -38,6 +38,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "closure #1 in ProfileViewController.userInfoUpdated(notification:):ProfileViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UserManager.currentUser()">
+            </PersistentString>
+            <PersistentString
+               value = "self.lblUsername.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #2 in PlayViewController.actionSharePost(_:):PlayViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -53,17 +64,6 @@
             </PersistentString>
             <PersistentString
                value = "lblUsername.text">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in ProfileViewController.userInfoUpdated(notification:):ProfileViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "UserManager.currentUser()">
-            </PersistentString>
-            <PersistentString
-               value = "self.lblUsername.text">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

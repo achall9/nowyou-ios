@@ -38,6 +38,15 @@ class UserManager: NSObject {
         UserDefaults.standard.synchronize()
     }
     
+    class func saveUserType(userLoggedinType: String) {
+        UserDefaults.standard.set(userLoggedinType, forKey: "UserLoggedinType")
+    }
+    
+    class func getUserType() -> String {
+        let userLoggedinType = UserDefaults.standard.string(forKey: "UserLoggedinType") ?? ""
+        return userLoggedinType
+    }
+    
     class func setPosts(userPosts: [Media]) {
         UserManager.posts = userPosts
     }

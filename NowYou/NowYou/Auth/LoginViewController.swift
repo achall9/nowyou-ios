@@ -18,6 +18,11 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPwd: UITextField!
     
+    
+    
+    var users = [User]()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -87,48 +92,106 @@ class LoginViewController: UIViewController {
             self.view.endEditing(true)
         }
         
-        NetworkManager.shared.login(email: txtEmail.text!, password: txtPwd.text!) { (response) in
-            
+        NetworkManager.shared.is_email_phone_duplicate(email: txtEmail.text!, phone: txtEmail.text!) { (response) in
             DispatchQueue.main.async {
                 Utils.hideSpinner()
-            switch response {
-            case .error(let error):
-                self.present(Alert.alertWithText(errorText: "Login not recognized"), animated: true, completion: nil)
-                self.txtEmail.text = ""
-                self.txtPwd.text = ""
-                break
-            case .success(let data):
-                do {
-                    let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    
-                    if let jsonObject = jsonRes as? [String: AnyObject] {
-                        
-                        if let token = jsonObject["token"] as? String {
-                            TokenManager.saveToken(token: token)
-                        }
-                        
-                        if let userJSON = jsonObject["user"] as? [String: Any] {
-                            print (userJSON)
-                            let user = User(json: userJSON)
-                            let encodedUser = NSKeyedArchiver.archivedData(withRootObject: user)
-                            UserDefaults.standard.set(encodedUser, forKey: USER_INFO)
+                
+                switch response {
+                    case .error(let error):
+                        self.present(Alert.alertWithText(errorText: "Checking email/phone duplication not recognized"), animated: true, completion: nil)
+                        break
+                    case .success(let data):
+                        do {
+                            let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                             
-                            NotificationManager.shared.storeToken()
-                            DispatchQueue.main.async {
-                                let app = UIApplication.shared.delegate as! AppDelegate
-                                app.window?.rootViewController = UIViewController.viewControllerWith("homeVC")
-                            }
+                            if let jsonObject = jsonRes as? [String: Any] {
+                                
+                                let accounts = jsonObject["accounts"] as? [[String: Any]]
+                                
+                                self.users.removeAll()
+                                self.saveUserType()
+                                if accounts?.count == 1 {
+                                    self.doLogin()
+                                } else if accounts!.count > 1 {
+                                    for account in accounts! {
+                                        let user = User(json: account)
+                                        self.users.append(user)
+                                    }
+                                    
+                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginMultipleViewController") as! LoginMultipleViewController
+                                    vc.users = self.users
+                                    self.navigationController?.pushViewController(vc, animated: true)
+                                    
+                                } else {
+                                    self.present(Alert.alertWithText(errorText: "Invalid username or password."), animated: true, completion: nil)
+                                }
+                                
+                                
+                            } else {
+                               self.present(Alert.alertWithText(errorText: "Invalid Credentials."), animated: true, completion: nil)
+                           }
+                        } catch {
                             
-                        } else {
-                            self.present(Alert.alertWithText(errorText: "Invalid Credentials."), animated: true, completion: nil)
                         }
-                    }
-                } catch {
-                    
+                    break
                 }
-                break
+                
             }
+        }
+    }
+    
+    func doLogin() {
+        
+        NetworkManager.shared.login(email: txtEmail.text!, password: txtPwd.text!) { (response) in
+            DispatchQueue.main.async {
+                Utils.hideSpinner()
+                switch response {
+                    case .error(let error):
+                        self.present(Alert.alertWithText(errorText: "Login not recognized"), animated: true, completion: nil)
+                        self.txtEmail.text = ""
+                        self.txtPwd.text = ""
+                        break
+                    case .success(let data):
+                        do {
+                            let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                            
+                            if let jsonObject = jsonRes as? [String: AnyObject] {
+                                
+                                if let token = jsonObject["token"] as? String {
+                                    TokenManager.saveToken(token: token)
+                                }
+                                
+                                if let userJSON = jsonObject["user"] as? [String: Any] {
+                                    print (userJSON)
+                                    let user = User(json: userJSON)
+                                    let encodedUser = NSKeyedArchiver.archivedData(withRootObject: user)
+                                    UserDefaults.standard.set(encodedUser, forKey: USER_INFO)
+                                    
+                                    
+                                    NotificationManager.shared.storeToken()
+                                    DispatchQueue.main.async {
+                                        let app = UIApplication.shared.delegate as! AppDelegate
+                                        app.window?.rootViewController = UIViewController.viewControllerWith("homeVC")
+                                    }
+                                    
+                                } else {
+                                    self.present(Alert.alertWithText(errorText: "Invalid Credentials."), animated: true, completion: nil)
+                                }
+                            }
+                        } catch {
+                            
+                        }
+                    break
+                }
             }
+        }
+    }
+    
+    func saveUserType() {
+        if txtEmail.text!.contains("@") {
+            UserManager.saveUserType(userLoggedinType: "email")
+        } else {
+            UserManager.saveUserType(userLoggedinType: "phone_username")
         }
     }
     

@@ -11,7 +11,7 @@ import CropViewController
 
 class AddAdditionalAccountVC: UIViewController {
 
-    @IBOutlet weak var imgProfile: UIImageView!
+    
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var txtUsername: UITextField!
@@ -28,7 +28,7 @@ class AddAdditionalAccountVC: UIViewController {
     }
     
     func initView() {
-        self.imgProfile.setCircular()
+        //self.imgProfile.setCircular()
     }
     
     
@@ -48,8 +48,59 @@ class AddAdditionalAccountVC: UIViewController {
             let user_name = self.txtUsername.text!
             let password = self.txtPassword.text!
             let bio = self.txtBio.text!
-            let photo = self.imgProfile.image!.pngData()!
+            //let photo = self.imgProfile.image!.pngData()!
             
+            let email = UserManager.currentUser()!.email!
+            let phoneNum = UserManager.currentUser()!.phone!
+            let gender = UserManager.currentUser()!.gender
+            let birthday = UserManager.currentUser()!.birthday!
+            let privateOn = UserManager.currentUser()!.privateOn!
+            
+            NetworkManager.shared.register(first_name: first_name, last_name: last_name, email: email, password: password, phone: phoneNum, device_token: "", birthday: birthday, gender: gender, username: user_name, privateOn: privateOn, bio: bio) { (response) in
+                        DispatchQueue.main.async {
+                            Utils.hideSpinner()
+                            switch response {
+                            case .error(let error):
+                                self.present(Alert.alertWithText(errorText: "Resiger not recognized"), animated: true, completion: nil)
+                                break
+                            case .success(let data):
+                                do {
+                                    let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+
+                                    if let jsonObject = jsonRes as? [String: AnyObject] {
+                                        if let token = jsonObject["token"] as? String {
+                                            TokenManager.saveToken(token: token)
+                                        }
+                                        if let userJSON = jsonObject["user"] as? [String: Any] {
+                                            let user = User(json: userJSON)
+                                            
+                                            let encodedUser = NSKeyedArchiver.archivedData(withRootObject: user)
+                                            UserDefaults.standard.set(encodedUser, forKey: USER_INFO)
+
+                                            NotificationManager.shared.storeToken()
+                                            NetworkManager.shared.follow(userId: 41, completion: { (response) in
+                                                DispatchQueue.main.async {
+                                                    
+                                                    let app = UIApplication.shared.delegate as! AppDelegate
+                                                    app.window?.rootViewController = UIViewController.viewControllerWith("homeVC")
+
+                                                }
+                                            })
+                                            
+                                        } else {
+                                            self.present(Alert.alertWithText(errorText: "Please check internet connection"), animated: true, completion: nil)
+                                            self.navigationController?.popViewController(animated: false)
+                                        }
+                                    }
+                                } catch {
+
+                                }
+                                break
+                            }
+                        }
+                    }
+            
+            /*
             NetworkManager.shared.createAdditionalAccount(main_user_id: main_user_id, first_name: first_name, last_name: last_name, user_name: user_name, password: password, bio: bio, photo: photo) { (response) in
                 
                 DispatchQueue.main.async {
@@ -95,6 +146,7 @@ class AddAdditionalAccountVC: UIViewController {
                 }
                 
             }
+            */
             
         } else {
             self.present(Alert.alertWithTextInfo(errorText: alert), animated: true, completion: nil)
@@ -116,46 +168,6 @@ class AddAdditionalAccountVC: UIViewController {
     }
     
     
-    //MARK: Photo
-    func openCamera() {
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)) {
-            imagePicker.sourceType = UIImagePickerController.SourceType.camera
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-    }
-    
-    func openGallary() {
-        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    
-    
-    @IBAction func changePhotoAction(_ sender: UIButton) {
-        // show picker
-        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: .default)
-        {
-            UIAlertAction in
-            self.openCamera()
-        }
-        let gallaryAction = UIAlertAction(title: "Gallery", style: .default)
-        {
-            UIAlertAction in
-            self.openGallary()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        {
-            UIAlertAction in
-        }
-        
-        // Add the actions
-        imagePicker.delegate = self
-        alert.addAction(cameraAction)
-        alert.addAction(gallaryAction)
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true, completion: nil)
-    }
     
     //MARK: BACK
     @IBAction func backAction(_ sender: UIButton) {
@@ -165,7 +177,7 @@ class AddAdditionalAccountVC: UIViewController {
 
 
 
-
+/*
 extension AddAdditionalAccountVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //--- Crop image
@@ -197,3 +209,4 @@ extension AddAdditionalAccountVC: CropViewControllerDelegate {
     }
 }
 //--- End Crop image
+*/

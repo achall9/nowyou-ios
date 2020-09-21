@@ -232,9 +232,9 @@
 		D621F1842502CA7400BA81DE /* iOSDropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621F1832502CA7400BA81DE /* iOSDropDown.swift */; };
 		D621F18925034D8E00BA81DE /* NY_GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621F18825034D8E00BA81DE /* NY_GradientView.swift */; };
 		D621F18B25054B2500BA81DE /* AddAdditionalAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621F18A25054B2500BA81DE /* AddAdditionalAccountVC.swift */; };
+		D6487DE52514EE480090F1BE /* LoginMultipleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6487DE42514EE480090F1BE /* LoginMultipleViewController.swift */; };
 		D64909A124C0528E00EE9AC7 /* KVVideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */; };
 		D64909A324C0542E00EE9AC7 /* silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D64909A224C0542E00EE9AC7 /* silence.mp3 */; };
-		D673C4C524EA06F000F08335 /* FacebookNativeAdsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */; };
 		D6E1BA6424E5EDC4007668D0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6324E5EDC4007668D0 /* FBSDKCoreKit.framework */; };
 		D6E1BA6624E5EDD8007668D0 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6524E5EDD8007668D0 /* FBAudienceNetwork.framework */; };
 		D6FF66B924DD9A0C007769E9 /* NYImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FF66B824DD9A0C007769E9 /* NYImage.swift */; };
@@ -539,9 +539,9 @@
 		D621F1832502CA7400BA81DE /* iOSDropDown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSDropDown.swift; sourceTree = "<group>"; };
 		D621F18825034D8E00BA81DE /* NY_GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NY_GradientView.swift; sourceTree = "<group>"; };
 		D621F18A25054B2500BA81DE /* AddAdditionalAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdditionalAccountVC.swift; sourceTree = "<group>"; };
+		D6487DE42514EE480090F1BE /* LoginMultipleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginMultipleViewController.swift; sourceTree = "<group>"; };
 		D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVVideoManager.swift; sourceTree = "<group>"; };
 		D64909A224C0542E00EE9AC7 /* silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = silence.mp3; sourceTree = "<group>"; };
-		D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookNativeAdsVC.swift; sourceTree = "<group>"; };
 		D6E1BA6324E5EDC4007668D0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		D6E1BA6524E5EDD8007668D0 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		D6FF66B824DD9A0C007769E9 /* NYImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYImage.swift; sourceTree = "<group>"; };
@@ -832,7 +832,6 @@
 				181318C321FF16FC0095C1CA /* PostViewController.swift */,
 				18CC3F15228E9E4500151337 /* StoryPlayVC.swift */,
 				827F1AD1248665F80053A861 /* PostPlayVC.swift */,
-				D673C4C424EA06F000F08335 /* FacebookNativeAdsVC.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -911,6 +910,7 @@
 				18131B8721FF17020095C1CA /* LoginViewController.swift */,
 				18CC5043220BBBE100C84EA3 /* LaunchViewController.swift */,
 				8256F19C23F592FD003FC445 /* PhoneVerifyViewController.swift */,
+				D6487DE42514EE480090F1BE /* LoginMultipleViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1766,6 +1766,7 @@
 				18131E0621FF170E0095C1CA /* CSIOpusEncoder.m in Sources */,
 				18131C0C21FF17090095C1CA /* RadioViewController.swift in Sources */,
 				18CC50542212D68700C84EA3 /* SwiftlySlider.swift in Sources */,
+				D6487DE52514EE480090F1BE /* LoginMultipleViewController.swift in Sources */,
 				FD44509D2408C73D00ADE179 /* DataBaseManager.swift in Sources */,
 				82481FDB23DA88F2006F4F0E /* LogoAnimationView.swift in Sources */,
 				FD94F4EA23E9EA21006E06C8 /* KeyCenter.swift in Sources */,
@@ -1855,7 +1856,6 @@
 				18131BE921FF17090095C1CA /* ColorsCollectionViewDelegate.swift in Sources */,
 				18131C0A21FF17090095C1CA /* PostViewController.swift in Sources */,
 				18131BFB21FF17090095C1CA /* WatermarkCompositionInstruction.swift in Sources */,
-				D673C4C524EA06F000F08335 /* FacebookNativeAdsVC.swift in Sources */,
 				18131BFE21FF17090095C1CA /* CameraRollViewController.swift in Sources */,
 				FDEDCD6923E27AF900850DAE /* AppManager.swift in Sources */,
 				18A950D8220222800044840C /* VideoFrameCell.swift in Sources */,
@@ -2077,7 +2077,7 @@
 				CODE_SIGN_ENTITLEMENTS = NowYou/NowYou.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = U55S7N6YRF;
 				ENABLE_BITCODE = NO;
@@ -2120,7 +2120,7 @@
 				CODE_SIGN_ENTITLEMENTS = NowYou/NowYou.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = U55S7N6YRF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
