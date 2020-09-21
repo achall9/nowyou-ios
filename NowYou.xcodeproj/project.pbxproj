@@ -172,6 +172,9 @@
 		8204D284240A9EAD00266EED /* StripeBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8204D283240A9EAC00266EED /* StripeBank.swift */; };
 		82050E0E2410A65700873357 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82050E0D2410A65700873357 /* temp.swift */; };
 		82050E1024110E7300873357 /* external.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82050E0F24110E7300873357 /* external.swift */; };
+		8237297E25150F24004116BD /* PayPalWithdrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237297D25150F24004116BD /* PayPalWithdrawViewController.swift */; };
+		8237298025151A0C004116BD /* PayPalAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237297F25151A0C004116BD /* PayPalAPIManager.swift */; };
+		8237298225159832004116BD /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237298125159831004116BD /* StringExtensions.swift */; };
 		82377C8F23CFA6CF008F41EF /* RadioStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82377C8E23CFA6CF008F41EF /* RadioStation.swift */; };
 		82377C9323CFB9B9008F41EF /* Audios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82377C9223CFB9B9008F41EF /* Audios.swift */; };
 		8239DBF023D0832500C13E7B /* RadioStationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8239DBEE23D0832500C13E7B /* RadioStationCell.swift */; };
@@ -475,6 +478,9 @@
 		8204D283240A9EAC00266EED /* StripeBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeBank.swift; sourceTree = "<group>"; };
 		82050E0D2410A65700873357 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
 		82050E0F24110E7300873357 /* external.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external.swift; sourceTree = "<group>"; };
+		8237297D25150F24004116BD /* PayPalWithdrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPalWithdrawViewController.swift; sourceTree = "<group>"; };
+		8237297F25151A0C004116BD /* PayPalAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPalAPIManager.swift; sourceTree = "<group>"; };
+		8237298125159831004116BD /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		82377C8E23CFA6CF008F41EF /* RadioStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStation.swift; sourceTree = "<group>"; };
 		82377C9223CFB9B9008F41EF /* Audios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audios.swift; sourceTree = "<group>"; };
 		8239DBEE23D0832500C13E7B /* RadioStationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStationCell.swift; sourceTree = "<group>"; };
@@ -688,6 +694,7 @@
 				828A778A2408E6B400E401F4 /* StripeManager.swift */,
 				82050E0D2410A65700873357 /* temp.swift */,
 				82050E0F24110E7300873357 /* external.swift */,
+				8237297F25151A0C004116BD /* PayPalAPIManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1224,6 +1231,7 @@
 				829B8FC0240B039500F0FE99 /* StripeBaseViewController.swift */,
 				8296DE302418A0910056131A /* UserInfoRegisterViewController.swift */,
 				82D80A842435243F002C690F /* SSNResViewController.swift */,
+				8237297D25150F24004116BD /* PayPalWithdrawViewController.swift */,
 			);
 			path = withdraw;
 			sourceTree = "<group>";
@@ -1347,6 +1355,7 @@
 		FD94F4CE23E9E86C006E06C8 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				8237298125159831004116BD /* StringExtensions.swift */,
 				FD94F4CF23E9E881006E06C8 /* AgoraExtension.swift */,
 			);
 			path = Extension;
@@ -1741,6 +1750,7 @@
 				18131BDE21FF17090095C1CA /* UIViewController+Extension.swift in Sources */,
 				18131E2B21FF170E0095C1CA /* CrossFadeAttributesAnimator.swift in Sources */,
 				18131E3121FF170E0095C1CA /* PageAttributesAnimator.swift in Sources */,
+				8237297E25150F24004116BD /* PayPalWithdrawViewController.swift in Sources */,
 				18131E2721FF170E0095C1CA /* UIImage+FixOrientation.swift in Sources */,
 				D621F1842502CA7400BA81DE /* iOSDropDown.swift in Sources */,
 				18131BE221FF17090095C1CA /* NYFonts.swift in Sources */,
@@ -1769,6 +1779,7 @@
 				18131BE121FF17090095C1CA /* NYColors.swift in Sources */,
 				18131BDC21FF17090095C1CA /* UILabel+Extension.swift in Sources */,
 				18D07553220AB69400C91DA9 /* CameraFocusSquare.swift in Sources */,
+				8237298025151A0C004116BD /* PayPalAPIManager.swift in Sources */,
 				18131BDB21FF17090095C1CA /* UIColor+Extension.swift in Sources */,
 				18C20669220508D300883B57 /* VerticalDismissOnPanGesture.swift in Sources */,
 				18481C24221BECE80061D2AB /* SearchViewController.swift in Sources */,
@@ -1836,6 +1847,7 @@
 				18131E1E21FF170E0095C1CA /* RadioComment.swift in Sources */,
 				18131E2F21FF170E0095C1CA /* ZoomInOutAttributesAnimator.swift in Sources */,
 				82B0E3FC247BEB7C00CA6550 /* BlockUser.swift in Sources */,
+				8237298225159832004116BD /* StringExtensions.swift in Sources */,
 				18888D6E22626BDE00E399D6 /* AngleGradientBorderLayer.swift in Sources */,
 				18CC506122132F6300C84EA3 /* AudioRecorderManager.swift in Sources */,
 				FD94F4ED23E9EA21006E06C8 /* FileCenter.swift in Sources */,

@@ -5315,7 +5315,7 @@
                                             <fragment content="There are no broadcasts at the moment">
                                                 <attributes>
                                                     <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" metaFont="label" size="14"/>
+                                                    <font key="NSFont" metaFont="menu" size="14"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -5988,7 +5988,7 @@
                                             <fragment content="There are no comments at the moment">
                                                 <attributes>
                                                     <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" metaFont="label" size="14"/>
+                                                    <font key="NSFont" metaFont="menu" size="14"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -6676,7 +6676,7 @@
                                             <fragment content="There are no comments at the moment">
                                                 <attributes>
                                                     <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" metaFont="label" size="14"/>
+                                                    <font key="NSFont" metaFont="menu" size="14"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -9239,7 +9239,7 @@
                                             <fragment content="There are no comments at the moment">
                                                 <attributes>
                                                     <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" metaFont="label" size="14"/>
+                                                    <font key="NSFont" metaFont="menu" size="14"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -9785,7 +9785,7 @@
                                                             </constraints>
                                                         </stackView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W4K-oL-rSi" customClass="ActiveLabel" customModule="ActiveLabel">
-                                                            <rect key="frame" x="20" y="38" width="375" height="14"/>
+                                                            <rect key="frame" x="20" y="38" width="375" height="0.0"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -9809,14 +9809,14 @@
                                                             </connections>
                                                         </button>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9F3-77-VXZ">
-                                                            <rect key="frame" x="15" y="59" width="30" height="30"/>
+                                                            <rect key="frame" x="15" y="45" width="30" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="30" id="KRg-o7-EXZ"/>
                                                                 <constraint firstAttribute="height" constant="30" id="Pap-hR-he4"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNe-bQ-zxM">
-                                                            <rect key="frame" x="55" y="59" width="41.5" height="30"/>
+                                                            <rect key="frame" x="55" y="45" width="41.5" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="41.670000000000002" id="5Xq-Ic-IfS"/>
                                                                 <constraint firstAttribute="height" constant="30" id="vhl-KB-Orb"/>
@@ -9826,7 +9826,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p8h-VC-4ON">
-                                                            <rect key="frame" x="15" y="59" width="30" height="30"/>
+                                                            <rect key="frame" x="15" y="45" width="30" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="30" id="0Ex-nm-FwD"/>
                                                                 <constraint firstAttribute="height" constant="30" id="ZTj-ed-peD"/>

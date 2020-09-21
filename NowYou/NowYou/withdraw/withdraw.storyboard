@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -984,6 +984,104 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kGm-dp-Pik" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-807.24637681159425" y="91.741071428571431"/>
+        </scene>
+        <!--Pay Pal Withdraw View Controller-->
+        <scene sceneID="VJm-Dk-RU2">
+            <objects>
+                <viewController storyboardIdentifier="PayPalWithdrawViewController" id="78M-vu-GE5" customClass="PayPalWithdrawViewController" customModule="NowYou" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="k7v-jl-KlK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cGt-n8-lQI" userLabel="Head View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
+                                <subviews>
+                                    <imageView multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NY_Logo" translatesAutoresizingMaskIntoConstraints="NO" id="z3O-Os-xEo">
+                                        <rect key="frame" x="157" y="35" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="z3O-Os-xEo" secondAttribute="height" multiplier="1:1" id="3jW-IN-3tj"/>
+                                            <constraint firstAttribute="height" constant="100" id="MFh-Af-DoV"/>
+                                            <constraint firstAttribute="width" constant="100" id="jkZ-HO-Psi"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.19215686269999999" green="0.6705882353" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="z3O-Os-xEo" firstAttribute="top" secondItem="cGt-n8-lQI" secondAttribute="top" constant="35" id="GVv-jW-WBl"/>
+                                    <constraint firstItem="z3O-Os-xEo" firstAttribute="centerX" secondItem="cGt-n8-lQI" secondAttribute="centerX" id="LOh-Oi-a9m"/>
+                                    <constraint firstAttribute="height" constant="150" id="b8I-Yy-Bj1"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SNj-pQ-Pve" userLabel="back">
+                                <rect key="frame" x="15" y="82" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="eOJ-zg-dhj"/>
+                                    <constraint firstAttribute="width" constant="32" id="yoL-Ze-5C2"/>
+                                </constraints>
+                                <state key="normal" image="bold_left_arrow"/>
+                                <connections>
+                                    <action selector="onBack:" destination="78M-vu-GE5" eventType="touchUpInside" id="AoE-Vi-Ley"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZZ-3E-Pv5">
+                                <rect key="frame" x="20" y="180" width="374" height="44"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PayPal Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Fx-F4-adQ">
+                                        <rect key="frame" x="4" y="0.0" width="366" height="44"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="3Fx-F4-adQ" secondAttribute="bottom" id="HJe-3z-UbK"/>
+                                    <constraint firstItem="3Fx-F4-adQ" firstAttribute="leading" secondItem="JZZ-3E-Pv5" secondAttribute="leading" constant="4" id="NTF-P3-fXQ"/>
+                                    <constraint firstAttribute="height" constant="44" id="WcR-jh-jbM"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Fx-F4-adQ" secondAttribute="trailing" constant="4" id="soP-Ay-jr9"/>
+                                    <constraint firstItem="3Fx-F4-adQ" firstAttribute="top" secondItem="JZZ-3E-Pv5" secondAttribute="top" id="sse-8J-Geb"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nd9-se-YV1">
+                                <rect key="frame" x="35" y="244" width="344" height="35"/>
+                                <color key="backgroundColor" red="0.19215686269999999" green="0.6705882353" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Zeo-8e-zfM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="16"/>
+                                <state key="normal" title="Withdraw">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onDraw:" destination="78M-vu-GE5" eventType="touchUpInside" id="aCV-U0-TBU"/>
+                                    <action selector="onWithdraw:" destination="UMz-rF-jx0" eventType="touchUpInside" id="SEr-Sr-J9o"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="cGt-n8-lQI" firstAttribute="top" secondItem="k7v-jl-KlK" secondAttribute="top" id="4JC-mU-rOu"/>
+                            <constraint firstAttribute="trailing" secondItem="cGt-n8-lQI" secondAttribute="trailing" id="4h3-zF-7PF"/>
+                            <constraint firstItem="cGt-n8-lQI" firstAttribute="leading" secondItem="k7v-jl-KlK" secondAttribute="leading" id="F00-E6-znu"/>
+                            <constraint firstItem="vJN-RC-Ekm" firstAttribute="trailing" secondItem="JZZ-3E-Pv5" secondAttribute="trailing" constant="20" id="NGa-oa-ejJ"/>
+                            <constraint firstItem="JZZ-3E-Pv5" firstAttribute="leading" secondItem="vJN-RC-Ekm" secondAttribute="leading" constant="20" id="X4h-C7-GEI"/>
+                            <constraint firstItem="nd9-se-YV1" firstAttribute="top" secondItem="JZZ-3E-Pv5" secondAttribute="bottom" constant="20" id="Zdj-98-1LA"/>
+                            <constraint firstItem="JZZ-3E-Pv5" firstAttribute="top" secondItem="cGt-n8-lQI" secondAttribute="bottom" constant="30" id="fGr-8R-nii"/>
+                            <constraint firstItem="SNj-pQ-Pve" firstAttribute="leading" secondItem="vJN-RC-Ekm" secondAttribute="leading" constant="15" id="hw4-fd-ODm"/>
+                            <constraint firstItem="nd9-se-YV1" firstAttribute="leading" secondItem="vJN-RC-Ekm" secondAttribute="leading" constant="35" id="jpG-cl-yVT"/>
+                            <constraint firstItem="nd9-se-YV1" firstAttribute="centerX" secondItem="k7v-jl-KlK" secondAttribute="centerX" id="odP-b6-6HS"/>
+                            <constraint firstItem="SNj-pQ-Pve" firstAttribute="top" secondItem="k7v-jl-KlK" secondAttribute="top" constant="82" id="tgi-Nq-tUq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="vJN-RC-Ekm"/>
+                    </view>
+                    <connections>
+                        <outlet property="btnWithdraw" destination="nd9-se-YV1" id="VNS-3G-rrb"/>
+                        <outlet property="txtEmail" destination="3Fx-F4-adQ" id="7AC-Z6-hMo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ggq-dd-9GK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2984" y="228"/>
         </scene>
     </scenes>
     <resources>

@@ -9,7 +9,7 @@ import UIKit
 class CashInfo : NSObject, NSCoding {
   
     var total_amount        : Double = 0.0
-    var total_cash          : Double = 0.0
+    var total_cash          : Double = 3.0
     var total_click_count   : Int = 0
     var total_view_count    : Int = 0
     var total_post_clicked  : Int = 0
