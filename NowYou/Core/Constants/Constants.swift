@@ -193,8 +193,6 @@ class API {
     static let UNFOLLOW_HASHTAG = "/feed/hashtag/unfollow"
     static let GET_FOLLOWING_HASHTAGS = "/feed/hashtag/followings"
     static let GET_ALL_HASHTAGS = "/feed/hashtags"
->>>>>>> dd10d0aaa3e4d5a117ebd30b42ef40dc8caf47a3
-}
     class API {
         static let URL_SCHEME               = "https"
         static let HOST                     = "https://staging-nowyou.herokuapp.com"
@@ -398,7 +396,7 @@ class API {
         static let LINK_SCREEN_W            = "screen_w"
         static let LINK_SCREEN_H            = "screen_h"
     }
-    
+    }
     class COMMENT {
         static let ID                       = "id"
         static let FEED_ID                  = "feed_id"
@@ -458,7 +456,6 @@ class API {
     let NEW_CATEGORY_ADDED2     = "new_category_added_notification2"
     let NEW_RADIO_STATION_ADDED = "new_radio_station_added_notification"
     let NEW_AUDIO_ADDED         = "new_audio_added_notification"
-=======
     static let PLAY_SCREEN_OPENED       = "play_screen_opened"
 }
 
@@ -497,3 +494,4 @@ let NEW_CATEGORY_ADDED      = "new_category_added_notification"
 let NEW_CATEGORY_ADDED2     = "new_category_added_notification2"
 let NEW_RADIO_STATION_ADDED = "new_radio_station_added_notification"
 let NEW_AUDIO_ADDED         = "new_audio_added_notification"
+
