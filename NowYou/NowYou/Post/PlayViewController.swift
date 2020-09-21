@@ -943,6 +943,8 @@ class PlayViewController: EmbeddedViewController {
         }
         guard medias.count > self.adFiredIndex else { return }
         guard let mediaID = medias[self.adFiredIndex].id else { return }
+        
+        
         NetworkManager.shared.logAdView(postId: mediaID, type: 0, clickAd: clickAd) { (response) in
             DispatchQueue.main.async {
                 Utils.hideSpinner()
@@ -956,8 +958,10 @@ class PlayViewController: EmbeddedViewController {
                        if let json = jsonRes as? [String: Any] {
                            if let message = json["success"] as? String {
 
-                             print(message)
-                             print("Sent logAdView infor successfully")
+                                print(message)
+                                print("Sent logAdView infor successfully")
+                                                            
+                            
                             }
                        }
                    } catch {
@@ -986,6 +990,7 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
            
         if indexPath.row % 3 == 0 && indexPath.row != 0 {
             self.lblBannerReview.isHidden = true
+            self.logAdViewOrClickFromFeed(clickAd: 0)
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FacebookAdsCell", for: indexPath) as! FacebookAdsCell
             return cell
             
@@ -1909,6 +1914,7 @@ extension FacebookAdsCell: FBNativeAdDelegate, FBMediaViewDelegate {
     
     func nativeAdDidClick(_ nativeAd: FBNativeAd) {
         print("Native ad was clicked.")
+        
     }
     
     func nativeAdDidFinishHandlingClick(_ nativeAd: FBNativeAd) {
@@ -1933,6 +1939,7 @@ extension PlayViewController: FBAdViewDelegate {
     
     func adViewDidClick(_ adView: FBAdView) {
         print("banner ads click")
+        logAdViewOrClickFromFeed(clickAd: 1)
     }
     
     func adViewDidFinishHandlingClick(_ adView: FBAdView) {

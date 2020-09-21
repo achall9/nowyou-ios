@@ -36,19 +36,9 @@ class ChooseAccountVC: UIViewController {
             Utils.showSpinner()
         }
         
-        var email = ""
-        var phone = ""
+        let name = UserManager.getUserType()
         
-        if UserManager.getUserType() == "phone_username" {
-            email = UserManager.currentUser()!.phone!
-            phone = UserManager.currentUser()!.phone!
-        } else {
-            email = UserManager.currentUser()!.email!
-            phone = UserManager.currentUser()!.email!
-        }
-        
-        
-        NetworkManager.shared.is_email_phone_duplicate(email: email, phone: phone) { (response) in
+        NetworkManager.shared.is_email_phone_duplicate(email: name, phone: name, user_name: name) { (response) in
             DispatchQueue.main.async {
                 Utils.hideSpinner()
             

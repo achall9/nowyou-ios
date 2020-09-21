@@ -92,7 +92,8 @@ class LoginViewController: UIViewController {
             self.view.endEditing(true)
         }
         
-        NetworkManager.shared.is_email_phone_duplicate(email: txtEmail.text!, phone: txtEmail.text!) { (response) in
+        
+        NetworkManager.shared.is_email_phone_duplicate(email: txtEmail.text!, phone: txtEmail.text!, user_name: txtEmail.text!) { (response) in
             DispatchQueue.main.async {
                 Utils.hideSpinner()
                 
@@ -109,7 +110,7 @@ class LoginViewController: UIViewController {
                                 let accounts = jsonObject["accounts"] as? [[String: Any]]
                                 
                                 self.users.removeAll()
-                                self.saveUserType()
+                                self.saveUserType(self.txtEmail.text!)
                                 if accounts?.count == 1 {
                                     self.doLogin()
                                 } else if accounts!.count > 1 {
@@ -187,12 +188,8 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func saveUserType() {
-        if txtEmail.text!.contains("@") {
-            UserManager.saveUserType(userLoggedinType: "email")
-        } else {
-            UserManager.saveUserType(userLoggedinType: "phone_username")
-        }
+    func saveUserType(_ name: String) {
+        UserManager.saveUserType(userLoggedinType: name)
     }
     
     @IBAction func actionForgotPwd(_ sender: UIButton) {

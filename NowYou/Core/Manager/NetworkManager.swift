@@ -42,8 +42,8 @@ class NetworkManager: NSObject {
 //        reachability?.stopNotifier()
     }
     
-    func is_email_phone_duplicate(email: String, phone: String, completion: ((ServerResponse)->())?) {
-        let rest = RestRouter.is_email_phone_duplicate(email: email, phone: phone)
+    func is_email_phone_duplicate(email: String, phone: String, user_name: String, completion: ((ServerResponse)->())?) {
+        let rest = RestRouter.is_email_phone_duplicate(email: email, phone: phone, user_name: user_name)
         
         var request = URLRequest(url: rest.url)
         
@@ -899,6 +899,7 @@ class NetworkManager: NSObject {
          
         call(request, completion: completion)
     }
+    
     func rejectListen(radio_Station_id : Int, completion: ((ServerResponse)->())?) {
         let rest = RestRouter.rejectListen(radio_station_id: radio_Station_id)
         var request = URLRequest(url: rest.url)

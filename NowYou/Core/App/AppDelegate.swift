@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    var fcmToken:String = ""
+    var fcmToken  : String = ""
     
     private struct AppodealConstants {
         

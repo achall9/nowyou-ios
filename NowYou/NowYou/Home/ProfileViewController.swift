@@ -651,36 +651,36 @@ extension ProfileViewController: CropViewControllerDelegate {
 
 extension ProfileViewController{
     open func getUserInfo(){
-        NetworkManager.shared.getUserDetails(userId: (UserManager.currentUser()?.userID)!) { (response) in
-        switch response {
-        case .error(let error):
-            DispatchQueue.main.async {
-                self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
-            }
-        case .success(let data):
-            do {
-                let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                if let json = jsonRes as? [String: Any] {
-                    if let userJson = json["user"] as? [String: Any] {
-                        let user = User(json: userJson)
-                        let encodedUser = NSKeyedArchiver.archivedData(withRootObject: user)
-                        UserDefaults.standard.set(encodedUser, forKey: USER_INFO)
-                        UserDefaults.standard.synchronize()
+            NetworkManager.shared.getUserDetails(userId: (UserManager.currentUser()?.userID)!) { (response) in
+            switch response {
+            case .error(let error):
+                DispatchQueue.main.async {
+                    self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                }
+            case .success(let data):
+                do {
+                    let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    if let json = jsonRes as? [String: Any] {
+                        if let userJson = json["user"] as? [String: Any] {
+                            let user = User(json: userJson)
+                            let encodedUser = NSKeyedArchiver.archivedData(withRootObject: user)
+                            UserDefaults.standard.set(encodedUser, forKey: USER_INFO)
+                            UserDefaults.standard.synchronize()
+                            
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.clvPost.cr.addHeadRefresh(animator: NormalHeaderAnimator()) {
+                            self.loadPosts()
+                        }
+                        self.clvPost.cr.endHeaderRefresh()
+                        self.clvPost.reloadData()
                         
                     }
-                }
-                DispatchQueue.main.async {
-                    self.clvPost.cr.addHeadRefresh(animator: NormalHeaderAnimator()) {
-                        self.loadPosts()
-                    }
-                    self.clvPost.cr.endHeaderRefresh()
-                    self.clvPost.reloadData()
+                } catch {
                     
                 }
-            } catch {
-                
             }
         }
-    }
     }
 }

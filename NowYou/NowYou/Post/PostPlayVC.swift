@@ -644,8 +644,10 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
                        if let json = jsonRes as? [String: Any] {
                            if let message = json["success"] as? String {
 
-                             print(message)
-                             print("Sent logAdView infor successfully")
+                            
+                                print(message)
+                                print("Sent logAdView infor successfully")
+                            
                             }
                        }
                    } catch {
@@ -655,6 +657,12 @@ class PostPlayVC: EmbeddedViewController, UIViewControllerTransitioningDelegate 
                }
             }
         }
+        
+        
+        
+        
+        
+        
     }
 }
 
@@ -672,6 +680,7 @@ extension PostPlayVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row % 3 == 0 && indexPath.row != 0 {
             self.lblBannerReview.isHidden = true
+            self.logAdViewOrClickFromFeed(clickAd: 0)
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FacebookAdsCell", for: indexPath) as! FacebookAdsCell
             return cell
             
@@ -1353,6 +1362,7 @@ extension PostPlayVC: FBAdViewDelegate {
     
     func adViewDidClick(_ adView: FBAdView) {
         print("banner ads click")
+        logAdViewOrClickFromFeed(clickAd: 1)
     }
     
     func adViewDidFinishHandlingClick(_ adView: FBAdView) {

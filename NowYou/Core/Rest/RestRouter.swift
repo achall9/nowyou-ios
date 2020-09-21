@@ -19,7 +19,7 @@ enum RestRouter: RestAPIProtocol {
     // get all users
     case getAllUsers(pageNum: Int)
     // know if email/phone is duplicate or not
-    case is_email_phone_duplicate(email: String, phone: String)
+    case is_email_phone_duplicate(email: String, phone: String, user_name: String)
     // auth
     case login(email: String, password: String)
     case passwordReset(email: String)
@@ -490,16 +490,17 @@ enum RestRouter: RestAPIProtocol {
     
     var body: Data? {
         switch self {
-        case .is_email_phone_duplicate(let email, let phone):
+        case .is_email_phone_duplicate(let email, let phone, let user_name):
             
             var data = Data()
             
             
-            let param = ["email": email, "phone": phone]
+            let param = ["email": email, "phone": phone, "user_name": user_name]
             do {
                 data = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
                 return data
             } catch let error {
+                print(error.localizedDescription)
             }
             
             return nil
@@ -509,7 +510,7 @@ enum RestRouter: RestAPIProtocol {
             var data = Data()
             
             var token: String = ""
-            if let deviceToken = UserDefaults.standard.value(forKey: USER.DEVICE_TOKEN) as? String{
+            if let deviceToken = UserDefaults.standard.value(forKey: "currentFCMTokenKey") as? String {
                 token = deviceToken
             }
             let param = ["email": email, "password": password, "push_token": token]
@@ -517,6 +518,7 @@ enum RestRouter: RestAPIProtocol {
                 data = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
                 return data
             } catch let error {
+                print(error.localizedDescription)
             }
             
             return nil
@@ -538,7 +540,8 @@ enum RestRouter: RestAPIProtocol {
             var data = Data()
             
             var token: String = ""
-            if let deviceToken = UserDefaults.standard.value(forKey: USER.DEVICE_TOKEN) as? String {
+            //if let deviceToken = UserDefaults.standard.value(forKey: USER.DEVICE_TOKEN) as? String {
+            if let deviceToken = UserDefaults.standard.value(forKey: "currentFCMTokenKey") as? String {
                 token = deviceToken
             }
             

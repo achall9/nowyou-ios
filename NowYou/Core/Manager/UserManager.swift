@@ -39,11 +39,11 @@ class UserManager: NSObject {
     }
     
     class func saveUserType(userLoggedinType: String) {
-        UserDefaults.standard.set(userLoggedinType, forKey: "UserLoggedinType")
+        UserDefaults.standard.set(userLoggedinType, forKey: "LoggedName")
     }
     
     class func getUserType() -> String {
-        let userLoggedinType = UserDefaults.standard.string(forKey: "UserLoggedinType") ?? ""
+        let userLoggedinType = UserDefaults.standard.string(forKey: "LoggedName") ?? ""
         return userLoggedinType
     }
     
