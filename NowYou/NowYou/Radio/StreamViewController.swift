@@ -121,6 +121,7 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
         }
         
         addRigthSwipe()
+        onPause(self.btnPlay)
     }
     func setupVideo() {
         let configuration = AgoraVideoEncoderConfiguration(size: AgoraVideoDimension640x360, frameRate: .fps15, bitrate: AgoraVideoBitrateStandard, orientationMode: .adaptative)
@@ -220,7 +221,7 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
         textView.text = ""
     }
 
-    @IBAction func onPause(_ sender: Any) {
+    @IBAction func onPause(_ sender: UIButton) {
         if self.audioProcessor != nil {
             self.audioProcessor?.stop()
             self.audioProcessor = nil
