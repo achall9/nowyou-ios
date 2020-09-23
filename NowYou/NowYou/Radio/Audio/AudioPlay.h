@@ -11,7 +11,7 @@
 #import "CSIOpusEncoder.h"
 #import "CSIOpusDecoder.h"
 #include "CSIDataQueue.h"
-@import Firebase;
+@import FirebaseDatabase;
 #import <Firebase/Firebase.h>
 
 // return max value for given values
@@ -49,7 +49,7 @@
 @property (strong) CSIOpusEncoder *encoder;
 @property (strong) CSIOpusDecoder *decoder;
 @property (nonatomic) BOOL isRecording;
-@property (nonatomic, retain) FIRDatabaseReference *rootRef;
+@property (nonatomic) FIRDatabaseReference *rootRef;
 @property (assign) AUGraph audioGraph;
 @property (assign) AudioComponentDescription ioUnitDesc;
 @property (assign) double sampleRate;

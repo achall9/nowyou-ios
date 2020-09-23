@@ -185,8 +185,6 @@
 		82278313251A3B9F00FB54C4 /* NYIrregularityContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278311251A3B9F00FB54C4 /* NYIrregularityContentView.swift */; };
 		82278315251A3BF400FB54C4 /* NYBasicContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278314251A3BF400FB54C4 /* NYBasicContentView.swift */; };
 		8227831A251A496300FB54C4 /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278319251A496300FB54C4 /* UIManager.swift */; };
-		8227831B251A4C0F00FB54C4 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82278317251A3CD600FB54C4 /* pop.framework */; };
-		8227831C251A4C0F00FB54C4 /* pop.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82278317251A3CD600FB54C4 /* pop.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8237297E25150F24004116BD /* PayPalWithdrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237297D25150F24004116BD /* PayPalWithdrawViewController.swift */; };
 		8237298025151A0C004116BD /* PayPalAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237297F25151A0C004116BD /* PayPalAPIManager.swift */; };
 		8237298225159832004116BD /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237298125159831004116BD /* StringExtensions.swift */; };
@@ -251,6 +249,8 @@
 		D6487DE52514EE480090F1BE /* LoginMultipleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6487DE42514EE480090F1BE /* LoginMultipleViewController.swift */; };
 		D64909A124C0528E00EE9AC7 /* KVVideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */; };
 		D64909A324C0542E00EE9AC7 /* silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D64909A224C0542E00EE9AC7 /* silence.mp3 */; };
+		D65452A6251B81BE0097F916 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82278317251A3CD600FB54C4 /* pop.framework */; };
+		D65452A7251B81BF0097F916 /* pop.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82278317251A3CD600FB54C4 /* pop.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D6E1BA6424E5EDC4007668D0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6324E5EDC4007668D0 /* FBSDKCoreKit.framework */; };
 		D6E1BA6624E5EDD8007668D0 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6524E5EDD8007668D0 /* FBAudienceNetwork.framework */; };
 		D6FF66B924DD9A0C007769E9 /* NYImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FF66B824DD9A0C007769E9 /* NYImage.swift */; };
@@ -310,7 +310,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8227831C251A4C0F00FB54C4 /* pop.framework in Embed Frameworks */,
+				D65452A7251B81BF0097F916 /* pop.framework in Embed Frameworks */,
 				18131E4F21FF2CC00095C1CA /* AnimatedCollectionViewLayout.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -605,7 +605,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8227831B251A4C0F00FB54C4 /* pop.framework in Frameworks */,
+				D65452A6251B81BE0097F916 /* pop.framework in Frameworks */,
 				D6E1BA6424E5EDC4007668D0 /* FBSDKCoreKit.framework in Frameworks */,
 				180098782246CC1B00F5A202 /* UserNotifications.framework in Frameworks */,
 				18131E4821FF21020095C1CA /* libopus.a in Frameworks */,
@@ -2155,7 +2155,7 @@
 				CODE_SIGN_ENTITLEMENTS = NowYou/NowYou.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 19;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = U55S7N6YRF;
 				ENABLE_BITCODE = NO;
@@ -2199,7 +2199,7 @@
 				CODE_SIGN_ENTITLEMENTS = NowYou/NowYou.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = U55S7N6YRF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

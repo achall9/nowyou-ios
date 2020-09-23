@@ -9,8 +9,10 @@
 import UIKit
 import IQKeyboardManagerSwift
 import Firebase
+import FirebaseCore
 import FirebaseMessaging
 import Fabric
+import FirebaseAuth
 import Crashlytics
 import UserNotifications
 //import GoogleMobileAds
