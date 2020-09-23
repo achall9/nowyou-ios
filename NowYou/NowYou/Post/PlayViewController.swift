@@ -196,7 +196,7 @@ class PlayViewController: EmbeddedViewController {
         self.bannerAd.delegate = self
         self.bannerAd.loadAd()
         
-        self.lblBannerReview = UILabel.init(frame: CGRect.init(x: 0, y: self.view.bounds.height - 80, width: self.view.bounds.width, height: 50))
+        self.lblBannerReview = UILabel.init(frame: CGRect.init(x: 0, y: self.view.bounds.height - 100, width: self.view.bounds.width, height: 50))
         self.lblBannerReview.text = "Reviewing ads by Facebook team"
         self.lblBannerReview.textAlignment = .center
         self.lblBannerReview.backgroundColor = .white

@@ -301,12 +301,13 @@ extension AppDelegate: NotificationDelegate{
                     let radioObj = RadioStation(json: radioJson)
                     NotificationCenter.default.post(name:.radioIsOnBroadcastingToFeedNotification, object: nil, userInfo: ["radioObj" : radioObj, "profileIconPath" : profileIconPath])
                       DispatchQueue.main.async {
-                          let homeVC = UIApplication.shared.windows[0].rootViewController as! HomeViewController
+                        if let homeVC = Utils.shared.getTopViewController(){
                             let home = UIStoryboard(name: "Main", bundle: nil)
                             let vc = home.instantiateViewController(withIdentifier: "RadioDetailsVC") as! RadioDetailsViewController
                             vc.radio = radioObj
                             let radioNav = UINavigationController(rootViewController: vc)
-                            homeVC.focusViewController?.navigationController?.topViewController?.present(radioNav, animated: true, completion: nil)
+                            homeVC.present(radioNav, animated: true, completion: nil)
+                        }
                       }
                   }
               } catch {

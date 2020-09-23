@@ -171,8 +171,7 @@ class LoginViewController: UIViewController {
                                     
                                     NotificationManager.shared.storeToken()
                                     DispatchQueue.main.async {
-                                        let app = UIApplication.shared.delegate as! AppDelegate
-                                        app.window?.rootViewController = UIViewController.viewControllerWith("homeVC")
+                                       UIManager.showMain()
                                     }
                                     
                                 } else {

@@ -55,13 +55,17 @@ class MetricsViewController: BaseViewController {
             chartView.isHidden = false
             vDaily.isHidden = true
             showChart(horizontal: false)
-            lblTotalEarned.text = "+ $\(UserManager.myCashInfo()?.total_amount.truncate(places: 2) ?? 0.0) total earned"
+            let totalEarnedStr = String(format: "%.2f", UserManager.myCashInfo()?.total_amount ?? 0.0)
+            lblTotalEarned.text = "+ $\(totalEarnedStr) total earned"
             if metricsMode == .YEARLY {
-                lblEarned.text = "+ $\(UserManager.myCashInfo()?.yearly.truncate(places: 2) ?? 0.00) this year"
+                let yearEarndStr = String(format: "%.2f", UserManager.myCashInfo()?.yearly ?? 0.0)
+                lblEarned.text = "+ $\(yearEarndStr) this year"
             } else if metricsMode == .MONTHLY {
-                 lblEarned.text = "+ $\(UserManager.myCashInfo()?.monthly.truncate(places: 2) ?? 0.00) this month"
+                let monthEarndStr = String(format: "%.2f", UserManager.myCashInfo()?.monthly ?? 0.0)
+                 lblEarned.text = "+ $\(monthEarndStr) this month"
             } else {
-                 lblEarned.text = "+ $\(UserManager.myCashInfo()?.daily.truncate(places: 2) ?? 0.00) today"
+                let dayEarndStr = String(format: "%.2f", UserManager.myCashInfo()?.daily ?? 0.0)
+                 lblEarned.text = "+ $\(dayEarndStr) today"
             }
         }
     }
@@ -147,14 +151,14 @@ class MetricsViewController: BaseViewController {
         super.viewDidLoad()
         segView.items = ["Day", "Month", "Year"]
         segView.selectedIndex = 0
-        
+        vAmount.clipsToBounds = true
         loadUserInfo()
         initBrainTree()
         loadCashInfo()
         
         segView.layer.borderColor = UIColor(hexValue: 0x979797).withAlphaComponent(0.2).cgColor
         segView.layer.borderWidth = 1
-        segView.setRoundCorner(radius: 6)
+        segView.setRoundCorner(radius: 20)
         
         btnCashout.layer.cornerRadius = 6
         btnCashout.layer.masksToBounds = true
@@ -177,6 +181,11 @@ class MetricsViewController: BaseViewController {
     
     func initBrainTree() {
         self.braintreeClient = BTAPIClient(authorization: "sandbox_csqhfs5n_j75yqq5gt9vtp55x")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showChart(horizontal: false)
     }
     
     @objc func openTutor(notification: Notification){
@@ -216,20 +225,23 @@ class MetricsViewController: BaseViewController {
         imgProfile.layer.borderWidth = 3
         imgProfile.layer.borderColor = UIColor(hexValue: 0xBABABA).cgColor
         imgProfile.setCircular()
+        
+    
     }
     
     private func loadCashInfo(){
 //        lblViewCount.text = "\(cashInfo.total_view_count)"
 //        lblEarned.text = "+ $\(UserManager.currentUser()?.earning_daily ?? 0.00) today"
-        showChart(horizontal: false)
+        self.showChart(horizontal: false)
     }
     private func loadUserInfo() {
         let user = UserManager.currentUser()!
         //----
         lblViewCount.text = "\(user.view_count_total)"
-        
-        lblEarned.text = "+ $\(UserManager.myCashInfo()?.daily.truncate(places: 2) ?? 0.00) today"
-        lblTotalEarned.text = "+ $\(UserManager.myCashInfo()?.total_amount.truncate(places: 2) ?? 0.0) total earned"
+        let dayEarndStr = String(format: "%.2f", UserManager.myCashInfo()?.daily ?? 0.0)
+        lblEarned.text = "+ $\(dayEarndStr) today"
+        let totalEarndStr = String(format: "%.2f", UserManager.myCashInfo()?.total_amount ?? 0.0)
+        lblTotalEarned.text = "+ $\(totalEarndStr) total earned"
         //----
         lblWeekViewcount.text = "+\(user.view_count_weekly) this week"
         
@@ -506,7 +518,7 @@ class MetricsViewController: BaseViewController {
         for subview in vAmount.subviews {
             subview.removeFromSuperview()
         }
-        
+        chart.view.frame = CGRect(x: 0, y: 0, width: vAmount.frame.size.width - 30, height: vAmount.frame.size.height)
         vAmount.addSubview(chart.view)
         self.chart = chart
     }

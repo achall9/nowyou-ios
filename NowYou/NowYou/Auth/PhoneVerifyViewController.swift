@@ -147,8 +147,7 @@ class PhoneVerifyViewController: UIViewController {
                                     DispatchQueue.main.async {
 //                                    self.createStripeCustomer(email: self.email, name: self.username)
 //                                    self.createStripeCustomAccount(email: self.email)
-                                        let app = UIApplication.shared.delegate as! AppDelegate
-                                        app.window?.rootViewController = UIViewController.viewControllerWith("homeVC")
+                                       UIManager.showMain()
 
                                     }
                                 })
@@ -217,8 +216,7 @@ extension PhoneVerifyViewController{
             }else{
                 DispatchQueue.main.async {
                     UserDefaults.standard.set(customerId, forKey: "StripeCustomerId")
-                    let app = UIApplication.shared.delegate as! AppDelegate
-                    app.window?.rootViewController = UIViewController.viewControllerWith("homeVC")
+                    UIManager.showMain()
                     print("Register stripe custom account id successfully")
                 }
             }

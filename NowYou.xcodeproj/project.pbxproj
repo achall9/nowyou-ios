@@ -172,6 +172,21 @@
 		8204D284240A9EAD00266EED /* StripeBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8204D283240A9EAC00266EED /* StripeBank.swift */; };
 		82050E0E2410A65700873357 /* temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82050E0D2410A65700873357 /* temp.swift */; };
 		82050E1024110E7300873357 /* external.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82050E0F24110E7300873357 /* external.swift */; };
+		82278305251A300D00FB54C4 /* ESTabBarItemMoreContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822782FD251A300D00FB54C4 /* ESTabBarItemMoreContentView.swift */; };
+		82278306251A300D00FB54C4 /* ESTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822782FE251A300D00FB54C4 /* ESTabBarController.swift */; };
+		82278307251A300D00FB54C4 /* ESTabBarItemContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822782FF251A300D00FB54C4 /* ESTabBarItemContentView.swift */; };
+		82278308251A300D00FB54C4 /* ESTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278300251A300D00FB54C4 /* ESTabBarItem.swift */; };
+		82278309251A300D00FB54C4 /* ESTabBarItemBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278301251A300D00FB54C4 /* ESTabBarItemBadgeView.swift */; };
+		8227830A251A300D00FB54C4 /* ESTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278302251A300D00FB54C4 /* ESTabBar.swift */; };
+		8227830B251A300D00FB54C4 /* ESTabBarItemContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278303251A300D00FB54C4 /* ESTabBarItemContainer.swift */; };
+		8227830D251A390500FB54C4 /* NYTabBarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8227830C251A390500FB54C4 /* NYTabBarProvider.swift */; };
+		8227830F251A3A6800FB54C4 /* NYNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8227830E251A3A6800FB54C4 /* NYNavigationController.swift */; };
+		82278312251A3B9F00FB54C4 /* NYBouncesContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278310251A3B9F00FB54C4 /* NYBouncesContentView.swift */; };
+		82278313251A3B9F00FB54C4 /* NYIrregularityContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278311251A3B9F00FB54C4 /* NYIrregularityContentView.swift */; };
+		82278315251A3BF400FB54C4 /* NYBasicContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278314251A3BF400FB54C4 /* NYBasicContentView.swift */; };
+		8227831A251A496300FB54C4 /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82278319251A496300FB54C4 /* UIManager.swift */; };
+		8227831B251A4C0F00FB54C4 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82278317251A3CD600FB54C4 /* pop.framework */; };
+		8227831C251A4C0F00FB54C4 /* pop.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82278317251A3CD600FB54C4 /* pop.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8237297E25150F24004116BD /* PayPalWithdrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237297D25150F24004116BD /* PayPalWithdrawViewController.swift */; };
 		8237298025151A0C004116BD /* PayPalAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237297F25151A0C004116BD /* PayPalAPIManager.swift */; };
 		8237298225159832004116BD /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237298125159831004116BD /* StringExtensions.swift */; };
@@ -295,6 +310,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8227831C251A4C0F00FB54C4 /* pop.framework in Embed Frameworks */,
 				18131E4F21FF2CC00095C1CA /* AnimatedCollectionViewLayout.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -479,6 +495,20 @@
 		8204D283240A9EAC00266EED /* StripeBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeBank.swift; sourceTree = "<group>"; };
 		82050E0D2410A65700873357 /* temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = temp.swift; sourceTree = "<group>"; };
 		82050E0F24110E7300873357 /* external.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external.swift; sourceTree = "<group>"; };
+		822782FD251A300D00FB54C4 /* ESTabBarItemMoreContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBarItemMoreContentView.swift; sourceTree = "<group>"; };
+		822782FE251A300D00FB54C4 /* ESTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBarController.swift; sourceTree = "<group>"; };
+		822782FF251A300D00FB54C4 /* ESTabBarItemContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBarItemContentView.swift; sourceTree = "<group>"; };
+		82278300251A300D00FB54C4 /* ESTabBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBarItem.swift; sourceTree = "<group>"; };
+		82278301251A300D00FB54C4 /* ESTabBarItemBadgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBarItemBadgeView.swift; sourceTree = "<group>"; };
+		82278302251A300D00FB54C4 /* ESTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBar.swift; sourceTree = "<group>"; };
+		82278303251A300D00FB54C4 /* ESTabBarItemContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTabBarItemContainer.swift; sourceTree = "<group>"; };
+		8227830C251A390500FB54C4 /* NYTabBarProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYTabBarProvider.swift; sourceTree = "<group>"; };
+		8227830E251A3A6800FB54C4 /* NYNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYNavigationController.swift; sourceTree = "<group>"; };
+		82278310251A3B9F00FB54C4 /* NYBouncesContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYBouncesContentView.swift; sourceTree = "<group>"; };
+		82278311251A3B9F00FB54C4 /* NYIrregularityContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYIrregularityContentView.swift; sourceTree = "<group>"; };
+		82278314251A3BF400FB54C4 /* NYBasicContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NYBasicContentView.swift; sourceTree = "<group>"; };
+		82278317251A3CD600FB54C4 /* pop.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = pop.framework; sourceTree = "<group>"; };
+		82278319251A496300FB54C4 /* UIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIManager.swift; sourceTree = "<group>"; };
 		8237297D25150F24004116BD /* PayPalWithdrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPalWithdrawViewController.swift; sourceTree = "<group>"; };
 		8237297F25151A0C004116BD /* PayPalAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPalAPIManager.swift; sourceTree = "<group>"; };
 		8237298125159831004116BD /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
@@ -575,6 +605,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8227831B251A4C0F00FB54C4 /* pop.framework in Frameworks */,
 				D6E1BA6424E5EDC4007668D0 /* FBSDKCoreKit.framework in Frameworks */,
 				180098782246CC1B00F5A202 /* UserNotifications.framework in Frameworks */,
 				18131E4821FF21020095C1CA /* libopus.a in Frameworks */,
@@ -650,6 +681,7 @@
 				18131BA721FF17060095C1CA /* Model */,
 				FDACB2A723E437DE00B7A9C0 /* View */,
 				1813189621FF16FC0095C1CA /* NowYou */,
+				82278316251A3CD600FB54C4 /* Framework */,
 				FDACB2A223E4356A00B7A9C0 /* Resources */,
 			);
 			path = NowYou;
@@ -697,6 +729,7 @@
 				82050E0D2410A65700873357 /* temp.swift */,
 				82050E0F24110E7300873357 /* external.swift */,
 				8237297F25151A0C004116BD /* PayPalAPIManager.swift */,
+				82278319251A496300FB54C4 /* UIManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1206,6 +1239,33 @@
 			path = Follow;
 			sourceTree = "<group>";
 		};
+		822782FA251A300D00FB54C4 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				82278314251A3BF400FB54C4 /* NYBasicContentView.swift */,
+				82278310251A3B9F00FB54C4 /* NYBouncesContentView.swift */,
+				82278311251A3B9F00FB54C4 /* NYIrregularityContentView.swift */,
+				8227830C251A390500FB54C4 /* NYTabBarProvider.swift */,
+				8227830E251A3A6800FB54C4 /* NYNavigationController.swift */,
+				822782FD251A300D00FB54C4 /* ESTabBarItemMoreContentView.swift */,
+				822782FE251A300D00FB54C4 /* ESTabBarController.swift */,
+				822782FF251A300D00FB54C4 /* ESTabBarItemContentView.swift */,
+				82278300251A300D00FB54C4 /* ESTabBarItem.swift */,
+				82278301251A300D00FB54C4 /* ESTabBarItemBadgeView.swift */,
+				82278302251A300D00FB54C4 /* ESTabBar.swift */,
+				82278303251A300D00FB54C4 /* ESTabBarItemContainer.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		82278316251A3CD600FB54C4 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				82278317251A3CD600FB54C4 /* pop.framework */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
 		824FFCCB23D9EE1A0032A3AE /* FollowCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1416,6 +1476,7 @@
 		FDACB2A723E437DE00B7A9C0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				822782FA251A300D00FB54C4 /* TabBar */,
 				18131BB221FF17080095C1CA /* Common */,
 				FDACB2A923E4389000B7A9C0 /* CustomCell */,
 				FDACB2A823E4382F00B7A9C0 /* CustomView */,
@@ -1712,13 +1773,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82278305251A300D00FB54C4 /* ESTabBarItemMoreContentView.swift in Sources */,
 				183662EA226C6DC300189E0C /* ColorPickerViewController.swift in Sources */,
 				8249BAEA251943AB006BB275 /* Constant.swift in Sources */,
 				18131E3221FF170E0095C1CA /* SnapInAttributesAnimator.swift in Sources */,
 				8254CDC923DA16BF00F7167F /* FollowingsTableViewController.swift in Sources */,
+				82278315251A3BF400FB54C4 /* NYBasicContentView.swift in Sources */,
 				18481C28221BF20B0061D2AB /* TagSearchCell.swift in Sources */,
 				828A77792407E3F100E401F4 /* ReportVC.swift in Sources */,
 				829DF2402412AD0C00491770 /* CardToken.swift in Sources */,
+				8227830D251A390500FB54C4 /* NYTabBarProvider.swift in Sources */,
 				18131E3B21FF170E0095C1CA /* RecordButton.swift in Sources */,
 				82377C8F23CFA6CF008F41EF /* RadioStation.swift in Sources */,
 				18131E1821FF170E0095C1CA /* ServerError.swift in Sources */,
@@ -1760,12 +1824,15 @@
 				18131BE221FF17090095C1CA /* NYFonts.swift in Sources */,
 				18131C0921FF17090095C1CA /* PlayViewController.swift in Sources */,
 				827C76182494106F00A52EBE /* StringExtension.swift in Sources */,
+				8227830F251A3A6800FB54C4 /* NYNavigationController.swift in Sources */,
+				82278306251A300D00FB54C4 /* ESTabBarController.swift in Sources */,
 				18131E2521FF170E0095C1CA /* GradientView1.swift in Sources */,
 				18131BF321FF17090095C1CA /* EmojiCollectionViewCell.swift in Sources */,
 				82050E1024110E7300873357 /* external.swift in Sources */,
 				18481C31222024200061D2AB /* OtherProfileViewController.swift in Sources */,
 				18131E1F21FF170E0095C1CA /* RadioCategory.swift in Sources */,
 				18131D0E21FF170B0095C1CA /* CSIDataQueue.c in Sources */,
+				82278308251A300D00FB54C4 /* ESTabBarItem.swift in Sources */,
 				18131E2621FF170E0095C1CA /* UIImage+Resize.swift in Sources */,
 				18131E0621FF170E0095C1CA /* CSIOpusEncoder.m in Sources */,
 				18131C0C21FF17090095C1CA /* RadioViewController.swift in Sources */,
@@ -1839,9 +1906,11 @@
 				18CC506222132F6300C84EA3 /* SoundWave+Helpers.swift in Sources */,
 				18131BDF21FF17090095C1CA /* PHAsset+Extension.swift in Sources */,
 				D621F17B2501514800BA81DE /* UserListVC.swift in Sources */,
+				82278307251A300D00FB54C4 /* ESTabBarItemContentView.swift in Sources */,
 				8204D27C2409429F00266EED /* StripeCard.swift in Sources */,
 				829B8FC1240B039500F0FE99 /* StripeBaseViewController.swift in Sources */,
 				18131BEC21FF17090095C1CA /* BottomSheetViewController.swift in Sources */,
+				8227830B251A300D00FB54C4 /* ESTabBarItemContainer.swift in Sources */,
 				1800987D22479BB100F5A202 /* NotificationViewController.swift in Sources */,
 				18CC3F18228EA1AA00151337 /* CachingPlayerItem.swift in Sources */,
 				18A47F862284BD55006BBE09 /* PreviewView.swift in Sources */,
@@ -1850,6 +1919,7 @@
 				18131BDD21FF17090095C1CA /* UIView+Extension.swift in Sources */,
 				18131E0A21FF170E0095C1CA /* CommentViewController.swift in Sources */,
 				18131E1E21FF170E0095C1CA /* RadioComment.swift in Sources */,
+				82278312251A3B9F00FB54C4 /* NYBouncesContentView.swift in Sources */,
 				18131E2F21FF170E0095C1CA /* ZoomInOutAttributesAnimator.swift in Sources */,
 				82B0E3FC247BEB7C00CA6550 /* BlockUser.swift in Sources */,
 				8237298225159832004116BD /* StringExtensions.swift in Sources */,
@@ -1866,6 +1936,7 @@
 				829B8FBE240AFBDF00F0FE99 /* BankTableViewCell.swift in Sources */,
 				18131BFA21FF17090095C1CA /* UIImageViewExtensions.swift in Sources */,
 				8239DBF023D0832500C13E7B /* RadioStationCell.swift in Sources */,
+				8227831A251A496300FB54C4 /* UIManager.swift in Sources */,
 				18131E3821FF170E0095C1CA /* Utils.swift in Sources */,
 				1800988A22495D3800F5A202 /* NotificationObj.swift in Sources */,
 				1843ED7A223DA105004CE7DA /* RadioSearchViewController.swift in Sources */,
@@ -1878,6 +1949,7 @@
 				18131C0321FF17090095C1CA /* ProfilePostCell.swift in Sources */,
 				82050E0E2410A65700873357 /* temp.swift in Sources */,
 				FD94F4EC23E9EA21006E06C8 /* Settings.swift in Sources */,
+				82278313251A3B9F00FB54C4 /* NYIrregularityContentView.swift in Sources */,
 				829B8FB2240AEC4800F0FE99 /* AddCardViewController.swift in Sources */,
 				8256F19D23F592FD003FC445 /* PhoneVerifyViewController.swift in Sources */,
 				82E8F99F241C0AF2009774A9 /* CashInfo.swift in Sources */,
@@ -1885,12 +1957,14 @@
 				1800BA6D226C7B07004D9966 /* BasePagerVC.swift in Sources */,
 				18131E5E21FF69670095C1CA /* FollowCell.swift in Sources */,
 				18131C0721FF17090095C1CA /* EmbeddedViewController.swift in Sources */,
+				8227830A251A300D00FB54C4 /* ESTabBar.swift in Sources */,
 				18B364C522017AB000484D1D /* LinkAttachViewController.swift in Sources */,
 				82011C9223EB953E00EC0BFB /* AllCategoryViewController.swift in Sources */,
 				82377C9323CFB9B9008F41EF /* Audios.swift in Sources */,
 				D621F18925034D8E00BA81DE /* NY_GradientView.swift in Sources */,
 				18131E2121FF170E0095C1CA /* User.swift in Sources */,
 				18131E0721FF170E0095C1CA /* SubRadioViewController.swift in Sources */,
+				82278309251A300D00FB54C4 /* ESTabBarItemBadgeView.swift in Sources */,
 				18131E2E21FF170E0095C1CA /* UIView+Anchor.swift in Sources */,
 				18131C1321FF17090095C1CA /* CreateRadioViewController.swift in Sources */,
 				18CC3F16228E9E4600151337 /* StoryPlayVC.swift in Sources */,
@@ -2088,6 +2162,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/NowYou/Resources/FBFrameworks",
+					"$(PROJECT_DIR)/NowYou/Framework",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2130,6 +2205,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/NowYou/Resources/FBFrameworks",
+					"$(PROJECT_DIR)/NowYou/Framework",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

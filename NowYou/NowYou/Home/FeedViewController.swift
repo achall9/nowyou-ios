@@ -10,7 +10,7 @@ import UIKit
 import CRRefresh
 import SwiftyJSON
 
-class FeedViewController: EmbeddedViewController {
+class FeedViewController: BaseViewController {
 
     @IBOutlet weak var gridLayout: GridLayout!
     @IBOutlet weak var feedIntroIV: UIImageView!
@@ -437,7 +437,7 @@ extension FeedViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         if collectionView == self.clvProfile && indexPath.row == 0 {
             if todayUserPosts.count == 0 {
-                self.delegate?.onShowContainer(position: .Center, sender: self)
+//                self.delegate?.onShowContainer(position: .Center, sender: self)
                 return
             }
         }

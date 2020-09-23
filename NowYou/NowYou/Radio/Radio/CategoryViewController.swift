@@ -110,7 +110,6 @@ class CategoryViewController: BaseTableViewController, IndicatorInfoProvider,UIV
             tableView.isScrollEnabled = true
             return categories.count
         } else{
-            tableView.isScrollEnabled = false
             return categories.count > 6 ? 6 : categories.count
         }
     }
@@ -155,7 +154,7 @@ class CategoryViewController: BaseTableViewController, IndicatorInfoProvider,UIV
             if Utils.isIPhoneX() {
                 return 812 * 0.0839 + 16
             } else {
-                return 667 * 0.0839 + 10
+                return 667 * 0.0839 + 20
             }
         }
 

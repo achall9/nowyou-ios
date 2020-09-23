@@ -21,8 +21,7 @@ class LaunchViewController: UIViewController {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
             if let _ = TokenManager.getToken() {
-                let homeVc = UIViewController.viewControllerWith("homeVC")
-                appDelegate.window?.rootViewController = homeVc
+                UIManager.showMain()
             } else {
                 let authNav = mainStoryboard.instantiateViewController(withIdentifier: "authNav") as? UINavigationController
                 appDelegate.window?.rootViewController = authNav

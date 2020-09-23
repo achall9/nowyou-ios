@@ -58,8 +58,7 @@ extension LoginMultipleViewController: UITableViewDataSource, UITableViewDelegat
         UserManager.updateUser(user: user)
         
         DispatchQueue.main.async {
-            let app = UIApplication.shared.delegate as! AppDelegate
-            app.window?.rootViewController = UIViewController.viewControllerWith("homeVC")
+            UIManager.showMain()
         }
         
     }

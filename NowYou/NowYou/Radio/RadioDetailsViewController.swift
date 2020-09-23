@@ -452,7 +452,11 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
         
         leaveChannel()
         if let nav = self.navigationController{
-            nav.popViewController(animated: true)
+            if (self.navigationController?.viewControllers.count ?? 0 > 1){
+                nav.popViewController(animated: true)
+            }else{
+                self.dismiss(animated: true)
+            }
         }else{
             self.dismiss(animated: true)
         }

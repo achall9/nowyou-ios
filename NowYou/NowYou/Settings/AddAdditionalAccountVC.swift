@@ -81,8 +81,7 @@ class AddAdditionalAccountVC: UIViewController {
                                             NetworkManager.shared.follow(userId: 41, completion: { (response) in
                                                 DispatchQueue.main.async {
                                                     
-                                                    let app = UIApplication.shared.delegate as! AppDelegate
-                                                    app.window?.rootViewController = UIViewController.viewControllerWith("homeVC")
+                                                    UIManager.showMain()
 
                                                 }
                                             })
