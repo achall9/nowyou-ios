@@ -75,59 +75,6 @@ class ChooseAccountVC: UIViewController {
             }
         }
             
-       /*
-       var main_user_id = UserManager.currentUser()?.userID
-       if UserManager.currentUser()?.main_user_id != nil &&
-           UserManager.currentUser()?.main_user_id != 0 {
-           main_user_id = UserManager.currentUser()?.main_user_id
-       }
-       let main_userId = "\(main_user_id ?? 0)"
-       */
-            
-        /*
-        NetworkManager.shared.getAdditionalAccounts(main_user_id: main_userId) { (response) in
-            DispatchQueue.main.async {
-                switch response {
-                    case .error(let error):
-                        print (error.localizedDescription)
-                    case .success(let data):
-                        do {
-                            let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-
-                            print (jsonRes)
-                            if let json = jsonRes as? [String: Any]  /*, let usersData = json["data"] as? [[String: Any]]*/ {
-                                if let usersJson = json["additional_accounts"] as? [[String: Any]] {
-                                    for userJson in usersJson {
-                                        let users = User(json: userJson)
-                                        self.users.append(users)
-                                    }
-                                }
-                            }
-                        } catch {
-                            
-                        }
-                }  // End switch response
-                
-                // Sort the users that current user to be on top of list.
-                var tmpUsers = [User]()
-                for user in self.users {
-                    if user.userID != UserManager.currentUser()?.userID {
-                        tmpUsers.append(user)
-                    }
-                }
-                self.users.removeAll()
-                self.users.append(UserManager.currentUser()!)
-                self.users.append(contentsOf: tmpUsers)
-                // End Sort
-                
-                DispatchQueue.main.async {
-                    Utils.hideSpinner()
-                    self.tableView.reloadData()
-                }
-            }  // End DispatchQueue.main.async {
-        } // End NetworkManager
-        */
-        
     }
     
     @IBAction func editAction(_ sender: UIButton) {
