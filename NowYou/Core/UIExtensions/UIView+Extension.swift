@@ -208,8 +208,64 @@ extension UIView {
     }
     
 }
+extension CALayer {
+func addShadow(radius: CGFloat) {
+    self.shadowOffset = .zero
+    self.shadowOpacity = 0.2
+    self.shadowRadius = radius
+    self.shadowColor = UIColor.black.cgColor
+    self.masksToBounds = false
+    if cornerRadius != 0 {
+        addShadowWithRoundedCorners()
+    }
+}
 
-
+func roundCorners(radius: CGFloat) {
+    self.cornerRadius = radius
+    self.masksToBounds = true
+    if shadowOpacity != 0 {
+        addShadowWithRoundedCorners()
+    }
+}
+    func addShadowWithRoundedCorners() {
+        if let contents = self.contents {
+            masksToBounds = false
+            sublayers?.filter{ $0.frame.equalTo(self.bounds) }
+                .forEach{ $0.roundCorners(radius: self.cornerRadius) }
+            self.contents = nil
+            if let sublayer = sublayers?.first,
+                sublayer.name == "shadow_layer" {
+                sublayer.removeFromSuperlayer()
+            }
+            let contentLayer = CALayer()
+            contentLayer.name = "shadow_layer"
+            contentLayer.contents = contents
+            contentLayer.frame = bounds
+            contentLayer.cornerRadius = cornerRadius
+            contentLayer.masksToBounds = true
+            insertSublayer(contentLayer, at: 0)
+        }
+    }
+}
+@IBDesignable extension UIView{
+    @IBInspectable
+    public var cornersRadius: CGFloat{
+        set{
+            self.layer.roundCorners(radius: newValue)
+        }get{
+            return self.layer.cornerRadius
+        }
+    }
+    
+    @IBInspectable
+    public var shadowRadius: CGFloat {
+        set{
+            self.layer.addShadow(radius: newValue)
+        }get{
+            return self.layer.shadowRadius
+        }
+    }
+}
 extension UIStackView {
     func removeAllArrangedSubviews() {
         let removedSubviews = arrangedSubviews.reduce([]) { (allSubviews, subview) -> [UIView] in

@@ -13,6 +13,7 @@ import IQKeyboardManagerSwift
 import SoundWave
 //import GoogleMobileAds
 import AgoraRtcKit
+import FBAudienceNetwork
 
 protocol StreamCompletionDelegate {
     func streamCompleted()
@@ -36,6 +37,9 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
             }
         }
     }
+    var bannerAd: FBAdView!
+    var lblBannerReview: UILabel!
+    var failedOfBanner: Bool = false
 
     @IBOutlet weak var segmentVideo: UISegmentedControl!
     private let viewModel = ViewModel()
@@ -101,7 +105,34 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
         }
     }
         
-    
+    func initBannerAds() {
+        /*
+        self.adView = [[FBAdView alloc] initWithPlacementID:@"YOUR_PLACEMENT_ID"
+                                                     adSize:kFBAdSizeHeight250Rectangle
+                                         rootViewController:self];
+        self.adView.frame = CGRectMake(0, 0, 320, 250);
+        self.adView.delegate = self;
+        [self.adView loadAd];
+         */
+        self.bannerAd = FBAdView.init(placementID: FBADS.BANNER_PLACEMENT_ID, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        self.bannerAd.frame = CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50)
+        self.bannerAd.delegate = self
+       
+        
+        self.lblBannerReview = UILabel.init(frame: CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50))
+        self.lblBannerReview.text = "Reviewing ads by Facebook team"
+        self.lblBannerReview.textAlignment = .center
+        self.lblBannerReview.backgroundColor = .white
+        self.perform(#selector(showAds), with: self, afterDelay: 120)
+    }
+    @objc func showAds(){
+         self.bannerAd.loadAd()
+        self.perform(#selector(hideAds), with: self, afterDelay: 180)
+    }
+    @objc func hideAds(){
+        self.bannerAd.removeFromSuperview()
+        self.lblBannerReview.removeFromSuperview()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -122,6 +153,7 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
         
         addRigthSwipe()
         onPause(self.btnPlay)
+        initBannerAds()
     }
     func setupVideo() {
         let configuration = AgoraVideoEncoderConfiguration(size: AgoraVideoDimension640x360, frameRate: .fps15, bitrate: AgoraVideoBitrateStandard, orientationMode: .adaptative)
@@ -492,6 +524,9 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
             self.lblViewers.text = "\(viewers)"
         }
     }
+    func logAdViewOrClickFromFeed(clickAd: Int) {
+        
+    }
 }
 
 // MARK: - Comment Table Delegate
@@ -598,6 +633,40 @@ extension StreamViewController: AgoraRtcEngineDelegate {
     // warning code
     func rtcEngine(_ engine: AgoraRtcEngineKit, didOccurWarning warningCode: AgoraWarningCode) {
         print("warning code: \(warningCode.description)")
+    }
+    
+}
+extension StreamViewController: FBAdViewDelegate {
+    
+    func adViewDidClick(_ adView: FBAdView) {
+        print("banner ads click")
+        logAdViewOrClickFromFeed(clickAd: 1)
+    }
+    
+    func adViewDidFinishHandlingClick(_ adView: FBAdView) {
+        print("adViewDidFinishHandlingClick")
+    }
+    
+    func adViewWillLogImpression(_ adView: FBAdView) {
+        print("adViewWillLogImpression")
+    }
+    
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        self.lblBannerReview.frame = CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50)
+        self.viewVideoContainer.addSubview(self.lblBannerReview)
+        self.lblBannerReview.isHidden = false
+        self.failedOfBanner = true
+        print("banner ads loading failed")
+    }
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        self.lblBannerReview.isHidden = true
+        self.showBanner()
+    }
+    
+    func showBanner() {
+        self.bannerAd.frame = CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50)
+        self.viewVideoContainer.addSubview(self.bannerAd)
     }
     
 }

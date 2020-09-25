@@ -1337,7 +1337,7 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        return CGSize(width: view.bounds.width , height: view.bounds.height)
+        return CGSize(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

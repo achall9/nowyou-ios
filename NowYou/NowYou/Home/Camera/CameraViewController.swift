@@ -19,6 +19,7 @@ class CameraViewController: BaseViewController,  UIViewControllerTransitioningDe
     @IBOutlet weak var previewView: UIView!
     
     
+    @IBOutlet weak var closeView: UIView!
     // record button
     var recordButton : RecordButton!
     var progressTimer : Timer!
@@ -150,6 +151,9 @@ class CameraViewController: BaseViewController,  UIViewControllerTransitioningDe
         
     }
     
+    @IBAction func onClose(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
     func changeCameraDevice() {
         cameraManager.cameraDevice = cameraManager.cameraDevice == CameraDevice.front ? CameraDevice.back : CameraDevice.front
     }
