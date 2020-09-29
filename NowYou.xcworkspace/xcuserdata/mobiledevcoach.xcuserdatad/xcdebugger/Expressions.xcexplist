@@ -3,6 +3,22 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in closure #2 in LoginMultipleViewController.doLogin(_:):LoginMultipleViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user.username">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LoginViewController.onLogin(_:):LoginViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "txtEmail.text!">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "RestRouter.body.getter:RestRouter.swift">
          <PersistentStrings>
             <PersistentString
@@ -66,6 +82,9 @@
                value = "lblUsername.text">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LoginMultipleViewController.tableView(_:didSelectRowAt:):LoginMultipleViewController.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

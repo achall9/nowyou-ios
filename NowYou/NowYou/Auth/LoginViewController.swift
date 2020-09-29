@@ -107,25 +107,32 @@ class LoginViewController: UIViewController {
                             
                             if let jsonObject = jsonRes as? [String: Any] {
                                 
-                                let accounts = jsonObject["accounts"] as? [[String: Any]]
-                                
-                                self.users.removeAll()
-                                self.saveUserType(self.txtEmail.text!)
-                                if accounts?.count == 1 {
-                                    self.doLogin()
-                                } else if accounts!.count > 1 {
-                                    for account in accounts! {
-                                        let user = User(json: account)
-                                        self.users.append(user)
+                                if let accounts = jsonObject["accounts"] as? [[String: Any]] {
+                                    self.users.removeAll()
+                                    self.saveUserType(self.txtEmail.text!)
+                                    if accounts.count == 1 {
+                                        let user = User(json: accounts.first!)
+                                        
+                                        self.doLogin(user.username)
+                                    } else if accounts.count > 1 {
+                                        for account in accounts {
+                                            let user = User(json: account)
+                                            self.users.append(user)
+                                        }
+                                        
+                                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginMultipleViewController") as! LoginMultipleViewController
+                                        vc.users = self.users
+                                        vc.password = self.txtPwd.text!
+                                        self.navigationController?.pushViewController(vc, animated: true)
+                                        
+                                    } else {
+                                        self.present(Alert.alertWithText(errorText: "Invalid username or password."), animated: true, completion: nil)
                                     }
-                                    
-                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginMultipleViewController") as! LoginMultipleViewController
-                                    vc.users = self.users
-                                    self.navigationController?.pushViewController(vc, animated: true)
-                                    
                                 } else {
-                                    self.present(Alert.alertWithText(errorText: "Invalid username or password."), animated: true, completion: nil)
+                                    self.present(Alert.alertWithText(errorText: "Something went wrong in backend"), animated: true, completion: nil)
                                 }
+                                
+                                
                                 
                                 
                             } else {
@@ -141,14 +148,14 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func doLogin() {
+    func doLogin(_ user_name: String) {
         
-        NetworkManager.shared.login(email: txtEmail.text!, password: txtPwd.text!) { (response) in
+        NetworkManager.shared.login(user_name: user_name, password: self.txtPwd.text!) { (response) in
             DispatchQueue.main.async {
                 Utils.hideSpinner()
                 switch response {
                     case .error(let error):
-                        self.present(Alert.alertWithText(errorText: "Login not recognized"), animated: true, completion: nil)
+                        self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
                         self.txtEmail.text = ""
                         self.txtPwd.text = ""
                         break

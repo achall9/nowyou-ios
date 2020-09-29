@@ -13,6 +13,7 @@ class LoginMultipleViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var users: [User]!
+    var password: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,57 @@ class LoginMultipleViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.tableFooterView = UIView()
     }
+    
+    func doLogin(_ user: User) {
+        DispatchQueue.main.async {
+            Utils.showSpinner()
+            self.view.endEditing(true)
+        }
+        NetworkManager.shared.login(user_name: user.username, password: self.password) { (response) in
+            DispatchQueue.main.async {
+                Utils.hideSpinner()
+                switch response {
+                    case .error(let error):
+                        self.present(Alert.alertWithText(errorText: "Login not recognized"), animated: true, completion: nil)
+                        
+                        break
+                    case .success(let data):
+                        do {
+                            let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                            
+                            if let jsonObject = jsonRes as? [String: AnyObject] {
+                                
+                                if let token = jsonObject["token"] as? String {
+                                    TokenManager.saveToken(token: token)
+                                }
+                                
+                                if let userJSON = jsonObject["user"] as? [String: Any] {
+                                    print (userJSON)
+                                    let user = User(json: userJSON)
+                                    let encodedUser = NSKeyedArchiver.archivedData(withRootObject: user)
+                                    UserDefaults.standard.set(encodedUser, forKey: USER_INFO)
+                                    
+                                    NotificationManager.shared.storeToken()
+                                    UserManager.updateUser(user: user)
+                                    
+                                    DispatchQueue.main.async {
+                                        UIManager.showMain()
+                                    }
+                                    
+                                } else {
+                                    self.present(Alert.alertWithText(errorText: "Invalid Credentials."), animated: true, completion: nil)
+                                }
+                            }
+                        } catch {
+                            
+                        }
+                    break
+                }
+            }
+        }
+    }
+    
+    
     
     @IBAction func backAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -54,13 +106,7 @@ extension LoginMultipleViewController: UITableViewDataSource, UITableViewDelegat
        
         let user = self.users[indexPath.row]
         
-        TokenManager.saveToken(token: user.token)
-        UserManager.updateUser(user: user)
-        
-        DispatchQueue.main.async {
-            UIManager.showMain()
-        }
-        
+        self.doLogin(user)
     }
     
     

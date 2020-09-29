@@ -35,10 +35,47 @@ class ChooseAccountVC: UIViewController {
         DispatchQueue.main.async {
             Utils.showSpinner()
         }
+        /*
+        let main_user_id = "\(UserManager.currentUser()!.userID ?? 0)"
+        NetworkManager.shared.getAdditionalAccounts(main_user_id: main_user_id) { (response) in
+            switch response {
+                case .error(let error):
+                    self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
+                    break
+                case .success(let data):
+                    do {
+                        let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                        
+                        if let jsonObject = jsonRes as? [String: Any] {
+                            
+                            let accounts = jsonObject["accounts"] as? [[String: Any]]
+                            
+                            self.users.removeAll()
+                            
+                            for account in accounts! {
+                                let user = User(json: account)
+                                self.users.append(user)
+                            }
+                            
+                            self.tableView.reloadData()
+                            
+                            
+                        } else {
+                           self.present(Alert.alertWithText(errorText: "Invalid Credentials."), animated: true, completion: nil)
+                       }
+                    } catch {
+                        
+                    }
+                break
+            }
+        }
+        */
         
-        let name = UserManager.getUserType()
-        
-        NetworkManager.shared.is_email_phone_duplicate(email: name, phone: name, user_name: name) { (response) in
+        //let name = UserManager.getUserType()
+        let name = UserManager.currentUser()!.username!
+        let email = UserManager.currentUser()!.email!
+        let phone = UserManager.currentUser()!.phone!
+        NetworkManager.shared.is_email_phone_duplicate(email: email, phone: phone, user_name: name) { (response) in
             DispatchQueue.main.async {
                 Utils.hideSpinner()
             
@@ -74,6 +111,7 @@ class ChooseAccountVC: UIViewController {
                 }
             }
         }
+        
             
     }
     
