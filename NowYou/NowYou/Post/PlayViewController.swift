@@ -14,6 +14,7 @@ import Player
 import CRRefresh
 import SwiftyJSON
 import FBAudienceNetwork
+import SnapKit
 //import GoogleMobileAds
 
 class PlayViewController: EmbeddedViewController {
@@ -1907,9 +1908,15 @@ extension FacebookAdsCell: FBNativeAdDelegate, FBMediaViewDelegate {
             self.adCallToActionButton.setTitle(self.nativeAd.callToAction, for: .normal)
             */
             
-            let adView: FBNativeAdView! = FBNativeAdView.init(nativeAd: self.nativeAd, with: .genericHeight300)
-            self.adView.addSubview(adView)
-            adView.frame = self.adView.frame
+            let adFView: FBNativeAdView! = FBNativeAdView.init(nativeAd: self.nativeAd, with: .genericHeight300)
+            self.adView.addSubview(adFView)
+            //adView.frame = self.adView.frame
+            
+            adFView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            
+            
         }
     }
     

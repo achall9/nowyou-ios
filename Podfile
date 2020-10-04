@@ -20,7 +20,7 @@ target 'NowYou' do
   
   pod 'XLPagerTabStrip', '~> 8.1'
   pod "SoundWave"
-
+  pod 'SnapKit'
   
   pod 'Firebase'
   pod 'Firebase/Core'

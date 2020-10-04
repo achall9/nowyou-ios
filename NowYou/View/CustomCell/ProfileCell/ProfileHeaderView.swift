@@ -19,6 +19,8 @@ class ProfileHeaderView: UICollectionReusableView {
     @IBOutlet weak var lblFollowerCount: UILabel!
     @IBOutlet weak var lblFollowingCount: UILabel!
     @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblBio: UILabel!
+    
     @IBOutlet weak var lblViewCount: UILabel!
     
     @IBOutlet weak var btnFollow: NYView!
