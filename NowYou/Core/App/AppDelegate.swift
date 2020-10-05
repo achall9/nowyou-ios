@@ -259,6 +259,7 @@ extension AppDelegate: NotificationDelegate{
             print("radioStaionId= ",radioStationId)
         let profileIconPath = (userInfo["profileIconPath"] as! String)
             print("profileIconPath= ",profileIconPath)
+        
 // -------testing-------
 //        let radioObj = RadioStation(json:
 //        ["name": "Something",
@@ -304,7 +305,7 @@ extension AppDelegate: NotificationDelegate{
                     NotificationCenter.default.post(name:.radioIsOnBroadcastingToFeedNotification, object: nil, userInfo: ["radioObj" : radioObj, "profileIconPath" : profileIconPath])
                       DispatchQueue.main.async {
                         if let homeVC = Utils.shared.getTopViewController(){
-                            if !homeVC.isKind(of: StreamViewController) && !homeVC.isKind(of: RadioDetailsViewController){
+                            if !homeVC.isKind(of: StreamViewController.self) && !homeVC.isKind(of: RadioDetailsViewController.self){
                                 let home = UIStoryboard(name: "Main", bundle: nil)
                                 let vc = home.instantiateViewController(withIdentifier: "RadioDetailsVC") as! RadioDetailsViewController
                                 vc.radio = radioObj
