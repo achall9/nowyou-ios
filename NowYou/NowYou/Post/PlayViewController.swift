@@ -14,6 +14,7 @@ import Player
 import CRRefresh
 import SwiftyJSON
 import FBAudienceNetwork
+import SnapKit
 //import GoogleMobileAds
 
 class PlayViewController: EmbeddedViewController {
@@ -193,11 +194,11 @@ class PlayViewController: EmbeddedViewController {
          */
         let height = self.tabBarController?.tabBar.frame.height ?? 49.0
         self.bannerAd = FBAdView.init(placementID: FBADS.BANNER_PLACEMENT_ID, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
-        self.bannerAd.frame = CGRect.init(x: 0, y: self.view.bounds.height - height - 50 - UIManager.bottomPadding(), width: self.view.bounds.width, height: 50)
+        self.bannerAd.frame = CGRect.init(x: 0, y: self.view.bounds.height - height - 80 - UIManager.bottomPadding(), width: self.view.bounds.width, height: 80)
         self.bannerAd.delegate = self
         self.bannerAd.loadAd()
         
-        self.lblBannerReview = UILabel.init(frame: CGRect.init(x: 0, y: self.view.bounds.height - height - 50 - UIManager.bottomPadding(), width: self.view.bounds.width, height: 50))
+        self.lblBannerReview = UILabel.init(frame: CGRect.init(x: 0, y: self.view.bounds.height - height - 80 - UIManager.bottomPadding(), width: self.view.bounds.width, height: 80))
         self.lblBannerReview.text = "Reviewing ads by Facebook team"
         self.lblBannerReview.textAlignment = .center
         self.lblBannerReview.backgroundColor = .white
@@ -1907,9 +1908,15 @@ extension FacebookAdsCell: FBNativeAdDelegate, FBMediaViewDelegate {
             self.adCallToActionButton.setTitle(self.nativeAd.callToAction, for: .normal)
             */
             
-            let adView: FBNativeAdView! = FBNativeAdView.init(nativeAd: self.nativeAd, with: .genericHeight300)
-            self.adView.addSubview(adView)
-            adView.frame = self.adView.frame
+            let adFView: FBNativeAdView! = FBNativeAdView.init(nativeAd: self.nativeAd, with: .genericHeight300)
+            self.adView.addSubview(adFView)
+            //adView.frame = self.adView.frame
+            
+            adFView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            
+            
         }
     }
     

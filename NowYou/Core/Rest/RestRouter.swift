@@ -21,7 +21,7 @@ enum RestRouter: RestAPIProtocol {
     // know if email/phone is duplicate or not
     case is_email_phone_duplicate(email: String, phone: String, user_name: String)
     // auth
-    case login(email: String, password: String)
+    case login(user_name: String, password: String)
     case passwordReset(email: String)
     
     case register(firstName: String, lastName: String, email: String, password: String, phone: String, device_token: String, birthday: String, gender: Int, username: String, privateOn: Int, bio: String)
@@ -496,6 +496,7 @@ enum RestRouter: RestAPIProtocol {
             
             
             let param = ["email": email, "phone": phone, "user_name": user_name]
+            
             do {
                 data = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
                 return data
@@ -503,17 +504,17 @@ enum RestRouter: RestAPIProtocol {
                 print(error.localizedDescription)
             }
             
+            
             return nil
             
-            
-        case .login(let email, let password):
+        case .login(let user_name, let password):
             var data = Data()
             
             var token: String = ""
             if let deviceToken = UserDefaults.standard.value(forKey: "currentFCMTokenKey") as? String {
                 token = deviceToken
             }
-            let param = ["email": email, "password": password, "push_token": token]
+            let param = ["user_name": user_name, "password": password, "push_token": token]
             do {
                 data = try JSONSerialization.data(withJSONObject: param, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
                 return data

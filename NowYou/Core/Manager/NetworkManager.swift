@@ -56,14 +56,15 @@ class NetworkManager: NSObject {
         call(request, completion: completion)
     }
     
-    func login(email: String, password: String, completion: ((ServerResponse)->())?) {
-        let rest = RestRouter.login(email: email, password: password)
+    func login(user_name: String, password: String, completion: ((ServerResponse)->())?) {
+        let rest = RestRouter.login(user_name: user_name, password: password)
         
         var request = URLRequest(url: rest.url)
         
         request.httpMethod = rest.method
         request.httpBody = rest.body
         
+        //request.addValue("Bearer \(TokenManager.getToken()!)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         

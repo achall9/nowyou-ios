@@ -14,6 +14,7 @@ class OtherProfileViewController: UIViewController, UIViewControllerTransitionin
     
     @IBOutlet weak var lblUsername: UILabel!
     
+    
     var interactor = Interactor()
     var transition = CATransition()
     
@@ -240,6 +241,7 @@ extension OtherProfileViewController: UICollectionViewDataSource, UICollectionVi
         header.lblFollowerCount.text    = "\(user?.user?.followers_count ?? 0)"
         header.lblFollowingCount.text   = "\(user?.user?.followings_count ?? 0)"
         header.lblName.text             = user?.user?.fullname ?? ""
+        header.lblBio.text              = user?.user?.bio ?? ""
         
         header.imgProfile.isUserInteractionEnabled = true
         header.addGestureRecognizer(profileImgTap)
@@ -257,7 +259,7 @@ extension OtherProfileViewController: UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        return CGSize(width: view.frame.width, height: view.frame.height * 0.33)
+        return CGSize(width: view.frame.width, height: view.frame.height * 0.43)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

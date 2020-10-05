@@ -794,6 +794,7 @@ PODS:
   - SDWebImage (4.4.8):
     - SDWebImage/Core (= 4.4.8)
   - SDWebImage/Core (4.4.8)
+  - SnapKit (5.0.1)
   - SoundWave (0.1.4)
   - StackConsentManager (1.0.1)
   - Stripe (19.4.0)
@@ -833,6 +834,7 @@ DEPENDENCIES:
   - Player
   - ReachabilitySwift
   - SDWebImage (~> 4.0)
+  - SnapKit
   - SoundWave
   - StackConsentManager (~> 1.0)
   - Stripe
@@ -888,6 +890,7 @@ SPEC REPOS:
     - Protobuf
     - ReachabilitySwift
     - SDWebImage
+    - SnapKit
     - SoundWave
     - StackConsentManager
     - Stripe
@@ -942,6 +945,7 @@ SPEC CHECKSUMS:
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SoundWave: d98ffaa863570b29d991da32a09b7ce1b4aaf2d4
   StackConsentManager: 2e7c7512d4c1b5dddf248e7e9f78931d8d0142e8
   Stripe: 92f1c73a9dbd3c54277ed06a1fea6e08f20414c6
@@ -952,6 +956,6 @@ SPEC CHECKSUMS:
   WSTagsField: a4e91b7d866e8c9755332ebcf8123f42f2abd4a0
   XLPagerTabStrip: 63166e21c9844fa30f2d95d30f335e73be5caf22
 
-PODFILE CHECKSUM: 46281f7490da107dea41d5b1c40160326389e148
+PODFILE CHECKSUM: 907233def249186c81323265b033cbbbb789eaf3
 
 COCOAPODS: 1.9.3
