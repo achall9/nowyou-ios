@@ -304,11 +304,13 @@ extension AppDelegate: NotificationDelegate{
                     NotificationCenter.default.post(name:.radioIsOnBroadcastingToFeedNotification, object: nil, userInfo: ["radioObj" : radioObj, "profileIconPath" : profileIconPath])
                       DispatchQueue.main.async {
                         if let homeVC = Utils.shared.getTopViewController(){
-                            let home = UIStoryboard(name: "Main", bundle: nil)
-                            let vc = home.instantiateViewController(withIdentifier: "RadioDetailsVC") as! RadioDetailsViewController
-                            vc.radio = radioObj
-                            let radioNav = UINavigationController(rootViewController: vc)
-                            homeVC.present(radioNav, animated: true, completion: nil)
+                            if !homeVC.isKind(of: StreamViewController) && !homeVC.isKind(of: RadioDetailsViewController){
+                                let home = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = home.instantiateViewController(withIdentifier: "RadioDetailsVC") as! RadioDetailsViewController
+                                vc.radio = radioObj
+                                let radioNav = UINavigationController(rootViewController: vc)
+                                homeVC.present(radioNav, animated: true, completion: nil)
+                            }
                         }
                       }
                   }
