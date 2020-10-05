@@ -305,7 +305,7 @@ extension AppDelegate: NotificationDelegate{
                     NotificationCenter.default.post(name:.radioIsOnBroadcastingToFeedNotification, object: nil, userInfo: ["radioObj" : radioObj, "profileIconPath" : profileIconPath])
                       DispatchQueue.main.async {
                         if let homeVC = Utils.shared.getTopViewController(){
-                            if !homeVC.isKind(of: StreamViewController.self) && !homeVC.isKind(of: RadioDetailsViewController.self){
+                            if !homeVC.isKind(of: StreamViewController.self) && !homeVC.isKind(of: RadioDetailsViewController.self) && !homeVC.isKind(of: RecordedRadioPlayViewController.self){
                                 let home = UIStoryboard(name: "Main", bundle: nil)
                                 let vc = home.instantiateViewController(withIdentifier: "RadioDetailsVC") as! RadioDetailsViewController
                                 vc.radio = radioObj

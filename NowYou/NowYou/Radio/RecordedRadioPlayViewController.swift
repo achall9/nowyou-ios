@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import AVFoundation
 import IQKeyboardManagerSwift
+import FBAudienceNetwork
 //import GoogleMobileAds
 //import Appodeal
 public protocol RecordedRaidoFollowDelegate: AnyObject {
@@ -16,7 +17,7 @@ public protocol RecordedRaidoFollowDelegate: AnyObject {
     func decreaseFollowing();
 }
 class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTransitioningDelegate {
-
+    @IBOutlet weak var viewVideoContainer: UIView!
     @IBOutlet weak var vLogo: UIView!
     @IBOutlet weak var btnProfile: UIButton!
     @IBOutlet weak var playBtnView: UIView!
@@ -78,6 +79,9 @@ class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTrans
     var isCommentInComment : Bool = false
     let identifier1 = "messageCell"
     let identifier2 = "replyCell"
+    var bannerAd: FBAdView!
+    var lblBannerReview: UILabel!
+    var failedOfBanner: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +94,7 @@ class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTrans
         updateComment()
         loadComments()
         addRigthSwipe()
+        initBannerAds()
        
     }
     
@@ -124,7 +129,39 @@ class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTrans
         btnSend.setCircular()
     }
     
-  
+    func initBannerAds() {
+        /*
+        self.adView = [[FBAdView alloc] initWithPlacementID:@"YOUR_PLACEMENT_ID"
+                                                     adSize:kFBAdSizeHeight250Rectangle
+                                         rootViewController:self];
+        self.adView.frame = CGRectMake(0, 0, 320, 250);
+        self.adView.delegate = self;
+        [self.adView loadAd];
+         */
+        self.bannerAd = FBAdView.init(placementID: FBADS.BANNER_PLACEMENT_ID, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        self.bannerAd.frame = CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50)
+        self.bannerAd.delegate = self
+       
+        
+        self.lblBannerReview = UILabel.init(frame: CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50))
+        self.lblBannerReview.text = "Reviewing ads by Facebook team"
+        self.lblBannerReview.textAlignment = .center
+        self.lblBannerReview.backgroundColor = .white
+        self.perform(#selector(showAds), with: self, afterDelay: 120)
+    }
+    @objc func showAds(){
+        if let selish = self {
+            selish.bannerAd.loadAd()
+            selish.perform(hideAds(), with: self, afterDelay: 180)
+        }
+    }
+    @objc func hideAds(){
+        if let selish = self{
+            selish.bannerAd.removeFromSuperview()
+            selish.lblBannerReview.removeFromSuperview()
+        }
+        
+    }
     private func initValue(){
         adTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(showAd), userInfo: nil, repeats: true)
         adTimer_banner = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(showAd_banner), userInfo: nil, repeats: true)
@@ -985,4 +1022,38 @@ extension RecordedRadioPlayViewController{
             }
         })
     }
+}
+extension RecordedRadioPlayViewController: FBAdViewDelegate {
+    
+    func adViewDidClick(_ adView: FBAdView) {
+        print("banner ads click")
+        logAdViewOrClickFromFeed(clickAd: 1)
+    }
+    
+    func adViewDidFinishHandlingClick(_ adView: FBAdView) {
+        print("adViewDidFinishHandlingClick")
+    }
+    
+    func adViewWillLogImpression(_ adView: FBAdView) {
+        print("adViewWillLogImpression")
+    }
+    
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        self.lblBannerReview.frame = CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50)
+        self.viewVideoContainer.addSubview(self.lblBannerReview)
+        self.lblBannerReview.isHidden = false
+        self.failedOfBanner = true
+        print("banner ads loading failed")
+    }
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        self.lblBannerReview.isHidden = true
+        self.showBanner()
+    }
+    
+    func showBanner() {
+        self.bannerAd.frame = CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50)
+        self.viewVideoContainer.addSubview(self.bannerAd)
+    }
+    
 }
