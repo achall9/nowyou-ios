@@ -12,6 +12,8 @@ import AVFoundation
 import IQKeyboardManagerSwift
 import AgoraRtcKit
 
+import FBAudienceNetwork
+
 class RadioDetailsViewController: BaseViewController, UIViewControllerTransitioningDelegate {
 
     @IBOutlet weak var viewVideoContainer: UIView!
@@ -34,6 +36,9 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
     @IBOutlet weak var emptyCommentsView: UIView!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblRecorderName: UILabel!
+    var bannerAd: FBAdView!
+    var lblBannerReview: UILabel!
+    var failedOfBanner: Bool = false
 
     var player: AVPlayer?
     var decodeAudioProcessor: AudioPlay?
@@ -81,7 +86,31 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
         loadAgoraKit()
         addRigthSwipe()
         joinRadioStation()
+        initBannerAds()
 
+    }
+    func initBannerAds() {
+        /*
+        self.adView = [[FBAdView alloc] initWithPlacementID:@"YOUR_PLACEMENT_ID"
+                                                     adSize:kFBAdSizeHeight250Rectangle
+                                         rootViewController:self];
+        self.adView.frame = CGRectMake(0, 0, 320, 250);
+        self.adView.delegate = self;
+        [self.adView loadAd];
+         */
+        self.bannerAd = FBAdView.init(placementID: FBADS.BANNER_PLACEMENT_ID, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        self.bannerAd.frame = CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50)
+        self.bannerAd.delegate = self
+       
+        
+        self.lblBannerReview = UILabel.init(frame: CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50))
+        self.lblBannerReview.text = "Reviewing ads by Facebook team"
+        self.lblBannerReview.textAlignment = .center
+        self.lblBannerReview.backgroundColor = .white
+        self.showAds()
+    }
+    @objc func showAds(){
+         self.bannerAd.loadAd()
     }
     func setupVideo() {
             
@@ -814,4 +843,41 @@ extension RadioDetailsViewController{
         radioRef?.childByAutoId().setValue(data)
         textView.text = ""
     }
+}
+extension RadioDetailsViewController: FBAdViewDelegate {
+    
+    func adViewDidClick(_ adView: FBAdView) {
+        print("banner ads click")
+        logAdViewOrClickFromFeed(clickAd: 1)
+    }
+    
+    func adViewDidFinishHandlingClick(_ adView: FBAdView) {
+        print("adViewDidFinishHandlingClick")
+    }
+    
+    func adViewWillLogImpression(_ adView: FBAdView) {
+        print("adViewWillLogImpression")
+    }
+    
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        self.lblBannerReview.frame = CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50)
+        self.viewVideoContainer.addSubview(self.lblBannerReview)
+        self.lblBannerReview.isHidden = false
+        self.failedOfBanner = true
+        print("banner ads loading failed")
+    }
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        self.lblBannerReview.isHidden = true
+        self.showBanner()
+    }
+    
+    func showBanner() {
+        self.bannerAd.frame = CGRect.init(x: 0, y: self.viewVideoContainer.frame.size.height - 50, width: self.viewVideoContainer.frame.size.width, height: 50)
+        self.viewVideoContainer.addSubview(self.bannerAd)
+    }
+    func logAdViewOrClickFromFeed(clickAd: Int) {
+        
+    }
+    
 }

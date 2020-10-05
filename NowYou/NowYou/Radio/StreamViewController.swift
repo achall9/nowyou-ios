@@ -123,11 +123,10 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
         self.lblBannerReview.text = "Reviewing ads by Facebook team"
         self.lblBannerReview.textAlignment = .center
         self.lblBannerReview.backgroundColor = .white
-        self.perform(#selector(showAds), with: self, afterDelay: 120)
+        self.showAds()
     }
     @objc func showAds(){
          self.bannerAd.loadAd()
-        self.perform(#selector(hideAds), with: self, afterDelay: 180)
     }
     @objc func hideAds(){
         self.bannerAd.removeFromSuperview()
