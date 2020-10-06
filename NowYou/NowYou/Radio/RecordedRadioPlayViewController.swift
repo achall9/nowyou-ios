@@ -150,16 +150,12 @@ class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTrans
         self.perform(#selector(showAds), with: self, afterDelay: 120)
     }
     @objc func showAds(){
-        if let selish = self {
-            selish.bannerAd.loadAd()
-            selish.perform(hideAds(), with: self, afterDelay: 180)
-        }
+            self.bannerAd.loadAd()
+            self.perform(#selector(hideAds), with: self, afterDelay: 180)
     }
     @objc func hideAds(){
-        if let selish = self{
-            selish.bannerAd.removeFromSuperview()
-            selish.lblBannerReview.removeFromSuperview()
-        }
+            self.bannerAd.removeFromSuperview()
+            self.lblBannerReview.removeFromSuperview()
         
     }
     private func initValue(){
@@ -1027,7 +1023,7 @@ extension RecordedRadioPlayViewController: FBAdViewDelegate {
     
     func adViewDidClick(_ adView: FBAdView) {
         print("banner ads click")
-        logAdViewOrClickFromFeed(clickAd: 1)
+//        logAdViewOrClickFromFeed(clickAd: 1)
     }
     
     func adViewDidFinishHandlingClick(_ adView: FBAdView) {

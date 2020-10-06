@@ -11,9 +11,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import "CSIOpusEncoder.h"
 #import "CSIOpusDecoder.h"
-#include "CSIDataQueue.h"
-@import FirebaseDatabase;
 #import <Firebase/Firebase.h>
+#include "CSIDataQueue.h"
+
 
 
 // return max value for given values

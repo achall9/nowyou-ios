@@ -33,7 +33,7 @@ target 'NowYou' do
   pod 'ColorSlider', '~> 4.3'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'McPicker', '~> 2.0.0'
+  pod 'McPicker', '~> 3.0.0'
   pod 'WSTagsField'
   pod 'SwiftyGif'
   pod 'ObjectMapper'
