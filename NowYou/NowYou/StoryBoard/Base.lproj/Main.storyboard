@@ -1300,7 +1300,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera Roll" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6u-1t-7cV">
-                                <rect key="frame" x="160.5" y="68" width="93.5" height="20"/>
+                                <rect key="frame" x="159" y="70.5" width="96.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="Gilroy-Bold" family="Gilroy-Bold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1365,7 +1365,7 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3tl-FZ-tAC">
-                                <rect key="frame" x="15" y="68" width="20" height="20"/>
+                                <rect key="frame" x="15" y="69.5" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="8JO-aQ-eD7"/>
                                     <constraint firstAttribute="height" constant="20" id="Lfo-Ta-L82"/>
@@ -7463,7 +7463,7 @@
                                     <action selector="onBack:" destination="0WW-R1-BdV" eventType="touchUpInside" id="7pN-xW-Cgb"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create New Radio Station" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="nvu-Qw-6JJ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create New Live Station" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="nvu-Qw-6JJ">
                                 <rect key="frame" x="20" y="97" width="374" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="X6l-zQ-gQ2"/>
