@@ -40,7 +40,7 @@ enum NYTabBarProvider {
         let v5 = storyboard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         
         v1.tabBarItem = ESTabBarItem.init(NYIrregularityBasicContentView(), title: "Home", image: UIImage(named: "home"), selectedImage: UIImage(named: "home_1"))
-        v2.tabBarItem = ESTabBarItem.init(NYIrregularityBasicContentView(), title: "radio", image: UIImage(named: "NY_radio_live"), selectedImage: UIImage(named: "NY_radio_live"))
+        v2.tabBarItem = ESTabBarItem.init(NYIrregularityBasicContentView(), title: "live", image: UIImage(named: "NY_radio_live"), selectedImage: UIImage(named: "NY_radio_live"))
         v3.tabBarItem = ESTabBarItem.init(NYIrregularityContentView(), title: nil, image: UIImage(named: "photo_verybig"), selectedImage: UIImage(named: "photo_verybig"))
         v4.tabBarItem = ESTabBarItem.init(NYIrregularityBasicContentView(), title: "Metrics", image: UIImage(named: "favor"), selectedImage: UIImage(named: "favor"))
         v5.tabBarItem = ESTabBarItem.init(NYIrregularityBasicContentView(), title: "Me", image: UIImage(named: "me"), selectedImage: UIImage(named: "me"))

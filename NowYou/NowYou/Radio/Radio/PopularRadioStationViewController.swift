@@ -11,7 +11,7 @@ import XLPagerTabStrip
 import CRRefresh
 class PopularRadioStationViewController: BaseTableViewController, IndicatorInfoProvider,UIViewControllerTransitioningDelegate  {
         
-    var itemInfo = IndicatorInfo(title: "Popular Radio Stations")
+    var itemInfo = IndicatorInfo(title: "Popular Live Stations")
     var interactor = Interactor()
     var radioStations = [RadioStation]()
     var transition = CATransition()

@@ -33,6 +33,7 @@ class CategoryViewController: BaseTableViewController, IndicatorInfoProvider,UIV
             self.tableView.reloadData()
         }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         viewAllState = false
         getCategories()
@@ -45,7 +46,7 @@ class CategoryViewController: BaseTableViewController, IndicatorInfoProvider,UIV
       allCategory.interactor = interactor
       transitionNavMode(to: allCategory)
 
-        }
+    }
               
      func transitionNavMode(to controller: UIViewController) {
          transition.duration = 0.1
@@ -54,6 +55,7 @@ class CategoryViewController: BaseTableViewController, IndicatorInfoProvider,UIV
          view.window?.layer.add(transition, forKey: kCATransition)
          navigationController?.pushViewController(controller, animated: false)
      }
+    
     @objc func refresh(notification: Notification) {
         print("111111111")
         getCategories()

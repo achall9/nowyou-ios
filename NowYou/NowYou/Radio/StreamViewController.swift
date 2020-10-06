@@ -159,7 +159,7 @@ class StreamViewController: BaseViewController, AVAudioRecorderDelegate {
         //        agoraKit.setVideoEncoderConfiguration(AgoraVideoEncoderConfiguration(size: AgoraVideoDimension640x360, frameRate: .fps15, bitrate: AgoraVideoBitrateStandard, orientationMode: .adaptative))
         agoraKit?.setVideoEncoderConfiguration(configuration)
         DispatchQueue.main.async {
-            self.setupLocalVideo(uid: 1)
+            self.setupLocalVideo(uid: UInt(Int.random(in: 0..<5000)))
         }
         
         

@@ -156,8 +156,8 @@ class RecordedRadioPlayViewController: BaseViewController, UIViewControllerTrans
     @objc func hideAds(){
             self.bannerAd.removeFromSuperview()
             self.lblBannerReview.removeFromSuperview()
-        
     }
+    
     private func initValue(){
         adTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(showAd), userInfo: nil, repeats: true)
         adTimer_banner = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(showAd_banner), userInfo: nil, repeats: true)
