@@ -907,11 +907,11 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Braintree: 7ff6755ba50506e403dc03779ae68c5ccf6b9808
   ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
-  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CropViewController: 980df34ffc499db89755b2f307f20eca00cd40c6
   CRRefresh: 1415d4ae06837fa7bb064c44f2e102f3ef517044
   DatePickerDialog: 03dbb8350bfa80302ab2a8c83cee1fec70184444
-  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 210f41ca352067d83b1ba4fd2e7fb49a0c017397
   FirebaseAnalytics: a299a86ef70fcc6aa011418bc65a7e101fb9636c
   FirebaseAuth: 300433de340c1b058dbb8aec224a3f1bcfda5184

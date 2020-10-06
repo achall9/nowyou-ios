@@ -79,6 +79,8 @@ class RadioUsernameSearchVC: BaseTableViewController, IndicatorInfoProvider {
         
         parentVC?.searchDelegate?.radioSelected(searchRadios[indexPath.row], sender: parentVC)
     }
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -123,6 +125,8 @@ class RadioUsernameSearchVC: BaseTableViewController, IndicatorInfoProvider {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return itemInfo
     }

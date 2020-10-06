@@ -298,6 +298,7 @@ class CreateNewRadioStationViewController: BaseViewController {
             Utils.showSpinner()
         }
         NetworkManager.shared.createNewRadioStation(category_id: categoryId, name: title!, hash_tag: tags) {(response) in
+            
             DispatchQueue.main.async {
                 Utils.hideSpinner()
                 switch response {
@@ -305,7 +306,7 @@ class CreateNewRadioStationViewController: BaseViewController {
                     self.present(Alert.alertWithText(errorText: error.localizedDescription), animated: true, completion: nil)
                     self.navigationController?.popToRootViewController(animated: true)
                     break
-//                    self.dismiss(animated: true, completion: nil)
+                    
                 case .success(let data):
                     do {
                         let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
