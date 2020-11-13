@@ -22,8 +22,6 @@ class PlayViewController: EmbeddedViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet var dismissGesture: UISwipeGestureRecognizer!
     @IBOutlet var btnTabs: [UIButton]!
-    @IBOutlet weak var feedIntroIV: UIImageView!
-    @IBOutlet weak var btnCloseTutor: UIButton!
 
     @IBOutlet weak var stackViewForButtons: UIStackView!
     
@@ -158,16 +156,9 @@ class PlayViewController: EmbeddedViewController {
         UIApplication.shared.isStatusBarHidden = true
         profileIconFullPath  = ""
         initValue()
-
-        feedIntroIV.alpha = 0.0
-        btnCloseTutor.alpha = 0.0
-        btnCloseTutor.isEnabled = false
         let feedShown = UserDefaults.standard.bool(forKey: "feedShown")
         if !feedShown {
-           feedIntroIV.alpha = 1.0
-           btnCloseTutor.alpha = 1.0
            UserDefaults.standard.set(true, forKey: "feedShown")
-           btnCloseTutor.isEnabled = true
            tutorboardShown = true
         }else{
             tutorboardShown = false
@@ -205,16 +196,10 @@ class PlayViewController: EmbeddedViewController {
     }
     
        @objc func openTutor(notification: Notification){
-           feedIntroIV.alpha = 1.0
-           btnCloseTutor.alpha = 1.0
            UserDefaults.standard.set(true, forKey: "feedShown")
-           btnCloseTutor.isEnabled = true
            tutorboardShown = true
        }
        @objc func closeTutor(notification: Notification){
-           feedIntroIV.alpha = 0.0
-           btnCloseTutor.alpha = 0.0
-           btnCloseTutor.isEnabled = false
            tutorboardShown = false
        }
        @objc func firstVideoPlay(notification: Notification){
