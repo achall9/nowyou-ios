@@ -12,15 +12,26 @@ let backButtonWithArrow = UIBarButtonItem(title: " ", style: .plain, target: nil
 
 let APP_COLOR = "app_color"
 class API {
+    
+    /* #MARK: Staging Heroku URL
     static let URL_SCHEME               = "https"
     static let HOST                     = "https://staging-nowyou.herokuapp.com"
     static let SERVER                   = "https://staging-nowyou.herokuapp.com/api"
-//    static let HOST                     = "http://nowyou.toplev.com"
-//    static let SERVER                   = "http://nowyou.toplev.io/api"
+    */
+    
+    // #MARK: Production AWS URL
+    static let URL_SCHEME               = "http"
+    static let HOST                     = "http://3.138.103.176/"
+    static let SERVER                   = "http://3.138.103.176/api"
+    
+    /*
+    static let HOST                     = "http://nowyou.toplev.com"
+    static let SERVER                   = "http://nowyou.toplev.io/api"
 
-//    static let SERVER_ADDR              = "http://192.168.1.194/bucketapp.com/"
-//    static let HOST                     = "foodspecials.us"
-//    static let SERVER                   = "http://foodspecials.us/api"
+    static let SERVER_ADDR              = "http://192.168.1.194/bucketapp.com/"
+    static let HOST                     = "foodspecials.us"
+    static let SERVER                   = "http://foodspecials.us/api"
+    */
 
     static let SERVER_ADDR              = "http://192.168.1.194/bucketapp.com/"
     // know if email/phone is duplicate or not
