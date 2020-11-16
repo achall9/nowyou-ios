@@ -20,6 +20,7 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var vYear: NYView!
     @IBOutlet weak var vMonth: NYView!
     @IBOutlet weak var vDay: NYView!
+    var datePicker: UIDatePicker!
     
     @IBOutlet weak var vMale: NYView!
     @IBOutlet weak var vFemale: NYView!
@@ -175,34 +176,94 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         showDatePicker()
     }
     
-    private func showDatePicker() {
-        let dialog = DatePickerDialog(textColor: UIColor.black, buttonColor: UIColor.black, font: UIFont.boldSystemFont(ofSize: 15), locale: nil, showCancelButton: true)
-        
-        dialog.show("Birthday", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", defaultDate: self.birthday ?? Date(), minimumDate: nil, maximumDate: nil, datePickerMode: .date) { (date) in
-            if let dt = date {
-                
-                self.birthday = dt
-                
-                let calendar = Calendar.current
-                
-                let year = calendar.component(.year, from: dt)
-                let month = calendar.component(.month, from: dt)
-                let day = calendar.component(.day, from: dt)
-                
-                self.lblYear.text   = "Year \n\n \(year)"
-                self.lblMonth.text  = "Month \n\n \(month)"
-                self.lblDay.text    = "Day \n\n \(day)"
-                
-                self.lblYear.boldSubstring("\(year)")
-                self.lblMonth.boldSubstring("\(month)")
-                self.lblDay.boldSubstring("\(day)")
-                
-                self.setNYViewActive(nyView: self.vYear, active: true, color: UIColor(hexValue: 0xF0CF3F))
-                self.setNYViewActive(nyView: self.vMonth, active: true, color: UIColor(hexValue: 0xF0CF3F))
-                self.setNYViewActive(nyView: self.vDay, active: true, color: UIColor(hexValue: 0xF0CF3F))
-                
-            }
+//    private func showDatePicker() {
+//        let dialog = DatePickerDialog(textColor: UIColor.black, buttonColor: UIColor.black, font: UIFont.boldSystemFont(ofSize: 15), locale: nil, showCancelButton: true)
+//
+//        dialog.show("Birthday", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", defaultDate: self.birthday ?? Date(), minimumDate: nil, maximumDate: nil, datePickerMode: .date) { (date) in
+//            if let dt = date {
+//
+//                self.birthday = datePicker.date
+//
+//                let calendar = Calendar.current
+//
+//                let year = calendar.component(.year, from: dt)
+//                let month = calendar.component(.month, from: dt)
+//                let day = calendar.component(.day, from: dt)
+//
+//                self.lblYear.text   = "Year \n\n \(year)"
+//                self.lblMonth.text  = "Month \n\n \(month)"
+//                self.lblDay.text    = "Day \n\n \(day)"
+//
+//                self.lblYear.boldSubstring("\(year)")
+//                self.lblMonth.boldSubstring("\(month)")
+//                self.lblDay.boldSubstring("\(day)")
+//
+//                self.setNYViewActive(nyView: self.vYear, active: true, color: UIColor(hexValue: 0xF0CF3F))
+//                self.setNYViewActive(nyView: self.vMonth, active: true, color: UIColor(hexValue: 0xF0CF3F))
+//                self.setNYViewActive(nyView: self.vDay, active: true, color: UIColor(hexValue: 0xF0CF3F))
+//
+//            }
+//        }
+//    }
+    
+    
+    func showDatePicker() {
+
+        // create the alert
+        let alert = UIAlertController(title: "Birthday", message: "", preferredStyle: UIAlertController.Style.alert);
+
+        // add an action button
+        let nextAction: UIAlertAction = UIAlertAction(title: "Done", style: .default){action->Void in
+            // save date picked
+            self.birthday = Date()
+            
+            let calendar = Calendar.current
+            
+            let year = calendar.component(.year, from: self.datePicker.date)
+            let month = calendar.component(.month, from: self.datePicker.date)
+            let day = calendar.component(.day, from: self.datePicker.date)
+            
+            self.lblYear.text   = "Year \n\n \(year)"
+            self.lblMonth.text  = "Month \n\n \(month)"
+            self.lblDay.text    = "Day \n\n \(day)"
+            
+            self.lblYear.boldSubstring("\(year)")
+            self.lblMonth.boldSubstring("\(month)")
+            self.lblDay.boldSubstring("\(day)")
+            
+            self.setNYViewActive(nyView: self.vYear, active: true, color: UIColor(hexValue: 0xF0CF3F))
+            self.setNYViewActive(nyView: self.vMonth, active: true, color: UIColor(hexValue: 0xF0CF3F))
+            self.setNYViewActive(nyView: self.vDay, active: true, color: UIColor(hexValue: 0xF0CF3F))
         }
+        alert.addAction(nextAction)
+        
+
+        // now create our custom view - we are using a container view which can contain other views
+        let containerViewWidth = 250
+        let containerViewHeight = 120
+        let containerFrame = CGRect(x: 10, y: 70, width: CGFloat(containerViewWidth), height: CGFloat(containerViewHeight))
+        datePicker = UIDatePicker(frame: containerFrame)
+        
+        /*
+        datePicker.tag = type
+        datePicker.delegate = self
+        datePicker.dataSource = self
+        */
+        
+        alert.view.addSubview(datePicker)
+
+        // now add some constraints to make sure that the alert resizes itself
+        let cons:NSLayoutConstraint = NSLayoutConstraint(item: alert.view!, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, toItem: datePicker, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1.00, constant: 130)
+
+        alert.view.addConstraint(cons)
+
+        let cons2:NSLayoutConstraint = NSLayoutConstraint(item: alert.view!, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.greaterThanOrEqual, toItem: datePicker, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1.00, constant: 20)
+
+        alert.view.addConstraint(cons2)
+
+        // present with our view controller
+        present(alert, animated: true, completion: nil)
+
     }
     
     // MARK: - Choose Sex
@@ -353,7 +414,7 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             txtPassword.becomeFirstResponder()
             break
         default:
-            break            
+            break
         }
     }
     
