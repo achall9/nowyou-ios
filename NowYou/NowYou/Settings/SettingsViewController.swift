@@ -76,6 +76,8 @@ class SettingsViewController: BaseViewController {
         btnShowTutor.layer.borderColor = UIColor(hexValue: 0x979797).withAlphaComponent(0.2).cgColor
         btnShowTutor.backgroundColor = UIColor(hexValue: 0x60DF76)
         btnShowTutor.setTitleColor(UIColor.white, for: .normal)
+        
+        loadUserInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,7 +86,7 @@ class SettingsViewController: BaseViewController {
         
         // Do any additional setup after loading the view.
         initUI()
-        loadUserInfo()
+        //loadUserInfo()
         if let color = UserManager.currentUser()?.color {
             btnColor.backgroundColor = UIColor(hexString: color)
         } else {
@@ -582,6 +584,7 @@ extension SettingsViewController: UITextFieldDelegate {
 
 
 extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
 //--- Crop image
     func presentCropViewController(_ profileImg : UIImage) {
         let image: UIImage = profileImg
@@ -589,8 +592,8 @@ extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationC
         cropViewController.delegate = self
         self.present(cropViewController, animated: true, completion: nil)
     }
-//--- End Crop image
     
+//--- End Crop image
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
      

@@ -90,7 +90,8 @@ class Utils: NSObject {
 //       return "http://nowyou.toplev.io\(path)"
 //        return "https://staging-nowyou.herokuapp.com\(path)"
 //        return "https://nowyou-staging.s3-us-west-2.amazonaws.com\(path)"
-        return "https://nowyou-dev.s3-us-east-2.amazonaws.com\(path)"
+//        return "https://nowyou-dev.s3-us-east-2.amazonaws.com\(path)"
+        return "https://nowyou-app.s3-us-east-2.amazonaws.com\(path)"
     }
     
     func getTopViewController() -> UIViewController? {

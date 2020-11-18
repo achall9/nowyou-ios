@@ -244,6 +244,7 @@ class SignupViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         let containerFrame = CGRect(x: 10, y: 70, width: CGFloat(containerViewWidth), height: CGFloat(containerViewHeight))
         datePicker = UIDatePicker(frame: containerFrame)
         
+        datePicker.datePickerMode = .date
         /*
         datePicker.tag = type
         datePicker.delegate = self

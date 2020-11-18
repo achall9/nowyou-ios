@@ -727,15 +727,21 @@ enum RestRouter: RestAPIProtocol {
                 }
             }
             data.append("--\(self.boundary)\r\n".data(using: .utf8)!)
-//             using as image name timestamp in UNIX format
+            //using as image name timestamp in UNIX format
+            
+            
             let tempFileName = Int(Date().timeIntervalSince1970).description + (isVideo ? ".mp4" : ".png")
             let mimeType = isVideo ? "video/mp4" : "image/png"
             data.append("Content-Disposition: form-data; name=\"media\"; filename=\"\(tempFileName)\"\r\n".data(using: .utf8)!)
             data.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+            
+            //let mediadata = UIImage.init(named: "NY_Logo")?.pngData()
             data.append(media)
+            
             data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
             
             let thumbnailName = Int(Date().timeIntervalSince1970).description + ".png"
+            
             
             if thumbnail != nil {
                 data.append("Content-Disposition: form-data; name=\"thumbnail\"; filename=\"\(thumbnailName)\"\r\n".data(using: .utf8)!)
@@ -743,6 +749,7 @@ enum RestRouter: RestAPIProtocol {
                 data.append(thumbnail!)
                 data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
             }
+            
             return data
 
         case .getFeeds:

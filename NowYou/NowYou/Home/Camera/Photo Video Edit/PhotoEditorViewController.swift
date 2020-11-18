@@ -1111,8 +1111,8 @@ public final class PhotoEditorViewController: UIViewController {
   
         print ("continue")
         player?.pause()
-        
-        photoEditorDelegate?.imageEdited(image: canvasView!.asImage(), hashtag: self.hashtag, link: attachedLinks[0], linkRect: attachedLinkPos[0], angle: attachedLinkPosAngle[0], taggedUserId: [self.taggedUserId], sender: self)
+        let image = canvasView!.asImage()//.resized(withPercentage: 0.5)!
+        photoEditorDelegate?.imageEdited(image: image, hashtag: self.hashtag, link: attachedLinks[0], linkRect: attachedLinkPos[0], angle: attachedLinkPosAngle[0], taggedUserId: [self.taggedUserId], sender: self)
     }
     
     func saveVideo(videoURLs: [URL]) {

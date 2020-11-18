@@ -563,7 +563,7 @@ extension CameraViewController: PhotoEditorDelegate {
             let screenWidth = UIScreen.main.bounds.width
             let screenHeight = UIScreen.main.bounds.height
             
-            NetworkManager.shared.postMedia(hash_tag: tags, description: "test", forever: true, isVideo: false, thumbnail: nil,  media: data!, link: link ?? "", user_id: (UserManager.currentUser()?.userID)!, screen_w: Int(screenWidth), screen_h: Int(screenHeight), x: linkRect.origin.x, y: linkRect.origin.y, width: linkRect.size.width, height: linkRect.size.height, angle: angle, scale: 0, taggedUserId: taggedUserId) { (response) in
+            NetworkManager.shared.postMedia(hash_tag: tags, description: "", forever: true, isVideo: false, thumbnail: nil,  media: data!, link: link ?? "", user_id: (UserManager.currentUser()?.userID)!, screen_w: Int(screenWidth), screen_h: Int(screenHeight), x: linkRect.origin.x, y: linkRect.origin.y, width: linkRect.size.width, height: linkRect.size.height, angle: angle, scale: 0, taggedUserId: taggedUserId) { (response) in
                 
                 DispatchQueue.main.async {
                     Utils.hideSpinner()
@@ -575,7 +575,8 @@ extension CameraViewController: PhotoEditorDelegate {
                         print("photo posted successfully")
                         do {
                             let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                            if let bar = jsonRes as? [String: AnyObject] {
+                            print(jsonRes)
+                            if jsonRes is [String: AnyObject] {
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: NOTIFICATION.NEW_MEDIA_POSTED), object: nil, userInfo: nil)
                             }
                         } catch {
@@ -702,8 +703,10 @@ extension CameraViewController: PhotoEditorDelegate {
                     case .success(let data):
                         do {
                             let jsonRes = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                        
                             if let res = jsonRes as? [String: AnyObject] {
-                                let feed_id = res["feed_id"] as! Int
+                                
+                                let feed_id = res["feed_id"] as? Int ?? 0
                                 
                                 var extraVideos = [URL]()
                                 var links = [String]()
