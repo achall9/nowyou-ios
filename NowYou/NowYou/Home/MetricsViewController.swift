@@ -82,6 +82,8 @@ class MetricsViewController: BaseViewController {
         dashboardIntroIV.alpha = 0.0
         btnCloseTutor.alpha = 0.0
         btnCloseTutor.isEnabled = false
+        
+        /*
         let dashShown = UserDefaults.standard.bool(forKey: "dashShown")
         if !dashShown {
             dashboardIntroIV.alpha = 1.0
@@ -89,6 +91,8 @@ class MetricsViewController: BaseViewController {
             UserDefaults.standard.set(true, forKey: "dashShown")
             btnCloseTutor.isEnabled = true
         }
+        */
+        
         // load user info
         NetworkManager.shared.getUserDetails(userId: (UserManager.currentUser()?.userID)!) { (response) in
             switch response {
@@ -174,9 +178,8 @@ class MetricsViewController: BaseViewController {
                                                name: NSNotification.Name(rawValue: NOTIFICATION.USER_PHOTO_UPDATED), object: nil)
         getPaymentEmail()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(openTutor(notification:)), name: .openTutorboardNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(closeTutor(notification:)), name: .closeTutorboardNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(openTutor(notification:)), name: .openTutorboardNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(closeTutor(notification:)), name: .closeTutorboardNotification, object: nil)
     }
     
     func initBrainTree() {
@@ -229,7 +232,7 @@ class MetricsViewController: BaseViewController {
     
     }
     
-    private func loadCashInfo(){
+    private func loadCashInfo() {
 //        lblViewCount.text = "\(cashInfo.total_view_count)"
 //        lblEarned.text = "+ $\(UserManager.currentUser()?.earning_daily ?? 0.00) today"
         self.showChart(horizontal: false)
@@ -268,8 +271,20 @@ class MetricsViewController: BaseViewController {
         }
     }
     
+    
+    func getYValue(Y_Value: Double) -> String {
+        var returnString = "\(Y_Value)"
+        returnString = String(returnString.prefix(5))
+        
+        if returnString == "0.0" {
+            return ""
+        } else {
+            return returnString
+        }
+        
+    }
+    
     func getMonthName(month: Double) -> String {
-//        return ""
         
         if metricsMode == .MONTHLY {
             return "\(Int(month) * 3 + 1)"
@@ -311,6 +326,7 @@ class MetricsViewController: BaseViewController {
     
     fileprivate func barsChart(horizontal: Bool) -> Chart {
         var tuplesXY = [(Int, Int)]()
+        var Y_Values = [Double]()
         
         if metricsMode == .YEARLY {
             if let monthly_history = UserManager.myCashInfo()?.monthly_history, monthly_history.count == 12 {
@@ -339,8 +355,11 @@ class MetricsViewController: BaseViewController {
                 
                 for index in 1..<13 {
                     tuplesXY.append((index - 1, Int(monthly_history[index - 1] * Double(multiple))))
+                    Y_Values.append(monthly_history[index - 1])
+                    
                 }
             }
+            
         } else if metricsMode == .MONTHLY {
             if let daily_history = UserManager.myCashInfo()?.daily_history, daily_history.count > 29 {
                 
@@ -366,11 +385,14 @@ class MetricsViewController: BaseViewController {
                     multiple = 1
                 }
                 
-                for index in 1..<10 {
+                for index in 1..<11 {
                     tuplesXY.append((index - 1, Int((daily_history[(index - 1) * 3 ] + daily_history[(index - 1) * 3 + 1] + daily_history[(index - 1) * 3 + 2]) * Double(multiple))))
+                    Y_Values.append((daily_history[(index - 1) * 3 ] + daily_history[(index - 1) * 3 + 1] + daily_history[(index - 1) * 3 + 2]))
+                    
                 }
+                
             }
-        } else {
+        } else { // DAILY
         //----
             if let timely_history = UserManager.myCashInfo()?.timely_history, timely_history.count > 23 {
                 let topValue = timely_history.max() ?? 0.0
@@ -403,6 +425,9 @@ class MetricsViewController: BaseViewController {
                 for index in 1..<25 {
                     if index % 2 == 0 {
                         tuplesXY.append((index / 2 - 1, Int((timely_history[index - 1] + timely_history[index - 2]) * Double(multiple))))
+                        Y_Values.append((timely_history[index - 1] + timely_history[index - 2]))
+                        
+                        
                     }
                 }
             }
@@ -416,28 +441,37 @@ class MetricsViewController: BaseViewController {
         
         let chartPoints = (horizontal ? reverseTuples(tuplesXY) : tuplesXY).map{ChartPoint(x: ChartAxisValueInt($0.0), y: ChartAxisValueInt($0.1))}
         
-        let labelSettings = ChartLabelSettings(font: UIFont(name: "Gilory-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14), fontColor: UIColor.black, rotation: metricsMode == .YEARLY ? 90 : 0, rotationKeep: .bottom)
+        let xlabelSettings = ChartLabelSettings(font: UIFont(name: "Gilory-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14), fontColor: UIColor.black, rotation: metricsMode == .YEARLY ? 90 : 0, rotationKeep: .bottom)
+        
+        
+        let ylabelSettings = ChartLabelSettings(font: UIFont(name: "Gilory-Medium", size: 14) ?? UIFont.systemFont(ofSize: 14), fontColor: UIColor.black, rotation: metricsMode == .YEARLY ? 0 : 0, rotationKeep: .bottom)
         
         
         let generator = ChartAxisGeneratorMultiplier(1)
-        let labelsGenerator = ChartAxisLabelsGeneratorFunc {scalar in
+        let xlabelsGenerator = ChartAxisLabelsGeneratorFunc {scalar in
             
-            return ChartAxisLabel(text: "\(self.getMonthName(month: scalar))", settings: labelSettings)
+            return ChartAxisLabel(text: "\(self.getMonthName(month: scalar))", settings: xlabelSettings)
         }
-        let xGenerator = ChartAxisGeneratorMultiplier(1)
+        
+        //Y_Values.sort { ($0 < $1)}
+        
+        let ylabelsGenerator = ChartAxisLabelsGeneratorFunc {scalar in
+            return ChartAxisLabel(text: "\(self.getYValue(Y_Value: Y_Values[Int(scalar)]))", settings: ylabelSettings)
+        }
         
         
         var lastModelValue: Double = 12
         
         if metricsMode == .YEARLY {
-            lastModelValue = 12
+            lastModelValue = 11
         } else if metricsMode == .DAILY {
-            lastModelValue = 12
+            lastModelValue = 11
         } else {
-            lastModelValue = 10
+            lastModelValue = 9
         }
-        let xModel = ChartAxisModel(firstModelValue: 0, lastModelValue: lastModelValue, axisTitleLabels: [ChartAxisLabel(text: "", settings: labelSettings)], axisValuesGenerator: xGenerator, labelsGenerator: labelsGenerator)
-        let yModel = ChartAxisModel(firstModelValue: 0, lastModelValue: lastModelValue, axisTitleLabels: [ChartAxisLabel(text: "Axis title", settings: labelSettings.defaultVertical())], axisValuesGenerator: generator, labelsGenerator: labelsGenerator)
+        
+        let xModel = ChartAxisModel(firstModelValue: 0, lastModelValue: lastModelValue, axisTitleLabels: [ChartAxisLabel(text: "", settings: xlabelSettings)], axisValuesGenerator: generator, labelsGenerator: xlabelsGenerator)
+        let yModel = ChartAxisModel(firstModelValue: 0, lastModelValue: lastModelValue, axisTitleLabels: [ChartAxisLabel(text: "", settings: ylabelSettings)], axisValuesGenerator: generator, labelsGenerator: ylabelsGenerator)
         
         let barViewGenerator = {(chartPointModel: ChartPointLayerModel, layer: ChartPointsViewsLayer, chart: Chart) -> UIView? in
             let bottomLeft = layer.modelLocToScreenLoc(x: 0, y: 0)
@@ -487,6 +521,7 @@ class MetricsViewController: BaseViewController {
             settings: chartSettings,
             layers: [
                 xAxisLayer,
+                yAxisLayer,
                 chartPointsLayer
             ]
         )
@@ -515,6 +550,7 @@ class MetricsViewController: BaseViewController {
         
         let chart = barsChart(horizontal: horizontal)
         
+        
         for subview in vAmount.subviews {
             subview.removeFromSuperview()
         }
@@ -522,6 +558,7 @@ class MetricsViewController: BaseViewController {
         vAmount.addSubview(chart.view)
         self.chart = chart
     }
+    
     fileprivate func getPaymentEmail(){
         DataBaseManager.shared.getPaymentEmail()
         { (result,error) in

@@ -29,6 +29,9 @@ class RadioViewController: BaseViewController, RadioSearchDelegate, UIViewContro
         radioIntroIV.alpha = 0.0
         btnCloseTutor.alpha = 0.0
         btnCloseTutor.isEnabled = false
+        
+        
+        /*
         let radioShown = UserDefaults.standard.bool(forKey: "radioShown")
         if !radioShown {
             radioIntroIV.alpha = 1.0
@@ -36,6 +39,8 @@ class RadioViewController: BaseViewController, RadioSearchDelegate, UIViewContro
             UserDefaults.standard.set(true, forKey: "radioShown")
             btnCloseTutor.isEnabled = true
         }
+        */
+        
     }
     
     override func viewDidLoad() {
@@ -44,10 +49,10 @@ class RadioViewController: BaseViewController, RadioSearchDelegate, UIViewContro
         vLogo.layer.borderColor = UIColor(hexValue: 0xBABABA).cgColor
         vLogo.layer.borderWidth = 0
         initButtonUI()
-         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(openTutor(notification:)), name: .openTutorboardNotification, object: nil)
-               
-        NotificationCenter.default.addObserver(self, selector: #selector(closeTutor(notification:)), name: .closeTutorboardNotification, object: nil)
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        //NotificationCenter.default.addObserver(self, selector: #selector(openTutor(notification:)), name: .openTutorboardNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(closeTutor(notification:)), name: .closeTutorboardNotification, object: nil)
     }
                
     @objc func openTutor(notification: Notification){

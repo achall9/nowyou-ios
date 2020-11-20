@@ -42,17 +42,21 @@ class ProfileViewController: EmbeddedViewController, UIViewControllerTransitioni
     static let shared = ProfileViewController()
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         profileIntroIV.alpha = 0.0
         btnCloseTutor.alpha = 0.0
         btnCloseTutor.isEnabled = false
+        
+        /*
         let profileShown = UserDefaults.standard.bool(forKey: "profileShown")
         if !profileShown {
           profileIntroIV.alpha = 1.0
           btnCloseTutor.alpha = 1.0
           UserDefaults.standard.set(true, forKey: "profileShown")
           btnCloseTutor.isEnabled = true
-
         }
+        */
+        
         //clvTags.isHidden = true
         selfPhotoUpdate = false
         lblUsername.text = UserManager.currentUser()?.username
@@ -98,14 +102,13 @@ class ProfileViewController: EmbeddedViewController, UIViewControllerTransitioni
         profileImgTap = UITapGestureRecognizer(target: self, action: #selector(profileImgTapped(_:)))
         profileImgTap.numberOfTapsRequired = 1
         
-        NotificationCenter.default.addObserver(self, selector: #selector(openTutor(notification:)), name: .openTutorboardNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(openTutor(notification:)), name: .openTutorboardNotification, object: nil)
             
-        NotificationCenter.default.addObserver(self, selector: #selector(closeTutor(notification:)), name: .closeTutorboardNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(closeTutor(notification:)), name: .closeTutorboardNotification, object: nil)
     }
         
     @objc func openTutor(notification: Notification){
         UserDefaults.standard.set(false, forKey: "profileShown")
-//        tutorShowProfileDelegate?.showTutorBoard()
     }
     @objc func closeTutor(notification: Notification){
         profileIntroIV.alpha = 0.0

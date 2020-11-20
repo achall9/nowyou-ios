@@ -89,8 +89,8 @@ class FeedViewController: BaseViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reportedPost(notification:)),
             name: .reportedPostSuccessfully, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(openTutor(notification:)), name: .openTutorboardNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(closeTutor(notification:)), name: .closeTutorboardNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(openTutor(notification:)), name: .openTutorboardNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(closeTutor(notification:)), name: .closeTutorboardNotification, object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -98,6 +98,8 @@ class FeedViewController: BaseViewController {
         feedIntroIV.alpha = 0.0
         btnCloseTutor.alpha = 0.0
         btnCloseTutor.isEnabled = false
+        
+        /*
         let feedShown = UserDefaults.standard.bool(forKey: "feedShown")
         if !feedShown {
             feedIntroIV.alpha = 1.0
@@ -105,6 +107,7 @@ class FeedViewController: BaseViewController {
             UserDefaults.standard.set(true, forKey: "feedShown")
             btnCloseTutor.isEnabled = true
         }
+        */
     }
     @objc func openTutor(notification: Notification){
         feedIntroIV.alpha = 1.0

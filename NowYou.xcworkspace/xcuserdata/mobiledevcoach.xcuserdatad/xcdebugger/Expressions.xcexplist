@@ -3,52 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "closure #1 in closure #2 in LoginMultipleViewController.doLogin(_:):LoginMultipleViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "user.username">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "LoginMultipleViewController.tableView(_:didSelectRowAt:):LoginMultipleViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "RestRouter.body.getter:RestRouter.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "param">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in closure #2 in ProfileViewController.loadTaggedPosts():ProfileViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "post.taggedUserId">
-            </PersistentString>
-            <PersistentString
-               value = "UserManager.currentUser()?.userID">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ChooseAccountVC.tableView(_:didSelectRowAt:):ChooseAccountVC.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "user.token">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "FacebookAdsCell.nativeAd(_:didFailWithError:):PlayViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "closure #1 in ProfileViewController.userInfoUpdated(notification:):ProfileViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -60,10 +14,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #2 in PlayViewController.actionSharePost(_:):PlayViewController.swift">
+         contextName = "closure #1 in closure #2 in LoginMultipleViewController.doLogin(_:):LoginMultipleViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "media.id!">
+               value = "user.username">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -79,10 +33,80 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ChooseAccountVC.tableView(_:didSelectRowAt:):ChooseAccountVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "user.token">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PhoneVerifyViewController.viewDidLoad():PhoneVerifyViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "phoneNum">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MetricsViewController.barsChart(horizontal:):MetricsViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UserManager.myCashInfo()?.timely_history">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #2 in ProfileViewController.loadTaggedPosts():ProfileViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "post.taggedUserId">
+            </PersistentString>
+            <PersistentString
+               value = "UserManager.currentUser()?.userID">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MetricsViewController.getYValue(Y_Value:):MetricsViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "returnString.prefix(4)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RestRouter.body.getter:RestRouter.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "param">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LoginMultipleViewController.tableView(_:didSelectRowAt:):LoginMultipleViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "FacebookAdsCell.nativeAd(_:didFailWithError:):PlayViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in RadioUsernameSearchVC.search():RadioUsernameSearchVC.swift">
          <PersistentStrings>
             <PersistentString
                value = "self.parentVC?.radios">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #2 in PlayViewController.actionSharePost(_:):PlayViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "media.id!">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

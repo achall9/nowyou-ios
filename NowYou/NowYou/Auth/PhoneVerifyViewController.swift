@@ -40,6 +40,7 @@ class PhoneVerifyViewController: UIViewController {
         initUI()
         userRegisterState = false
         sendVerificationCode(phoneNumber: phoneNum)
+        
     }
     
     @IBAction func onClose(_ sender: Any) {
