@@ -304,7 +304,7 @@ extension AppDelegate: NotificationDelegate{
                     let radioObj = RadioStation(json: radioJson)
                     NotificationCenter.default.post(name:.radioIsOnBroadcastingToFeedNotification, object: nil, userInfo: ["radioObj" : radioObj, "profileIconPath" : profileIconPath])
                       DispatchQueue.main.async {
-                        if let homeVC = Utils.shared.getTopViewController(){
+                        if let homeVC = UIApplication.getTopViewController(){
                             if !homeVC.isKind(of: StreamViewController.self) && !homeVC.isKind(of: RadioDetailsViewController.self) && !homeVC.isKind(of: RecordedRadioPlayViewController.self){
                                 let home = UIStoryboard(name: "Main", bundle: nil)
                                 let vc = home.instantiateViewController(withIdentifier: "RadioDetailsVC") as! RadioDetailsViewController
@@ -341,5 +341,21 @@ extension AppDelegate: STKConsentManagerDisplayDelegate {
     
     func consentManagerDidDismissDialog(_ consentManager: STKConsentManager) {
         //initializeAppodealSDK()
+    }
+}
+extension UIApplication {
+
+    class func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+
+        if let nav = base as? UINavigationController {
+            return getTopViewController(base: nav.visibleViewController)
+
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getTopViewController(base: selected)
+
+        } else if let presented = base?.presentedViewController {
+            return getTopViewController(base: presented)
+        }
+        return base
     }
 }
