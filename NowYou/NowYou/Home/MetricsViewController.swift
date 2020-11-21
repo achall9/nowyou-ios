@@ -453,12 +453,6 @@ class MetricsViewController: BaseViewController {
             return ChartAxisLabel(text: "\(self.getMonthName(month: scalar))", settings: xlabelSettings)
         }
         
-        //Y_Values.sort { ($0 < $1)}
-        
-        let ylabelsGenerator = ChartAxisLabelsGeneratorFunc {scalar in
-            return ChartAxisLabel(text: "\(self.getYValue(Y_Value: Y_Values[Int(scalar)]))", settings: ylabelSettings)
-        }
-        
         
         var lastModelValue: Double = 12
         
@@ -471,7 +465,17 @@ class MetricsViewController: BaseViewController {
         }
         
         let xModel = ChartAxisModel(firstModelValue: 0, lastModelValue: lastModelValue, axisTitleLabels: [ChartAxisLabel(text: "", settings: xlabelSettings)], axisValuesGenerator: generator, labelsGenerator: xlabelsGenerator)
-        let yModel = ChartAxisModel(firstModelValue: 0, lastModelValue: lastModelValue, axisTitleLabels: [ChartAxisLabel(text: "", settings: ylabelSettings)], axisValuesGenerator: generator, labelsGenerator: ylabelsGenerator)
+        
+        var yModel = ChartAxisModel(firstModelValue: 0, lastModelValue: lastModelValue, axisTitleLabels: [ChartAxisLabel(text: "", settings: ylabelSettings)], axisValuesGenerator: generator, labelsGenerator: xlabelsGenerator)
+        
+        //Y_Values.sort { ($0 < $1)}
+        
+        if Y_Values.count != 0 {
+            let ylabelsGenerator = ChartAxisLabelsGeneratorFunc {scalar in
+                return ChartAxisLabel(text: "\(self.getYValue(Y_Value: Y_Values[Int(scalar)]))", settings: ylabelSettings)
+            }
+            yModel = ChartAxisModel(firstModelValue: 0, lastModelValue: lastModelValue, axisTitleLabels: [ChartAxisLabel(text: "", settings: ylabelSettings)], axisValuesGenerator: generator, labelsGenerator: ylabelsGenerator)
+        }
         
         let barViewGenerator = {(chartPointModel: ChartPointLayerModel, layer: ChartPointsViewsLayer, chart: Chart) -> UIView? in
             let bottomLeft = layer.modelLocToScreenLoc(x: 0, y: 0)
