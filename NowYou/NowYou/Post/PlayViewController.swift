@@ -1657,7 +1657,8 @@ extension PlayViewController{
                self.medias.removeAll()
                self.collectionView.reloadData()
            }else{
-               guard let viralFeedDatas : [Media] = result else { return }
+               //guard let viralFeedDatas : [Media] = result else { return }
+               let viralFeedDatas: [Media] = result
                self.viralDataCounts = viralFeedDatas.count
                self.viralPageId += 1
                    for feed in viralFeedDatas {
@@ -1710,7 +1711,8 @@ extension PlayViewController{
                 self.medias.removeAll()
                 self.collectionView.reloadData()
            }else{
-            guard let followingFeedData: [Media] = result else { return }
+            //guard let followingFeedData: [Media] = result else { return }
+            let followingFeedData: [Media] = result
                self.feedDataCounts = followingFeedData.count
                self.feedPageId += 1
                    for feed in followingFeedData {
@@ -1769,7 +1771,8 @@ extension PlayViewController{
                     self.medias.removeAll()
                     self.collectionView.reloadData()
                 }else{
-                    guard let tagFeedData : [Media] = result else { return }
+                    //guard let tagFeedData : [Media] = result else { return }
+                    let tagFeedData: [Media] = result
                     self.tagDataCounts = tagFeedData.count
                     self.feedPageId += 1
                         for feed in tagFeedData {
