@@ -613,14 +613,16 @@ extension ProfileViewController: CropViewControllerDelegate {
     
     func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         self.imgProfile = image
+        self.clvPost.reloadData()
         let dateFormatter = DateFormatter()
+    
         dateFormatter.dateFormat = "yyyy/MM/dd"
         let user = UserManager.currentUser()!
         let appColor = user.color
         DispatchQueue.main.async {
             Utils.showSpinner()
         }
-        NetworkManager.shared.updateProfile(email: user.email, firstName: user.firstName, lastName: user.lastName, phone: user.phone, birthDay: user.birthday, photo: imgProfile.pngData()!, color: appColor, username: user.username, gender: user.gender, privateOn: 0, bio: "Senior mobile dev") { (response) in
+        NetworkManager.shared.updateProfile(email: user.email, firstName: user.firstName, lastName: user.lastName, phone: user.phone, birthDay: user.birthday, photo: imgProfile.pngData()!, color: appColor, username: user.username, gender: user.gender, privateOn: 0, bio: "") { (response) in
             DispatchQueue.main.async {
                 Utils.hideSpinner()
                 switch response {
