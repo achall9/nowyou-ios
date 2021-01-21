@@ -93,7 +93,7 @@ class PopularRadioStationViewController: BaseTableViewController, IndicatorInfoP
                 Utils.hideSpinner()
                 switch response {
                     case .error(let error):
-                        self.present(Alert.alertWithText(errorText: "No stations available. Please try again later."), animated: true, completion: nil)
+                        self.present(Alert.alertWithText(errorText: "Please try again later when there are radio live stations available. Thanks!"), animated: true, completion: nil)
                         break
                     case .success(let data):
                         do {
