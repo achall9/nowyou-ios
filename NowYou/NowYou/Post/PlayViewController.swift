@@ -1650,9 +1650,9 @@ extension PlayViewController{
     }
     @objc func getViralData(_ page: Int){
         
-        //Utils.showSpinner()
+        Utils.showSpinner()
         DataBaseManager.shared.getViralFeed(pageId: self.viralPageId) { (result, error) in
-           //Utils.hideSpinner()
+           Utils.hideSpinner()
            if error != "" {
                self.medias.removeAll()
                self.collectionView.reloadData()
@@ -1701,7 +1701,7 @@ extension PlayViewController{
     }
     @objc func getFeedData(_ page: Int){
         
-//        Utils.showSpinner()
+        Utils.showSpinner()
         DataBaseManager.shared.getFeedData(pageId: feedPageId){(result, error) in
            Utils.hideSpinner()
            if error != "" {

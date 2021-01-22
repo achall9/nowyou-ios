@@ -74,6 +74,7 @@ class Utils: NSObject {
     
     
     static func showSpinner() {
+        hideSpinner()
         let activityData = ActivityData(size: CGSize(width: 30, height: 30), message: nil, messageFont: nil, messageSpacing: 0, type: .ballClipRotateMultiple, color: .white, padding: nil, displayTimeThreshold: nil, minimumDisplayTime: nil, backgroundColor: nil, textColor: nil)
         
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData, nil)

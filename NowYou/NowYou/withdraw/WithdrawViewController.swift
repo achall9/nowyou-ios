@@ -75,7 +75,7 @@ class WithdrawViewController: StripeBaseViewController {
             (result,error) in
             DispatchQueue.main.async {
                 if let error = error {
-                    self.showAlertWithError(title: "", message: error.message ?? "")
+//                    self.showAlertWithError(title: "", message: error.message ?? "")
                 }else{
                     self.stripeCards = result
                     if self.stripeCards.count == 0{
@@ -95,10 +95,10 @@ class WithdrawViewController: StripeBaseViewController {
         StripeManager.shared.listAllbankAcccounts(customAccountId: stripeCustomAccountId){
           (result,error) in
           DispatchQueue.main.async {
-              if let error = error {
+              if let _ = error {
                   self.loaddata()
                   self.cardTable.reloadData()
-                  self.showAlertWithError(title: "", message: error.message ?? "")
+//                  self.showAlertWithError(title: "", message: error.message ?? "")
               }else{
                   self.stripeBanks = result
                   if self.stripeBanks.count == 0{

@@ -558,8 +558,11 @@ class MetricsViewController: BaseViewController {
         for subview in vAmount.subviews {
             subview.removeFromSuperview()
         }
-        chart.view.frame = CGRect(x: 0, y: 0, width: vAmount.frame.size.width - 30, height: vAmount.frame.size.height)
+        
         vAmount.addSubview(chart.view)
+        chart.view.snp.makeConstraints{make in
+            make.edges.equalToSuperview()
+        }
         self.chart = chart
     }
     

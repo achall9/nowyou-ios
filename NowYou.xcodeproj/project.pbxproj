@@ -229,6 +229,8 @@
 		829B8FBF240AFBDF00F0FE99 /* BankTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 829B8FBD240AFBDF00F0FE99 /* BankTableViewCell.xib */; };
 		829B8FC1240B039500F0FE99 /* StripeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829B8FC0240B039500F0FE99 /* StripeBaseViewController.swift */; };
 		829DF2402412AD0C00491770 /* CardToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DF23F2412AD0C00491770 /* CardToken.swift */; };
+		82AB288125B9261000DFAFC5 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82278317251A3CD600FB54C4 /* pop.framework */; };
+		82AB288225B9261000DFAFC5 /* pop.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82278317251A3CD600FB54C4 /* pop.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		82B0E3FC247BEB7C00CA6550 /* BlockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B0E3FB247BEB7B00CA6550 /* BlockUser.swift */; };
 		82B193F524852F7C00A218D9 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B193F424852F7C00A218D9 /* Search.swift */; };
 		82B193F724858CC700A218D9 /* tagHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B193F624858CC600A218D9 /* tagHeaderView.swift */; };
@@ -249,7 +251,6 @@
 		D6487DE52514EE480090F1BE /* LoginMultipleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6487DE42514EE480090F1BE /* LoginMultipleViewController.swift */; };
 		D64909A124C0528E00EE9AC7 /* KVVideoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64909A024C0528D00EE9AC7 /* KVVideoManager.swift */; };
 		D64909A324C0542E00EE9AC7 /* silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D64909A224C0542E00EE9AC7 /* silence.mp3 */; };
-		D65452A6251B81BE0097F916 /* pop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82278317251A3CD600FB54C4 /* pop.framework */; };
 		D6E1BA6424E5EDC4007668D0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6324E5EDC4007668D0 /* FBSDKCoreKit.framework */; };
 		D6E1BA6624E5EDD8007668D0 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E1BA6524E5EDD8007668D0 /* FBAudienceNetwork.framework */; };
 		D6FF66B924DD9A0C007769E9 /* NYImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FF66B824DD9A0C007769E9 /* NYImage.swift */; };
@@ -309,6 +310,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				82AB288225B9261000DFAFC5 /* pop.framework in Embed Frameworks */,
 				18131E4F21FF2CC00095C1CA /* AnimatedCollectionViewLayout.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -603,7 +605,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D65452A6251B81BE0097F916 /* pop.framework in Frameworks */,
+				82AB288125B9261000DFAFC5 /* pop.framework in Frameworks */,
 				D6E1BA6424E5EDC4007668D0 /* FBSDKCoreKit.framework in Frameworks */,
 				180098782246CC1B00F5A202 /* UserNotifications.framework in Frameworks */,
 				18131E4821FF21020095C1CA /* libopus.a in Frameworks */,
