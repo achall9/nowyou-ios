@@ -11,6 +11,7 @@ import Firebase
 import AVFoundation
 import IQKeyboardManagerSwift
 import AgoraRtcKit
+import SoundWave
 
 import FBAudienceNetwork
 
@@ -36,6 +37,7 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
     @IBOutlet weak var emptyCommentsView: UIView!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblRecorderName: UILabel!
+    @IBOutlet weak var audioVisualizationView: AudioVisualizationView!
     var bannerAd: FBAdView!
     var lblBannerReview: UILabel!
     var failedOfBanner: Bool = false
@@ -87,6 +89,9 @@ class RadioDetailsViewController: BaseViewController, UIViewControllerTransition
         addRigthSwipe()
         joinRadioStation()
         initBannerAds()
+        self.audioVisualizationView.audioVisualizationMode = .read
+        self.audioVisualizationView.meteringLevels = [0.1, 0.67, 0.13, 0.78, 0.31]
+        self.audioVisualizationView.play(for: 5.0)
 
     }
     func initBannerAds() {
@@ -715,6 +720,9 @@ private extension RadioDetailsViewController {
     
     func leaveChannel() {
         agoraKit.leaveChannel(nil)
+    }
+    private func audioUpdate(audioLevel: Float){
+        self.audioVisualizationView.add(meteringLevel: audioLevel)
     }
 }
 
